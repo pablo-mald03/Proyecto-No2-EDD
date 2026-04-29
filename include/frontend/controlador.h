@@ -6,6 +6,7 @@
 /*Includes de backend*/
 #include"gestorestructuras.h"
 
+/*Controlador encargado para llevar a cabo la logica ya existente de almacen de datos*/
 class Controlador : public QObject
 {
     Q_OBJECT

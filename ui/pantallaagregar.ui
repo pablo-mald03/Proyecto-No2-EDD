@@ -872,7 +872,7 @@ QPushButton#btnLimpiar:pressed {
     border-radius: 10px;          
     padding: 8px;
     font-family: Consolas, monospace;
-    font-size: 15px;
+    font-size: 14px;
 }</string>
                      </property>
                      <property name="placeholderText">
@@ -994,7 +994,7 @@ QPushButton#btnLimpiar:pressed {
     border-radius: 10px;          
     padding: 8px;
     font-family: Consolas, monospace;
-    font-size: 15px;
+    font-size: 14px;
 }</string>
                      </property>
                      <property name="placeholderText">
@@ -1066,13 +1066,13 @@ QPushButton#btnLimpiar:pressed {
             <widget class="QPushButton" name="btnVerArboles">
              <property name="minimumSize">
               <size>
-               <width>150</width>
+               <width>200</width>
                <height>60</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>150</width>
+               <width>200</width>
                <height>16777215</height>
               </size>
              </property>
@@ -1087,7 +1087,7 @@ QPushButton#btnLimpiar:pressed {
     
     color: white;
     font-family: &quot;Arial Black&quot;, Gadget, sans-serif;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: bold;
     text-transform: uppercase;
     
@@ -1109,7 +1109,7 @@ QPushButton#btnVerArboles:pressed {
 }</string>
              </property>
              <property name="text">
-              <string>Ver Arboles</string>
+              <string>Ver Estructuras</string>
              </property>
             </widget>
            </item>
@@ -1208,12 +1208,6 @@ QPushButton#btnLimpiarLogs:pressed {
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <widget class="QWidget" name="widget_content_2" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>290</width>
-          <height>260</height>
-         </size>
-        </property>
         <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
           <widget class="QLabel" name="labelArbolAvl">
@@ -1272,12 +1266,6 @@ QPushButton#btnLimpiarLogs:pressed {
            <layout class="QVBoxLayout" name="verticalLayout_13">
             <item>
              <widget class="QTextEdit" name="textArbolAvl">
-              <property name="minimumSize">
-               <size>
-                <width>150</width>
-                <height>100</height>
-               </size>
-              </property>
               <property name="styleSheet">
                <string notr="true">QTextEdit#textArbolAvl{
     background-color: #0D1117;   
@@ -1286,7 +1274,7 @@ QPushButton#btnLimpiarLogs:pressed {
     border-radius: 10px;          
     padding: 8px;
     font-family: Consolas, monospace;
-    font-size: 15px;
+    font-size: 14px;
 }</string>
               </property>
               <property name="placeholderText">
@@ -1296,12 +1284,6 @@ QPushButton#btnLimpiarLogs:pressed {
             </item>
             <item>
              <widget class="QLabel" name="labelTiempoAvl">
-              <property name="minimumSize">
-               <size>
-                <width>250</width>
-                <height>50</height>
-               </size>
-              </property>
               <property name="styleSheet">
                <string notr="true">QLabel#labelTiempoAvl {        
  
@@ -1309,7 +1291,7 @@ QPushButton#btnLimpiarLogs:pressed {
 	stop:0 rgb(0, 0, 0), 
 	stop:1 rgb(8, 2, 48));
 
-  	 font-size: 15px;
+	 font-size: 14px;
     font-weight: bold;
     font-family: &quot;Segoe UI&quot;, Arial;
     
@@ -1336,12 +1318,6 @@ QPushButton#btnLimpiarLogs:pressed {
       </item>
       <item>
        <widget class="QWidget" name="widget_content_3" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>290</width>
-          <height>260</height>
-         </size>
-        </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
           <widget class="QLabel" name="labelArbolB">
@@ -1400,12 +1376,6 @@ QPushButton#btnLimpiarLogs:pressed {
            <layout class="QVBoxLayout" name="verticalLayout_14">
             <item>
              <widget class="QTextEdit" name="textArbolB">
-              <property name="minimumSize">
-               <size>
-                <width>260</width>
-                <height>100</height>
-               </size>
-              </property>
               <property name="styleSheet">
                <string notr="true">QTextEdit#textArbolB{
     background-color: #0D1117;   
@@ -1414,7 +1384,7 @@ QPushButton#btnLimpiarLogs:pressed {
     border-radius: 10px;          
     padding: 8px;
     font-family: Consolas, monospace;
-    font-size: 15px;
+    font-size: 14px;
 }</string>
               </property>
               <property name="placeholderText">
@@ -1424,12 +1394,6 @@ QPushButton#btnLimpiarLogs:pressed {
             </item>
             <item>
              <widget class="QLabel" name="labelTiempoB">
-              <property name="minimumSize">
-               <size>
-                <width>250</width>
-                <height>50</height>
-               </size>
-              </property>
               <property name="styleSheet">
                <string notr="true">QLabel#labelTiempoB {        
  
@@ -1437,7 +1401,7 @@ QPushButton#btnLimpiarLogs:pressed {
 	stop:0 rgb(0, 0, 0), 
 	stop:1 rgb(8, 2, 48));
 
-  	 font-size: 15px;
+ 	 font-size: 14px;
     font-weight: bold;
     font-family: &quot;Segoe UI&quot;, Arial;
     
@@ -1464,12 +1428,6 @@ QPushButton#btnLimpiarLogs:pressed {
       </item>
       <item>
        <widget class="QWidget" name="widget_content_4" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>290</width>
-          <height>260</height>
-         </size>
-        </property>
         <layout class="QVBoxLayout" name="verticalLayout_7">
          <item>
           <widget class="QLabel" name="labelArbolBMas">
@@ -1528,12 +1486,6 @@ QPushButton#btnLimpiarLogs:pressed {
            <layout class="QVBoxLayout" name="verticalLayout_15">
             <item>
              <widget class="QTextEdit" name="textArbolBMas">
-              <property name="minimumSize">
-               <size>
-                <width>260</width>
-                <height>100</height>
-               </size>
-              </property>
               <property name="styleSheet">
                <string notr="true">QTextEdit#textArbolBMas{
     background-color: #0D1117;   
@@ -1542,7 +1494,7 @@ QPushButton#btnLimpiarLogs:pressed {
     border-radius: 10px;          
     padding: 8px;
     font-family: Consolas, monospace;
-    font-size: 15px;
+    font-size: 14px;
 }</string>
               </property>
               <property name="placeholderText">
@@ -1552,12 +1504,6 @@ QPushButton#btnLimpiarLogs:pressed {
             </item>
             <item>
              <widget class="QLabel" name="labelTiempoBMas">
-              <property name="minimumSize">
-               <size>
-                <width>250</width>
-                <height>50</height>
-               </size>
-              </property>
               <property name="styleSheet">
                <string notr="true">QLabel#labelTiempoBMas {        
  
@@ -1565,7 +1511,117 @@ QPushButton#btnLimpiarLogs:pressed {
 	stop:0 rgb(0, 0, 0), 
 	stop:1 rgb(8, 2, 48));
 
-  	 font-size: 15px;
+  	 font-size: 14px;
+    font-weight: bold;
+    font-family: &quot;Segoe UI&quot;, Arial;
+    
+    background: transparent;
+    padding: 2px;
+    margin-bottom: 5px;
+}
+
+</string>
+              </property>
+              <property name="text">
+               <string>Tiempo de insercion: 0 ms</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="widget_content_5" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout_16">
+         <item>
+          <widget class="QLabel" name="labelTablaHash">
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLabel#labelTablaHash {        
+ 
+    color: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+	stop:0 rgb(0, 0, 0), 
+	stop:1 rgb(77, 5, 57));
+
+  	 font-size: 18px;
+    font-weight: bold;
+    font-family: &quot;Segoe UI&quot;, Arial;
+    
+    background: transparent;
+    padding: 2px;
+    margin-bottom: 5px;
+}
+
+</string>
+           </property>
+           <property name="text">
+            <string>Tabla Hash</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="widget_15" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>200</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>250</height>
+            </size>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_17">
+            <item>
+             <widget class="QTextEdit" name="textTablaHash">
+              <property name="styleSheet">
+               <string notr="true">QTextEdit#textTablaHash{
+    background-color: #0D1117;   
+    color: #E6EDF3;               
+    border: 1px solid #30363D;     
+    border-radius: 10px;          
+    padding: 8px;
+    font-family: Consolas, monospace;
+    font-size: 14px;
+}</string>
+              </property>
+              <property name="placeholderText">
+               <string>Log de la tabla Hash</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="labelTiempoHash">
+              <property name="styleSheet">
+               <string notr="true">QLabel#labelTiempoHash {        
+ 
+    color: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+	stop:0 rgb(0, 0, 0), 
+	stop:1 rgb(8, 2, 48));
+
+	 font-size: 14px;
     font-weight: bold;
     font-family: &quot;Segoe UI&quot;, Arial;
     

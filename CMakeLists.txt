@@ -29,6 +29,9 @@ set(FRONTEND_SOURCES
     src/frontend/pantallaarbolbmas.cpp
     src/frontend/graphicsviewzoom.cpp
     src/frontend/pantallamain.cpp
+    src/frontend/controladornegocio.cpp
+    src/frontend/pantallagestion.cpp
+    src/frontend/pantallasucursal.cpp
 
 )
 
@@ -51,6 +54,9 @@ set(FRONTEND_HEADERS
     include/frontend/pantallaarbolb.h
     include/frontend/pantallaarbolbmas.h
     include/frontend/pantallamain.h
+    include/frontend/controladornegocio.h
+    include/frontend/pantallasucursal.h
+    include/frontend/pantallagestion.h
 )
 
 
@@ -71,6 +77,8 @@ set(UI_FILES
     ui/pantallaarbolb.ui
     ui/pantallaarbolbmas.ui
     ui/pantallamain.ui
+    ui/pantallagestion.ui
+    ui/pantallasucursal.ui
 
 )
 
@@ -130,7 +138,6 @@ qt_add_executable(ProyectoNo2-EDD
     ${EXCEPTIONS_HEADERS}
     ${UI_FILES}
     recursos.qrc
-
 )
 
 target_include_directories(ProyectoNo2-EDD PRIVATE
