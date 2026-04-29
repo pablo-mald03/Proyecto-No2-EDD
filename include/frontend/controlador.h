@@ -27,6 +27,9 @@ public:
     /*Metodo que permite ordenar a la lista*/
     void ordenarListado(int orden);
 
+    /*Metodo que permite setear el backend que se va a utilizar con los respectivos datos que vienen del grafo*/
+    void setBackend(GestorEstructuras *gestor);
+
 
 private:
     GestorEstructuras * gestorBackend = nullptr;

@@ -21,6 +21,17 @@ Controlador::~Controlador(){
 }
 
 
+/*Region de getters y setters del controlador*/
+
+/*Metodo que permite setear el backend que se va a utilizar con los respectivos datos que vienen del grafo*/
+void Controlador::setBackend(GestorEstructuras *gestor){
+    this->gestorBackend = gestor;
+
+    /*Pendiente refrescar ui*/
+}
+
+
+
 /*---METODO QUE ELIMINA POR COMPLETO TODO EL BACKEND CUANDO SE EXPORTA EL CSV---*/
 void Controlador::limpiarDatos(){
 

@@ -477,29 +477,8 @@ QPushButton#btnCerrar:disabled {
       <string notr="true"/>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <property name="spacing">
-       <number>5</number>
-      </property>
-      <property name="leftMargin">
-       <number>5</number>
-      </property>
-      <property name="topMargin">
-       <number>5</number>
-      </property>
-      <property name="rightMargin">
-       <number>5</number>
-      </property>
-      <property name="bottomMargin">
-       <number>5</number>
-      </property>
       <item>
        <widget class="QWidget" name="widget_content_1" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>290</width>
-          <height>550</height>
-         </size>
-        </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <property name="spacing">
           <number>4</number>
@@ -546,12 +525,6 @@ QPushButton#btnCerrar:disabled {
          </item>
          <item>
           <widget class="QWidget" name="widget_5" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>120</width>
-             <height>505</height>
-            </size>
-           </property>
            <layout class="QVBoxLayout" name="verticalLayout_9">
             <property name="spacing">
              <number>4</number>
@@ -570,12 +543,6 @@ QPushButton#btnCerrar:disabled {
             </property>
             <item>
              <widget class="QTextEdit" name="textEditAvl">
-              <property name="minimumSize">
-               <size>
-                <width>260</width>
-                <height>400</height>
-               </size>
-              </property>
               <property name="styleSheet">
                <string notr="true">QTextEdit#textEditAvl {
     background-color: #0D1117;   
@@ -594,12 +561,6 @@ QPushButton#btnCerrar:disabled {
             </item>
             <item>
              <widget class="QLabel" name="labelTiempoAvl">
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>35</height>
-               </size>
-              </property>
               <property name="styleSheet">
                <string notr="true">QLabel#labelTiempoAvl {        
  
@@ -634,12 +595,6 @@ QPushButton#btnCerrar:disabled {
       </item>
       <item>
        <widget class="QWidget" name="widget_content_2" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>290</width>
-          <height>550</height>
-         </size>
-        </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <property name="spacing">
           <number>4</number>
@@ -686,12 +641,6 @@ QPushButton#btnCerrar:disabled {
          </item>
          <item>
           <widget class="QWidget" name="widget_6" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>120</width>
-             <height>505</height>
-            </size>
-           </property>
            <layout class="QVBoxLayout" name="verticalLayout_10">
             <property name="leftMargin">
              <number>5</number>
@@ -707,12 +656,6 @@ QPushButton#btnCerrar:disabled {
             </property>
             <item>
              <widget class="QTextEdit" name="textEditB">
-              <property name="minimumSize">
-               <size>
-                <width>260</width>
-                <height>400</height>
-               </size>
-              </property>
               <property name="styleSheet">
                <string notr="true">QTextEdit#textEditB{
     background-color: #0D1117;   
@@ -731,12 +674,6 @@ QPushButton#btnCerrar:disabled {
             </item>
             <item>
              <widget class="QLabel" name="labelTiempoB">
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>35</height>
-               </size>
-              </property>
               <property name="styleSheet">
                <string notr="true">QLabel#labelTiempoB {        
  
@@ -771,12 +708,6 @@ QPushButton#btnCerrar:disabled {
       </item>
       <item>
        <widget class="QWidget" name="widget_content_3" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>290</width>
-          <height>550</height>
-         </size>
-        </property>
         <layout class="QVBoxLayout" name="verticalLayout_6">
          <property name="spacing">
           <number>4</number>
@@ -844,12 +775,6 @@ QPushButton#btnCerrar:disabled {
             </property>
             <item>
              <widget class="QTextEdit" name="textEditBMas">
-              <property name="minimumSize">
-               <size>
-                <width>260</width>
-                <height>400</height>
-               </size>
-              </property>
               <property name="styleSheet">
                <string notr="true">QTextEdit#textEditBMas {
     background-color: #0D1117;   
@@ -868,12 +793,6 @@ QPushButton#btnCerrar:disabled {
             </item>
             <item>
              <widget class="QLabel" name="labelTiempoBMas">
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>35</height>
-               </size>
-              </property>
               <property name="styleSheet">
                <string notr="true">QLabel#labelTiempoBMas {        
  
@@ -908,12 +827,6 @@ QPushButton#btnCerrar:disabled {
       </item>
       <item>
        <widget class="QWidget" name="widget_content_4" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>290</width>
-          <height>550</height>
-         </size>
-        </property>
         <layout class="QVBoxLayout" name="verticalLayout_7">
          <property name="spacing">
           <number>4</number>
@@ -960,12 +873,6 @@ QPushButton#btnCerrar:disabled {
          </item>
          <item>
           <widget class="QWidget" name="widget_8" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>120</width>
-             <height>505</height>
-            </size>
-           </property>
            <layout class="QVBoxLayout" name="verticalLayout_12">
             <property name="leftMargin">
              <number>5</number>
@@ -981,12 +888,6 @@ QPushButton#btnCerrar:disabled {
             </property>
             <item>
              <widget class="QTextEdit" name="textEditLista">
-              <property name="minimumSize">
-               <size>
-                <width>260</width>
-                <height>400</height>
-               </size>
-              </property>
               <property name="styleSheet">
                <string notr="true">QTextEdit#textEditLista {
     background-color: #0D1117;   
@@ -1005,14 +906,121 @@ QPushButton#btnCerrar:disabled {
             </item>
             <item>
              <widget class="QLabel" name="labelTiempoLista">
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>35</height>
-               </size>
-              </property>
               <property name="styleSheet">
                <string notr="true">QLabel#labelTiempoLista {        
+ 
+    color: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+	stop:0 rgb(0, 0, 0), 
+	stop:1 rgb(8, 2, 48));
+
+  	 font-size: 15px;
+    font-weight: bold;
+    font-family: &quot;Segoe UI&quot;, Arial;
+    
+    background: transparent;
+    padding: 2px;
+    margin-bottom: 5px;
+}
+
+</string>
+              </property>
+              <property name="text">
+               <string>Tiempo total: 0 ms</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="widget_content_5" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout_13">
+         <property name="spacing">
+          <number>4</number>
+         </property>
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <property name="topMargin">
+          <number>5</number>
+         </property>
+         <property name="rightMargin">
+          <number>5</number>
+         </property>
+         <property name="bottomMargin">
+          <number>5</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="labelHash">
+           <property name="styleSheet">
+            <string notr="true">QLabel#labelHash {        
+ 
+    color: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+	stop:0 rgb(0, 0, 0), 
+	stop:1 rgb(77, 5, 57));
+
+  	 font-size: 18px;
+    font-weight: bold;
+    font-family: &quot;Segoe UI&quot;, Arial;
+    
+    background: transparent;
+    padding: 2px;
+    margin-bottom: 5px;
+}
+
+</string>
+           </property>
+           <property name="text">
+            <string>Tabla Hash</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="widget_11" native="true">
+           <layout class="QVBoxLayout" name="verticalLayout_14">
+            <property name="leftMargin">
+             <number>5</number>
+            </property>
+            <property name="topMargin">
+             <number>5</number>
+            </property>
+            <property name="rightMargin">
+             <number>5</number>
+            </property>
+            <property name="bottomMargin">
+             <number>5</number>
+            </property>
+            <item>
+             <widget class="QTextEdit" name="textTablaHash">
+              <property name="styleSheet">
+               <string notr="true">QTextEdit#textTablaHash {
+    background-color: #0D1117;   
+    color: #E6EDF3;               
+    border: 1px solid #30363D;     
+    border-radius: 10px;          
+    padding: 8px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+}</string>
+              </property>
+              <property name="placeholderText">
+               <string>Log de la tabla Hash</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="labelTiempoHash">
+              <property name="styleSheet">
+               <string notr="true">QLabel#labelTiempoHash {        
  
     color: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
 	stop:0 rgb(0, 0, 0), 

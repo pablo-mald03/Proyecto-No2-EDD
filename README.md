@@ -1,10 +1,9 @@
-# ProyectoNo1-EDD
+# ProyectoNo2-EDD
 
 ## Descripcion
 
 Este es mi primer proyecto de mi tan esperado curso de EDD :)
-En el cual se pidio hacer un gestor de productos para poder almacenar productos y generar busquedas e inserciones de la manera 
-como lo hacen las grandes bases de datos.
+En el cual se pidio hacer un gestor de productos para poder almacenar productos y generar busquedas e inserciones de la manera como lo hacen las grandes bases de datos. Y ahora agregarle una red de supermercados que permiten enviar y recibir productos.
 En el Framework QT Creator que me permitio desarrollar una interfaz grafica. QT es un Framework de de C++ que posee la caracteristica de ser multiplataforma, sin embargo tambien 
 para futuros programadores de este proyecto se debe de saber como poder compilar este archivo.
 

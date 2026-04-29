@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.19)
-project(ProyectoNo1-EDD LANGUAGES CXX)
+project(ProyectoNo2-EDD LANGUAGES CXX)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
 
@@ -28,6 +28,7 @@ set(FRONTEND_SOURCES
     src/frontend/pantallaarbolb.cpp
     src/frontend/pantallaarbolbmas.cpp
     src/frontend/graphicsviewzoom.cpp
+    src/frontend/pantallamain.cpp
 
 )
 
@@ -49,6 +50,7 @@ set(FRONTEND_HEADERS
     include/frontend/pantallaarbolavl.h
     include/frontend/pantallaarbolb.h
     include/frontend/pantallaarbolbmas.h
+    include/frontend/pantallamain.h
 )
 
 
@@ -68,6 +70,7 @@ set(UI_FILES
     ui/pantallaarbolavl.ui
     ui/pantallaarbolb.ui
     ui/pantallaarbolbmas.ui
+    ui/pantallamain.ui
 
 )
 
@@ -117,7 +120,7 @@ set(EXCEPTIONS_HEADERS
 )
 
 
-qt_add_executable(ProyectoNo1-EDD
+qt_add_executable(ProyectoNo2-EDD
     WIN32 MACOSX_BUNDLE
     ${FRONTEND_SOURCES}
     ${FRONTEND_HEADERS}
@@ -130,14 +133,14 @@ qt_add_executable(ProyectoNo1-EDD
 
 )
 
-target_include_directories(ProyectoNo1-EDD PRIVATE
+target_include_directories(ProyectoNo2-EDD PRIVATE
     include/frontend
     include/backend
     include/exceptions
 )
 
 
-target_link_libraries(ProyectoNo1-EDD
+target_link_libraries(ProyectoNo2-EDD
     PRIVATE
         Qt::Core
         Qt::Widgets
@@ -147,7 +150,7 @@ target_link_libraries(ProyectoNo1-EDD
 if(NOT APPLE AND NOT LINUX OR QT_VERSION GREATER_EQUAL 6.3)
     include(GNUInstallDirs)
 
-    install(TARGETS ProyectoNo1-EDD
+    install(TARGETS ProyectoNo2-EDD
         BUNDLE  DESTINATION .
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -155,10 +158,11 @@ if(NOT APPLE AND NOT LINUX OR QT_VERSION GREATER_EQUAL 6.3)
 
     if(COMMAND qt_generate_deploy_app_script)
         qt_generate_deploy_app_script(
-            TARGET ProyectoNo1-EDD
+            TARGET ProyectoNo2-EDD
             OUTPUT_SCRIPT deploy_script
             NO_UNSUPPORTED_PLATFORM_ERROR
         )
         install(SCRIPT ${deploy_script})
     endif()
+    
 endif()

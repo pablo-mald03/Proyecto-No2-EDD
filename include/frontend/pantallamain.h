@@ -1,7 +1,7 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef PANTALLAMAIN_H
+#define PANTALLAMAIN_H
 
-#include <QMainWindow>
+#include <QWidget>
 
 /*Region de importacion de la UI*/
 #include"pantallaprincipal.h"
@@ -16,19 +16,17 @@
 #include"pantallalistarnombre.h"
 
 
-QT_BEGIN_NAMESPACE
 namespace Ui {
-class MainWindow;
+class PantallaMain;
 }
-QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class PantallaMain : public QWidget
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    explicit PantallaMain(QWidget *parent = nullptr);
+    ~PantallaMain();
 
 private slots:
     void on_btnCsv_clicked();
@@ -36,6 +34,8 @@ private slots:
     void on_btnAgregar_clicked();
 
     void on_btnBuscarNombre_clicked();
+
+    void on_btnBuscarBarra_clicked();
 
     void on_btnBuscarCategoria_clicked();
 
@@ -45,10 +45,12 @@ private slots:
 
     void on_btnListarNombre_clicked();
 
-    void on_btnArboles_clicked();
+    void on_btnEstructuras_clicked();
+
+    void on_btnCompararBusqueda_clicked();
 
 private:
-    Ui::MainWindow *ui;
+    Ui::PantallaMain *ui;
 
     /*Punteros de pantallas en la UI*/
     PantallaPrincipal *inicio = nullptr;
@@ -92,6 +94,6 @@ signals:
     void limpiarBuscarRango();
     void limpiarEliminar();
     void limpiarListar();
-
 };
-#endif // MAINWINDOW_H
+
+#endif // PANTALLAMAIN_H
