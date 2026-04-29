@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>assets/fondo/fondooverlay.png</file>
+        <file>assets/fondo/usericon.png</file>
+        <file>assets/fondo/tasksicon.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PantallaVerArboles</class>
+ <widget class="QWidget" name="PantallaVerArboles">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1225</width>
+    <height>810</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>4</number>
+   </property>
+   <property name="leftMargin">
+    <number>5</number>
+   </property>
+   <property name="topMargin">
+    <number>5</number>
+   </property>
+   <property name="rightMargin">
+    <number>5</number>
+   </property>
+   <property name="bottomMargin">
+    <number>5</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="widget" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>90</height>
+      </size>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QWidget" name="widget_2" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>120</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnAnterior">
+        <property name="minimumSize">
+         <size>
+          <width>190</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton#btnAnterior {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
+                        stop:0 rgb(50, 143, 42), 
+                        stop:1 rgb(255, 163, 72));
+    
+    border: 3px solid black;
+    border-radius: 8px;
+    
+    color: white;
+    font-family: &quot;Arial Black&quot;, Gadget, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    
+    padding: 10px 25px;
+}
+
+QPushButton#btnAnterior:hover {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
+                        stop:0 rgb(77, 5, 57), 
+                        stop:1 rgb(143, 240, 164));
+    border-color: #f1c40f;
+}
+
+
+QPushButton#btnAnterior:pressed {
+    background-color: #2c3e50;
+    padding-top: 12px;
+    padding-left: 27px;
+}</string>
+        </property>
+        <property name="text">
+         <string>Anterior</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="widget_5" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>600</width>
+          <height>80</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>177</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="labelArboles">
+           <property name="minimumSize">
+            <size>
+             <width>250</width>
+             <height>75</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLabel#labelArboles {        
+ 
+    color: qlineargradient(x1:0, y1:0, x2:1, y2:1, 
+	stop:0 rgb(0, 0, 0), 
+	stop:1 rgb(77, 5, 57));
+
+  	 font-size: 24px;
+    font-weight: bold;
+    font-family: &quot;Segoe UI&quot;, Arial;
+    
+    background: transparent;
+    padding: 2px;
+    margin-bottom: 5px;
+}
+
+</string>
+           </property>
+           <property name="text">
+            <string>Arbol AVL</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>177</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnSiguiente">
+        <property name="minimumSize">
+         <size>
+          <width>190</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton#btnSiguiente {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
+                        stop:0 rgb(198, 70, 0), 
+                        stop:1 rgb(255, 163, 72));
+    
+    border: 3px solid black;
+    border-radius: 8px;
+    
+    color: white;
+    font-family: &quot;Arial Black&quot;, Gadget, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    
+    padding: 10px 25px;
+}
+
+QPushButton#btnSiguiente:hover {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
+                        stop:0 rgb(77, 5, 57), 
+                        stop:1 rgb(143, 240, 164));
+    border-color: #f1c40f;
+}
+
+
+QPushButton#btnSiguiente:pressed {
+    background-color: #2c3e50;
+    padding-top: 12px;
+    padding-left: 27px;
+}</string>
+        </property>
+        <property name="text">
+         <string>Siguiente</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="widget_4" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>120</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="stackedWidget">
+     <widget class="QWidget" name="page"/>
+     <widget class="QWidget" name="page_2"/>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
