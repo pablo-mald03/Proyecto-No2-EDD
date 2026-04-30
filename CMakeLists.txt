@@ -7,6 +7,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
 set(CMAKE_AUTOUIC_SEARCH_PATHS
     ${CMAKE_CURRENT_SOURCE_DIR}/ui
     ${CMAKE_CURRENT_SOURCE_DIR}/ui/sucursales
+    ${CMAKE_CURRENT_SOURCE_DIR}/ui/inicio
 )
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -36,6 +37,17 @@ set(FRONTEND_SOURCES
     src/frontend/pantallasucursal.cpp
     src/frontend/pantallasistema.cpp
 
+
+    src/frontend/inicio/pantallacargasucursales.cpp
+    src/frontend/inicio/pantallacargaenvios.cpp
+    src/frontend/inicio/pantallacargaproductos.cpp
+    src/frontend/inicio/pantallaagregarsucursal.cpp
+    src/frontend/inicio/pantallamodificarsucursal.cpp
+    src/frontend/inicio/pantallaeliminarsucursal.cpp
+    src/frontend/inicio/pantallaversucursales.cpp
+    src/frontend/inicio/pantallaverenvios.cpp
+
+
 )
 
 set(FRONTEND_HEADERS
@@ -60,6 +72,15 @@ set(FRONTEND_HEADERS
     include/frontend/pantallasucursal.h
     include/frontend/pantallagestion.h
     include/frontend/pantallasistema.h
+
+    include/frontend/inicio/pantallacargasucursales.h
+    include/frontend/inicio/pantallacargaenvios.h
+    include/frontend/inicio/pantallacargaproductos.h
+    include/frontend/inicio/pantallaagregarsucursal.h
+    include/frontend/inicio/pantallamodificarsucursal.h
+    include/frontend/inicio/pantallaeliminarsucursal.h
+    include/frontend/inicio/pantallaversucursales.h
+    include/frontend/inicio/pantallaverenvios.h
 )
 
 set(CONTROLADORES_SOURCES
@@ -98,6 +119,15 @@ set(UI_FILES
     ui/pantallagestion.ui
     ui/pantallasucursal.ui
     ui/pantallasistema.ui
+
+    ui/inicio/pantallacargasucursales.ui
+    ui/inicio/pantallacargaenvios.ui
+    ui/inicio/pantallacargaproductos.ui
+    ui/inicio/pantallaagregarsucursal.ui
+    ui/inicio/pantallamodificarsucursal.ui
+    ui/inicio/pantallaeliminarsucursal.ui
+    ui/inicio/pantallaversucursales.ui
+    ui/inicio/pantallaverenvios.ui
 
 )
 
@@ -165,6 +195,7 @@ target_include_directories(ProyectoNo2-EDD PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include/frontend
     ${CMAKE_CURRENT_SOURCE_DIR}/include/backend
     ${CMAKE_CURRENT_SOURCE_DIR}/include/frontend/sucursales
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/frontend/inicio
     ${CMAKE_CURRENT_SOURCE_DIR}/include/exceptions
     ${CMAKE_CURRENT_SOURCE_DIR}/include/controladores
     ${CMAKE_CURRENT_BINARY_DIR}

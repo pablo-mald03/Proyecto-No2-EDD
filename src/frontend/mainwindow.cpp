@@ -34,8 +34,8 @@ MainWindow::MainWindow(QWidget *parent)
     this->pantallaInicio = new PantallaSistema(this);
 
     this->controladorGeneral= new ControladorNegocio();
-    this->ui->stackedWidget->addWidget(this->pantallaInicio);
 
+    this->ui->stackedWidget->addWidget(this->pantallaInicio);
 
 /*
     connect(this->inicio, &PantallaPrincipal::csvCargado, this->controladorCrud, &Controlador::procesarCsv);
@@ -62,7 +62,8 @@ MainWindow::MainWindow(QWidget *parent)
 /*Region de metodos para poder mostrar las diferentes vistas*/
 void MainWindow::mostrarInicio(){
 
-   // this->pantallaInicio->setText("Menu Principal");
+    this->ui->stackedWidget->setCurrentWidget(this->pantallaInicio);
+    this->pantallaInicio->setPantallanInicio();
    /*this->ui->stackedWidget->setCurrentWidget(this->pantallaInicio);
     this->controladorGeneral->evaluarEstadoCerrarCsv();
     this->controladorGeneral->verificarRefrescado();
