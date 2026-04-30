@@ -28,6 +28,9 @@ public:
     explicit PantallaMain(QWidget *parent = nullptr);
     ~PantallaMain();
 
+    /*Metodo para reestablecer la Ui al inicio*/
+    void mostrarInicio();
+
 private slots:
     void on_btnCsv_clicked();
 
@@ -74,9 +77,7 @@ private:
     /*Controlador*/
     Controlador * controladorCrud;
 
-
     /*Metodos para navegar por la UI*/
-    void mostrarInicio();
     void mostrarAgregar();
     void mostrarBuscarNombre();
     void mostrarBuscarCategoria();
@@ -86,7 +87,8 @@ private:
     void mostrarCompararBusqueda();
     void mostrarVerArboles();
 
-    /*Metodos signals que permiten dar ordenes a las pantallas hijas para que hagan acciones*/
+    /*Metodo que permite ir cambiando el titulo dinamicamente del centro*/
+    void solicitarTitulo(QString titulo);
 signals:
     void limpiarAgregar();
     void limpiarBuscarNombre();
@@ -94,6 +96,9 @@ signals:
     void limpiarBuscarRango();
     void limpiarEliminar();
     void limpiarListar();
+
+    /*Signal que permite ir cambiando el label de titulos*/
+    void cambiarTitulo(QString _titulo);
 };
 
 #endif // PANTALLAMAIN_H

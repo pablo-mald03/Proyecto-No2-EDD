@@ -35,10 +35,15 @@ PantallaMain::PantallaMain(QWidget *parent)
     mostrarInicio();
 }
 
+/*Signal que permite poder cambiar el texto de un label*/
+void PantallaMain::solicitarTitulo(QString titulo){
+    emit cambiarTitulo(titulo);
+}
+
 /*Region de metodos para poder mostrar las diferentes vistas*/
 void PantallaMain::mostrarInicio(){
 
-    this->ui->labelTasks->setText("Menu Principal");
+    this->solicitarTitulo("Menu Principal");
     this->ui->stackedWidget->setCurrentWidget(this->inicio);
     this->controladorCrud->evaluarEstadoCerrarCsv();
     this->controladorCrud->verificarRefrescado();
@@ -78,7 +83,7 @@ void PantallaMain::mostrarAgregar(){
     }
 
     emit this->limpiarAgregar();
-    this->ui->labelTasks->setText("Agregar Productos");
+    this->solicitarTitulo("Agregar Productos");
     this->ui->stackedWidget->setCurrentWidget(this->pantallaAgregar);
 }
 
@@ -118,7 +123,7 @@ void PantallaMain::mostrarBuscarNombre(){
 
     emit this->limpiarBuscarNombre();
     this->controladorCrud->ordenarListado(1);
-    this->ui->labelTasks->setText("Busqueda por nombre");
+    this->solicitarTitulo("Busqueda por nombre");
     this->ui->stackedWidget->setCurrentWidget(this->pantallaBusquedaNombre);
 
 }
@@ -160,7 +165,7 @@ void PantallaMain::mostrarBuscarCategoria(){
 
     emit this->limpiarBuscarCategoria();
     this->controladorCrud->ordenarListado(2);
-    this->ui->labelTasks->setText("Busqueda por categoria");
+    this->solicitarTitulo("Busqueda por categoria");
     this->ui->stackedWidget->setCurrentWidget(this->pantallaBusquedaCategoria);
 
 }
@@ -202,7 +207,7 @@ void PantallaMain::mostrarBuscarRango(){
 
     emit this->limpiarBuscarRango();
     this->controladorCrud->ordenarListado(3);
-    this->ui->labelTasks->setText("Busqueda por rango de caducidad");
+    this->solicitarTitulo("Busqueda rango de caducidad");
     this->ui->stackedWidget->setCurrentWidget(this->pantallaBusquedaRango);
 
 }
@@ -238,7 +243,7 @@ void PantallaMain::mostrarEliminar(){
 
     emit this->limpiarEliminar();
     this->controladorCrud->ordenarListado(4);
-    this->ui->labelTasks->setText("Eliminar productos");
+    this->solicitarTitulo("Eliminar productos");
     this->ui->stackedWidget->setCurrentWidget(this->pantallaEliminar);
 
 }
@@ -271,7 +276,7 @@ void PantallaMain::mostrarListarNombre(){
 
     emit this->limpiarListar();
     this->controladorCrud->ordenarListado(1);
-    this->ui->labelTasks->setText("Listar por nombre");
+    this->solicitarTitulo("Listar por nombre");
     this->ui->stackedWidget->setCurrentWidget(this->pantallaListarNombre);
 
 }
@@ -327,7 +332,7 @@ void PantallaMain::mostrarVerArboles(){
                 this->pantallaVerArboles, &PantallaVerArboles::recibirGrapvizBMas);
     }
 
-    this->ui->labelTasks->setText("Visualizar Arboles");
+    this->solicitarTitulo("Visualizar Arboles");
     this->ui->stackedWidget->setCurrentWidget(this->pantallaVerArboles);
     this->pantallaVerArboles->reestablecerVistas();
 

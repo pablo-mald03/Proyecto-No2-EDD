@@ -4,7 +4,10 @@ project(ProyectoNo2-EDD LANGUAGES CXX)
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
 
 
-set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/ui)
+set(CMAKE_AUTOUIC_SEARCH_PATHS
+    ${CMAKE_CURRENT_SOURCE_DIR}/ui
+    ${CMAKE_CURRENT_SOURCE_DIR}/ui/sucursales
+)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -13,72 +16,88 @@ set(FRONTEND_SOURCES
 
     main.cpp
     src/frontend/mainwindow.cpp
-    src/frontend/pantallaprincipal.cpp
-    src/frontend/pantallaagregar.cpp
-    src/frontend/controlador.cpp
-    src/frontend/pantallabuscarporcategoria.cpp
-    src/frontend/pantallabuscarpornombre.cpp
-    src/frontend/pantallabuscarrango.cpp
-    src/frontend/pantallalistarnombre.cpp
-    src/frontend/pantallaeliminarproducto.cpp
+    src/frontend/sucursales/pantallaprincipal.cpp
+    src/frontend/sucursales/pantallaagregar.cpp
+    src/frontend/sucursales/pantallabuscarporcategoria.cpp
+    src/frontend/sucursales/pantallabuscarpornombre.cpp
+    src/frontend/sucursales/pantallabuscarrango.cpp
+    src/frontend/sucursales/pantallalistarnombre.cpp
+    src/frontend/sucursales/pantallaeliminarproducto.cpp
 
-    src/frontend/pantallaverarboles.cpp
+    src/frontend/sucursales/pantallaverarboles.cpp
 
-    src/frontend/pantallaarbolavl.cpp
-    src/frontend/pantallaarbolb.cpp
-    src/frontend/pantallaarbolbmas.cpp
-    src/frontend/graphicsviewzoom.cpp
+    src/frontend/sucursales/pantallaarbolavl.cpp
+    src/frontend/sucursales/pantallaarbolb.cpp
+    src/frontend/sucursales/pantallaarbolbmas.cpp
+    src/frontend/sucursales/graphicsviewzoom.cpp
+
     src/frontend/pantallamain.cpp
-    src/frontend/controladornegocio.cpp
     src/frontend/pantallagestion.cpp
     src/frontend/pantallasucursal.cpp
+    src/frontend/pantallasistema.cpp
 
 )
 
 set(FRONTEND_HEADERS
 
     include/frontend/mainwindow.h
-    include/frontend/pantallaprincipal.h
-    include/frontend/pantallaagregar.h
-    include/frontend/controlador.h
-    include/frontend/pantallabuscarporcategoria.h
-    include/frontend/pantallabuscarpornombre.h
-    include/frontend/pantallabuscarrango.h
-    include/frontend/pantallalistarnombre.h
-    include/frontend/pantallaeliminarproducto.h
+    include/frontend/sucursales/pantallaprincipal.h
+    include/frontend/sucursales/pantallaagregar.h
+    include/frontend/sucursales/pantallabuscarporcategoria.h
+    include/frontend/sucursales/pantallabuscarpornombre.h
+    include/frontend/sucursales/pantallabuscarrango.h
+    include/frontend/sucursales/pantallalistarnombre.h
+    include/frontend/sucursales/pantallaeliminarproducto.h
 
-    include/frontend/pantallaverarboles.h
-    include/frontend/graphicsviewzoom.h
+    include/frontend/sucursales/pantallaverarboles.h
+    include/frontend/sucursales/graphicsviewzoom.h
 
-    include/frontend/pantallaarbolavl.h
-    include/frontend/pantallaarbolb.h
-    include/frontend/pantallaarbolbmas.h
+    include/frontend/sucursales/pantallaarbolavl.h
+    include/frontend/sucursales/pantallaarbolb.h
+    include/frontend/sucursales/pantallaarbolbmas.h
+
     include/frontend/pantallamain.h
-    include/frontend/controladornegocio.h
     include/frontend/pantallasucursal.h
     include/frontend/pantallagestion.h
+    include/frontend/pantallasistema.h
 )
+
+set(CONTROLADORES_SOURCES
+
+    src/controladores/controlador.cpp
+    src/controladores/controladornegocio.cpp
+    src/controladores/controladorsucursal.cpp
+)
+
+set(CONTROLADORES_HEADERS
+    include/controladores/controlador.h
+    include/controladores/controladornegocio.h
+    include/controladores/controladorsucursal.h
+)
+
 
 
 set(UI_FILES
 
     ui/mainwindow.ui
-    ui/pantallaprincipal.ui
-    ui/pantallaagregar.ui
-    ui/pantallabuscarporcategoria.ui
-    ui/pantallabuscarpornombre.ui
-    ui/pantallabuscarrango.ui
-    ui/pantallalistarnombre.ui
-    ui/pantallaeliminarproducto.ui
+    ui/sucursales/pantallaprincipal.ui
+    ui/sucursales/pantallaagregar.ui
+    ui/sucursales/pantallabuscarporcategoria.ui
+    ui/sucursales/pantallabuscarpornombre.ui
+    ui/sucursales/pantallabuscarrango.ui
+    ui/sucursales/pantallalistarnombre.ui
+    ui/sucursales/pantallaeliminarproducto.ui
 
-    ui/pantallaverarboles.ui
+    ui/sucursales/pantallaverarboles.ui
 
-    ui/pantallaarbolavl.ui
-    ui/pantallaarbolb.ui
-    ui/pantallaarbolbmas.ui
+    ui/sucursales/pantallaarbolavl.ui
+    ui/sucursales/pantallaarbolb.ui
+    ui/sucursales/pantallaarbolbmas.ui
+
     ui/pantallamain.ui
     ui/pantallagestion.ui
     ui/pantallasucursal.ui
+    ui/pantallasistema.ui
 
 )
 
@@ -130,6 +149,8 @@ set(EXCEPTIONS_HEADERS
 
 qt_add_executable(ProyectoNo2-EDD
     WIN32 MACOSX_BUNDLE
+    ${CONTROLADORES_SOURCES}
+    ${CONTROLADORES_HEADERS}
     ${FRONTEND_SOURCES}
     ${FRONTEND_HEADERS}
     ${BACKEND_SOURCES}
@@ -141,9 +162,12 @@ qt_add_executable(ProyectoNo2-EDD
 )
 
 target_include_directories(ProyectoNo2-EDD PRIVATE
-    include/frontend
-    include/backend
-    include/exceptions
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/frontend
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/backend
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/frontend/sucursales
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/exceptions
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/controladores
+    ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 

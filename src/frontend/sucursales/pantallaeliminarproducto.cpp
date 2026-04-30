@@ -1,5 +1,6 @@
 #include "pantallaeliminarproducto.h"
 #include "ui_pantallaeliminarproducto.h"
+
 #include<QMessageBox>
 
 PantallaEliminarProducto::PantallaEliminarProducto(QWidget *parent)

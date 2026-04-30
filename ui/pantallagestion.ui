@@ -14,6 +14,18 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>2</number>
+   </property>
+   <property name="topMargin">
+    <number>2</number>
+   </property>
+   <property name="rightMargin">
+    <number>2</number>
+   </property>
+   <property name="bottomMargin">
+    <number>2</number>
+   </property>
    <item>
     <widget class="QWidget" name="navBar" native="true">
      <property name="minimumSize">
@@ -27,7 +39,7 @@
     background: qlineargradient(
         x1:0, y1:0, x2:1, y2:0,
         stop:0 rgb(33, 129, 61),
-        stop:1 rgb(248, 200, 141)
+        stop:1 rgb(198, 70, 0)
     );
     border-bottom: 1px solid #d6e2d9;
 }
@@ -44,7 +56,7 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <widget class="QWidget" name="widgetPersona" native="true">
+          <widget class="QPushButton" name="btnHome">
            <property name="minimumSize">
             <size>
              <width>60</width>
@@ -52,12 +64,30 @@
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">QWidget#widgetPersona { 
+            <string notr="true">QPushButton#btnHome {
+    background-color: transparent; 
+    border: 2px solid transparent; 
+    border-radius: 8px;            
+    color: white;                 
+    padding: 5px;
+    border-image: url(:/assets/fondo/homeIcon.png) 0 0 0 0 stretch stretch;         
+    qproperty-iconSize: 24px 24px;
+    
+    transition: background-color 0.3s ease;
+}
 
-	border-image: url(:/assets/fondo/usericon.png) 0 0 0 0 stretch stretch; 
-                        
+QPushButton#btnHome:hover {
+    background-color: rgba(255, 255, 255, 0.1); /
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
 
-} </string>
+QPushButton#btnHome:pressed {
+    background-color: rgba(255, 255, 255, 0.2); 
+    border: 1px solid #ffffff;
+}</string>
+           </property>
+           <property name="text">
+            <string/>
            </property>
           </widget>
          </item>
@@ -91,7 +121,7 @@
             <string>Tienda</string>
            </property>
            <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignCenter</set>
+            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
            </property>
           </widget>
          </item>
@@ -141,7 +171,7 @@
           <widget class="QLabel" name="labelTasks">
            <property name="minimumSize">
             <size>
-             <width>300</width>
+             <width>320</width>
              <height>60</height>
             </size>
            </property>
@@ -183,6 +213,88 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnTienda">
+           <property name="minimumSize">
+            <size>
+             <width>60</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton#btnTienda {
+    background-color: transparent; 
+    border: 2px solid transparent; 
+    border-radius: 8px;            
+    color: white;                 
+    padding: 5px;
+    border-image: url(:/assets/fondo/ShopIcon.png) 0 0 0 0 stretch stretch;         
+    qproperty-iconSize: 24px 24px;
+    
+    transition: background-color 0.3s ease;
+}
+
+QPushButton#btnTienda:hover {
+    background-color: rgba(255, 255, 255, 0.1); /
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+QPushButton#btnTienda:pressed {
+    background-color: rgba(255, 255, 255, 0.2); 
+    border: 1px solid #ffffff;
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="widget_3" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>30</width>
+             <height>0</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnProductos">
+           <property name="minimumSize">
+            <size>
+             <width>60</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton#btnProductos {
+    background-color: transparent; 
+    border: 2px solid transparent; 
+    border-radius: 8px;            
+    color: white;                 
+    padding: 5px;
+    border-image: url(:/assets/fondo/ProductIcon.png) 0 0 0 0 stretch stretch;         
+    qproperty-iconSize: 24px 24px;
+    
+    transition: background-color 0.3s ease;
+}
+
+QPushButton#btnProductos:hover {
+    background-color: rgba(255, 255, 255, 0.1); /
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+QPushButton#btnProductos:pressed {
+    background-color: rgba(255, 255, 255, 0.2); 
+    border: 1px solid #ffffff;
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>

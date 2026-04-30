@@ -1,10 +1,9 @@
 #include "pantallaarbolavl.h"
-
+#include "graphicsviewzoom.h"
+#include "ui_pantallaarbolavl.h"
 
 /*Includes de la clase*/
 #include "nodoavl.h"
-#include "ui_pantallaarbolavl.h"
-#include"graphicsviewzoom.h"
 
 #include <QFileDialog>
 #include <QProcess>

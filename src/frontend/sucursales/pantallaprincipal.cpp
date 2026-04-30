@@ -1,5 +1,5 @@
 #include "pantallaprincipal.h"
-#include "ui/ui_pantallaprincipal.h"
+#include "ui_pantallaprincipal.h"
 #include<QFileDialog>
 #include<QFile>
 #include<QTextStream>

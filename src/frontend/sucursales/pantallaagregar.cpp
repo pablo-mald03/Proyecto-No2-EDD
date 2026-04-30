@@ -1,3 +1,4 @@
+
 #include "pantallaagregar.h"
 #include "ui_pantallaagregar.h"
 #include<QMessageBox>

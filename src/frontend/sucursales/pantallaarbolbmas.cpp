@@ -1,9 +1,9 @@
-#include "pantallaarbolb.h"
 
-/*Includes de la clase*/
-#include"nodob.h"
-#include "ui_pantallaarbolb.h"
+#include "pantallaarbolbmas.h"
+#include "graphicsviewzoom.h"
+#include "ui_pantallaarbolbmas.h"
 
+#include"nodobmas.h"
 #include <QFileDialog>
 #include <QProcess>
 #include <QFile>
@@ -13,9 +13,10 @@
 #include <QDesktopServices>
 #include <QUrl>
 
-PantallaArbolB::PantallaArbolB(QWidget *parent)
+
+PantallaArbolBMas::PantallaArbolBMas(QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::PantallaArbolB)
+    , ui(new Ui::PantallaArbolBMas)
 {
     ui->setupUi(this);
 
@@ -30,17 +31,17 @@ PantallaArbolB::PantallaArbolB(QWidget *parent)
 }
 
 /*Destructor*/
-PantallaArbolB::~PantallaArbolB()
+PantallaArbolBMas::~PantallaArbolBMas()
 {
     delete ui;
 }
 
 /*Metodo que permite generar el graphviz del arbol B*/
-void PantallaArbolB::generarGraphviz(std::string graph){
+void PantallaArbolBMas::generarGraphviz(std::string graph){
 
     QString rutaImagen = QFileDialog::getSaveFileName(
         this,
-        "Guardar arbol B como imagen",
+        "Guardar arbol como imagen",
         "",
         "Imagen PNG (*.png)"
         );
@@ -74,7 +75,6 @@ void PantallaArbolB::generarGraphviz(std::string graph){
     QStringList argumentos;
     argumentos << "-Tpng" << dotPath << "-o" << rutaImagen;
 
-
     proceso.start(programa, argumentos);
 
     if (!proceso.waitForFinished()) {
@@ -89,27 +89,30 @@ void PantallaArbolB::generarGraphviz(std::string graph){
                                      info.baseName() + ".png\n" +
                                      info.baseName() + ".dot");
         QDesktopServices::openUrl(QUrl::fromLocalFile(rutaImagen));
+
     } else {
-
-        QString errorDetalle = proceso.readAllStandardError();
-        QMessageBox::critical(this, "Error", "No se creo la imagen.\n" + errorDetalle);
+        QString errorGraphviz = proceso.readAllStandardError();
+        QMessageBox::critical(this, "Error", "Fallo la generacion de la imagen.\nDetalle:\n" + errorGraphviz);
     }
-
 }
 
 /*Metodo delegado para poder cargar la vista al momento de moverse*/
-void PantallaArbolB::setArbol(NodoB * _arbol){
-    this->raiz = _arbol;
+void PantallaArbolBMas::setArbol(NodoBMas * _raiz){
+    this->raiz = _raiz;
     actualizarVista();
 }
 
 /*Metodo que permite actualizar la vista*/
-void PantallaArbolB::actualizarVista(){
+void PantallaArbolBMas::actualizarVista(){
 
     this->scene->clear();
 
     if (this->raiz != nullptr) {
-        dibujarArbolB(this->raiz, 0, 0);
+
+
+        dibujarArbolBMas(this->raiz, 0, 0);
+
+        dibujarConexionesHojas(this->raiz);
     }
 
     QRectF bounds = scene->itemsBoundingRect();
@@ -120,21 +123,25 @@ void PantallaArbolB::actualizarVista(){
     }
 }
 
-/*Metodo que permite dibujar a los nodos*/
-int PantallaArbolB::dibujarNodoB(int x, int y, NodoB* nodo) {
 
-    int paddingX = 12;
-    int paddingY = 8;
+/*Metodo que permite dibujar a los nodos*/
+int PantallaArbolBMas::dibujarNodoBMas(int x, int y, NodoBMas* nodo) {
+
+    int paddingX = 10;
+    int paddingY = 6;
+    int separacion = 5;
     int currentX = x;
     int alturaMax = 0;
 
-    // Guardaremos los anchos de cada celda para dibujar las líneas divisorias después
-    std::vector<int> anchosCeldas;
+    std::vector<QGraphicsTextItem*> textos;
 
     int nClaves = nodo->getClaves().getLongitud();
+
     for (int i = 0; i < nClaves; i++) {
-        Producto product = nodo->getClaves().getValor(i);
-        QString etiqueta = QString::fromStdString(product.getFechaExpiracion());
+
+        Producto p = nodo->getClaves().getValor(i);
+
+        QString etiqueta = QString::fromStdString(p.getCodigoBarra());
 
         QGraphicsTextItem* text = scene->addText(etiqueta);
         text->setDefaultTextColor(Qt::white);
@@ -146,33 +153,32 @@ int PantallaArbolB::dibujarNodoB(int x, int y, NodoB* nodo) {
         alturaMax = std::max(alturaMax, alto);
         text->setPos(currentX + paddingX, y + paddingY);
 
-        anchosCeldas.push_back(ancho);
-        currentX += ancho;
+        textos.push_back(text);
+        currentX += ancho + separacion;
     }
 
-    int anchoTotal = currentX - x;
+    int anchoTotal = currentX - x - separacion;
 
-    scene->addRect(x, y, anchoTotal, alturaMax, QPen(Qt::white), Qt::NoBrush);
+    QPen pen(nodo->getEsHoja() ? Qt::green : Qt::white);
+    this->scene->addRect(x, y, anchoTotal, alturaMax, pen);
 
     int lineaX = x;
-    for (int i = 0; i < (int)anchosCeldas.size() - 1; i++) {
-        lineaX += anchosCeldas[i];
-        scene->addLine(lineaX, y, lineaX, y + alturaMax, QPen(Qt::white));
+    for (int i = 0; i < (int)textos.size() - 1; i++) {
+        lineaX += textos[i]->boundingRect().width() + paddingX * 2 + separacion;
+        this->scene->addLine(lineaX - (separacion/2), y, lineaX - (separacion/2), y + alturaMax, QPen(Qt::white));
     }
 
     return anchoTotal;
 }
-
 /*Metodo que permite dibujar las lineas*/
-void PantallaArbolB::dibujarLineaB(int x1, int y1, int x2, int y2) {
+void PantallaArbolBMas::dibujarLineaBMas(int x1, int y1, int x2, int y2) {
     QPen pen(Qt::white);
     pen.setWidth(1);
     this->scene->addLine(x1, y1, x2, y2, pen);
 }
 
-/*Metodo que permite dibujar el arbol B*/
-void PantallaArbolB::dibujarArbolB(NodoB* nodo, int x, int y) {
-
+/*Metodo para poder dibujar el arbol B+*/
+void PantallaArbolBMas::dibujarArbolBMas(NodoBMas* nodo, int x, int y) {
     if (!nodo){
         return;
     }
@@ -182,6 +188,9 @@ void PantallaArbolB::dibujarArbolB(NodoB* nodo, int x, int y) {
 
     int xNodo = x + (anchoSubarbol / 2) - (anchoNodo / 2);
 
+    posicionesX[nodo] = xNodo;
+    posicionesY[nodo] = y;
+
     std::vector<int> puntosDeUnion;
     puntosDeUnion.push_back(xNodo);
 
@@ -190,7 +199,9 @@ void PantallaArbolB::dibujarArbolB(NodoB* nodo, int x, int y) {
 
     for (int i = 0; i < nClaves; i++) {
         Producto p = nodo->getClaves().getValor(i);
-        QGraphicsTextItem* text = scene->addText(QString::fromStdString(p.getFechaExpiracion()));
+
+
+        QGraphicsTextItem* text = scene->addText(QString::fromStdString(p.getCategoria()));
         text->setDefaultTextColor(Qt::white);
         text->setPos(currX + paddingX, y + paddingY);
 
@@ -201,35 +212,69 @@ void PantallaArbolB::dibujarArbolB(NodoB* nodo, int x, int y) {
         puntosDeUnion.push_back(currX);
     }
 
-    scene->addRect(xNodo, y, anchoNodo, alturaMax, QPen(Qt::white), Qt::NoBrush);
+    QPen penNodo(nodo->getEsHoja() ? Qt::green : Qt::white);
+    scene->addRect(xNodo, y, anchoNodo, alturaMax, penNodo, Qt::NoBrush);
+
+
     for(size_t i = 1; i < puntosDeUnion.size() - 1; i++) {
         scene->addLine(puntosDeUnion[i], y, puntosDeUnion[i], y + alturaMax, QPen(Qt::white));
     }
 
     if (nodo->getEsHoja()) return;
 
-
-    int yHijos = y + 420;
+    int yHijos = y + 300;
     int nHijos = nodo->getHijos().getLongitud();
     int xHijoActual = x;
 
     for (int i = 0; i < nHijos; i++) {
-        NodoB* hijo = nodo->getHijos().getValor(i);
+        NodoBMas* hijo = nodo->getHijos().getValor(i);
         int anchoSubHijo = getAnchoTotal(hijo);
         int xCentroHijo = xHijoActual + (anchoSubHijo / 2);
 
-        dibujarLineaB(puntosDeUnion[i], y + alturaMax, xCentroHijo, yHijos);
+        dibujarLineaBMas(puntosDeUnion[i], y + alturaMax, xCentroHijo, yHijos);
 
-        dibujarArbolB(hijo, xHijoActual, yHijos);
+        dibujarArbolBMas(hijo, xHijoActual, yHijos);
         xHijoActual += anchoSubHijo;
     }
 }
 
+
+/* Método que recorre la lista enlazada y dibuja la flecha verde */
+void PantallaArbolBMas::dibujarConexionesHojas(NodoBMas* nodoRaiz) {
+    if (!nodoRaiz) return;
+
+    NodoBMas* actual = nodoRaiz;
+    while (!actual->getEsHoja()) {
+        actual = actual->getHijos().getValor(0); // Caer a la primera hoja
+    }
+
+    QPen penVerde(Qt::green);
+    penVerde.setWidth(2);
+
+    while (actual != nullptr && actual->getSiguiente() != nullptr) {
+        NodoBMas* siguiente = actual->getSiguiente();
+
+        int xInicio = posicionesX[actual] + getAnchoNodoReal(actual);
+        int yInicio = posicionesY[actual] + 15;
+
+        int xFin = posicionesX[siguiente];
+        int yFin = posicionesY[siguiente] + 15;
+
+        this->scene->addLine(xInicio, yInicio, xFin, yFin, penVerde);
+
+        this->scene->addLine(xFin - 5, yFin - 5, xFin, yFin, penVerde);
+        this->scene->addLine(xFin - 5, yFin + 5, xFin, yFin, penVerde);
+
+        actual = siguiente;
+    }
+}
+
 /*Metodo que permite calcular el ancho del nodo real*/
-int PantallaArbolB::getAnchoNodoReal(NodoB* nodo) {
+int PantallaArbolBMas::getAnchoNodoReal(NodoBMas* nodo) {
     if (!nodo) return 0;
     int paddingX = 12;
     int anchoTotal = 0;
+
     int nClaves = nodo->getClaves().getLongitud();
 
     for (int i = 0; i < nClaves; i++) {
@@ -242,7 +287,7 @@ int PantallaArbolB::getAnchoNodoReal(NodoB* nodo) {
 
 
 /*Metodo que permite obtener el ancho total de la lista para poder generar una mejor distribucion*/
-int PantallaArbolB::getAnchoTotal(NodoB* nodo) {
+int PantallaArbolBMas::getAnchoTotal(NodoBMas* nodo) {
     if (!nodo) {
         return 0;
     }
@@ -259,9 +304,10 @@ int PantallaArbolB::getAnchoTotal(NodoB* nodo) {
 }
 
 
-/*Metodo que permite exportar el arbol B*/
-void PantallaArbolB::on_btnExportar_clicked()
+
+/*Metodo que permite exportar el arbol B+*/
+void PantallaArbolBMas::on_btnExportar_clicked()
 {
-    emit solicitarGraphvizB();
+    emit solicitarGraphvizBMas();
 }
 

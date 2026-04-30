@@ -3,5 +3,9 @@
         <file>assets/fondo/fondooverlay.png</file>
         <file>assets/fondo/usericon.png</file>
         <file>assets/fondo/tasksicon.png</file>
+        <file>assets/fondo/ShopIcon.png</file>
+        <file>assets/fondo/ProductIcon.png</file>
+        <file>assets/fondo/GrafosBackground.png</file>
+        <file>assets/fondo/homeIcon.png</file>
     </qresource>
 </RCC>
