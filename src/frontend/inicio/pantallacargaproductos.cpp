@@ -15,6 +15,7 @@ PantallaCargaProductos::PantallaCargaProductos(QWidget *parent)
                         "} ");
 }
 
+/*Destructor*/
 PantallaCargaProductos::~PantallaCargaProductos()
 {
     delete ui;

@@ -15,6 +15,7 @@ PantallaCargaSucursales::PantallaCargaSucursales(QWidget *parent)
                         "} ");
 }
 
+/*Destructor*/
 PantallaCargaSucursales::~PantallaCargaSucursales()
 {
     delete ui;
