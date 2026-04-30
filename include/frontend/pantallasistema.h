@@ -1,6 +1,14 @@
 #ifndef PANTALLASISTEMA_H
 #define PANTALLASISTEMA_H
 
+#include "pantallaagregarsucursal.h"
+#include "pantallacargaenvios.h"
+#include "pantallacargaproductos.h"
+#include "pantallacargasucursales.h"
+#include "pantallaeliminarsucursal.h"
+#include "pantallamodificarsucursal.h"
+#include "pantallaverenvios.h"
+#include "pantallaversucursales.h"
 #include <QWidget>
 
 namespace Ui {
@@ -38,6 +46,18 @@ private slots:
 
 private:
     Ui::PantallaSistema *ui;
+
+    /*Referencias a las diferentes pantallas de la aplicacion*/
+    PantallaCargaEnvios * pantallaCargadoEnvios = nullptr;
+    PantallaCargaSucursales * pantallaCargadoSucursales = nullptr;
+    PantallaCargaProductos * pantallaCargadoProductos = nullptr;
+
+    PantallaAgregarSucursal * pantallaAgregadoSucursal = nullptr;
+    PantallaModificarSucursal * pantallaModificadoSucursal = nullptr;
+    PantallaEliminarSucursal * pantallaEliminadoSucursal = nullptr;
+    PantallaVerSucursales * pantallaVistaSucursales = nullptr;
+    PantallaVerEnvios * pantallaEnvios = nullptr;
+
 
     /*Metodos que permiten irse comunicando con la UI*/
     void mostrarCargaSucursales();

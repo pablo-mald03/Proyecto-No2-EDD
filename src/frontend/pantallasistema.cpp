@@ -7,6 +7,11 @@ PantallaSistema::PantallaSistema(QWidget *parent)
     , ui(new Ui::PantallaSistema)
 {
     ui->setupUi(this);
+
+    this->pantallaCargadoSucursales = new PantallaCargaSucursales();
+    this->ui->stackedWidget->addWidget(this->pantallaCargadoSucursales);
+
+
 }
 
 /*Metodos para poder comunicarse desde fuera con la pantalla*/
@@ -19,6 +24,7 @@ void PantallaSistema::setPantallanInicio(){
 /*Metodo que permite mostrar la pantalla de carga de csv de sucursales*/
 void PantallaSistema::mostrarCargaSucursales(){
 
+    this->ui->stackedWidget->setCurrentWidget(this->pantallaCargadoSucursales);
     this->ui->labelTasks->setText("Cargar Sucursales");
 }
 
@@ -74,7 +80,7 @@ PantallaSistema::~PantallaSistema()
 /*Metodo para poder cargar el csv de las sucursales*/
 void PantallaSistema::on_btnCargaSucursales_clicked()
 {
-
+    this->mostrarCargaSucursales();
 }
 
 
