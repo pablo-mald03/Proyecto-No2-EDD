@@ -4,7 +4,6 @@
 #include <QMainWindow>
 
 /*Region de importacion de la UI*/
-#include "controladornegocio.h"
 #include "pantallagestion.h"
 #include "pantallasistema.h"
 
@@ -32,10 +31,6 @@ private:
 
     PantallaGestion *pantallaGestion = nullptr;
 
-    /*Punteros de pantallas en la UI*/
-
-    /*Controlador*/
-    ControladorNegocio * controladorGeneral;
 
     /*Metodos para navegar por la UI*/
     void mostrarInicio();

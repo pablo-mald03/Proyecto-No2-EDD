@@ -8,32 +8,20 @@ PantallaSistema::PantallaSistema(QWidget *parent)
 {
     ui->setupUi(this);
 
+    this->controladorGeneral = new ControladorNegocio();
+
     this->pantallaCargadoSucursales = new PantallaCargaSucursales();
     this->ui->stackedWidget->addWidget(this->pantallaCargadoSucursales);
 
 
-    connect( this->pantallaCargadoSucursales, &PantallaCargaSucursales::csvSucursalesCargado,this,&PantallaSistema::recibirCsvSucursales);
-    connect( this->pantallaCargadoSucursales, &PantallaCargaSucursales::csvConexionesCargado,this, &PantallaSistema::recibirCsvConexiones);
+    connect( this->pantallaCargadoSucursales, &PantallaCargaSucursales::csvSucursalesCargado,this->controladorGeneral,&ControladorNegocio::procesarCsvSucursal);
+    connect( this->pantallaCargadoSucursales, &PantallaCargaSucursales::csvConexionesCargado,this->controladorGeneral, &ControladorNegocio::procesarCsvConexion);
 
-
-    connect( this,&PantallaSistema::agregarLogGrafo, this->pantallaCargadoSucursales, &PantallaCargaSucursales::appendGrafoLog);
-    connect( this, &PantallaSistema::agregarLogCarga, this->pantallaCargadoSucursales, &PantallaCargaSucursales::appendLogCarga);
-    connect( this, &PantallaSistema::agregarTiempo, this->pantallaCargadoSucursales, &PantallaCargaSucursales::mostrarTiempo);
-
+    connect( this->controladorGeneral,&ControladorNegocio::logGrafoSucursales, this->pantallaCargadoSucursales, &PantallaCargaSucursales::appendGrafoLog);
+    connect( this->controladorGeneral, &ControladorNegocio::logCargaCsvSucursales, this->pantallaCargadoSucursales, &PantallaCargaSucursales::appendLogCarga);
+    connect( this->controladorGeneral, &ControladorNegocio::tiempoProcesoSucursales, this->pantallaCargadoSucursales, &PantallaCargaSucursales::mostrarTiempo);
 
 }
-
-
-/*-------Apartado de slots que sirven para poder enviar datos al controlador de la pantalla de carga de sucursales----------*/
-void PantallaSistema::recibirCsvSucursales(const std::vector<std::vector<QString>> & data){
-    emit csvSucursalesCargado(data);
-}
-
-
-void PantallaSistema::recibirCsvConexiones(const std::vector<std::vector<QString>> &data){
-    emit csvConexionesCargado(data);
-}
-
 
 
 /*-------Fin del Apartado de slots que sirven para poder enviar datos al controlador de la pantalla de carga de sucursales----------*/
@@ -55,6 +43,21 @@ void PantallaSistema::mostrarCargaSucursales(){
 /*Metodo que permite mostrar la pantalla de carga de csv de envios*/
 void PantallaSistema::mostrarCargaEnvios(){
 
+    if (!this->pantallaCargadoEnvios) {
+
+        this->pantallaCargadoEnvios = new PantallaCargaEnvios(this);
+
+        this->ui->stackedWidget->addWidget(this->pantallaCargadoEnvios);
+
+        //Se conectan las signals para poder interactuar con la pantalla
+        connect( this->pantallaCargadoEnvios, &PantallaCargaEnvios::csvEnviosCargado,this->controladorGeneral,&ControladorNegocio::procesarCsvEnvios);
+
+        connect( this->controladorGeneral,&ControladorNegocio::logGrafoEnvios, this->pantallaCargadoEnvios, &PantallaCargaEnvios::appendGrafoLog);
+        connect( this->controladorGeneral, &ControladorNegocio::logCargaCsvEnvios, this->pantallaCargadoEnvios, &PantallaCargaEnvios::appendLogCarga);
+        connect( this->controladorGeneral, &ControladorNegocio::tiempoProcesoEnvios, this->pantallaCargadoEnvios, &PantallaCargaEnvios::mostrarTiempo);
+    }
+
+    this->ui->stackedWidget->setCurrentWidget(this->pantallaCargadoEnvios);
     this->ui->labelTasks->setText("Cargar Envios");
 }
 
@@ -107,45 +110,47 @@ void PantallaSistema::on_btnCargaSucursales_clicked()
     this->mostrarCargaSucursales();
 }
 
-
+/*Metodo que permite mostrar la carga de envios*/
 void PantallaSistema::on_btnCargaEnvios_clicked()
 {
-
+    this->mostrarCargaEnvios();
 }
 
-
+/*Metodo que permite mostrar la carga de productos asignados a una sucursal*/
 void PantallaSistema::on_btnCargarProductos_clicked()
 {
-
+    this->mostrarCargaProductos();
 }
 
-
+/*Metodo que permite mostrar la creacion de nuevas sucursales*/
 void PantallaSistema::on_btnAgregarSucursal_clicked()
 {
-
+    this->mostrarAgregarSucursal();
 }
 
-
+/*Metodo que permite modificar una sucursal*/
 void PantallaSistema::on_btnModificarSucursal_clicked()
 {
+    this->mostrarModificarSucursal();
 
 }
 
-
+/*Metodo que permite eliminar una sucursal*/
 void PantallaSistema::on_btnEliminarSucursal_clicked()
 {
-
+    this->mostrarEliminarSucursal();
 }
 
-
+/*Metodo que permite ver las sucursales*/
 void PantallaSistema::on_btnVerSucursales_clicked()
 {
+    this->mostrarVerSucursales();
 
 }
 
-
+/*Metodo que permite ver el estado de envios por sucursales*/
 void PantallaSistema::on_btnVerEnvios_clicked()
 {
-
+    this->mostrarVerEnvios();
 }
 

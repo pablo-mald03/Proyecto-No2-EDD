@@ -23,6 +23,7 @@ private:
     std::vector<std::vector<QString>> parsearCSV(const QString &contenido);
 
 public slots:
+    /*slots de la carga de sucursales*/
     void appendLogCarga(QString mensaje, QString color);
     void appendGrafoLog(QString mensaje, QString color);
     void mostrarTiempo(int estructura, double milisegundos);

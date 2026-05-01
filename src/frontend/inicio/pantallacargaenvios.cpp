@@ -1,5 +1,9 @@
 #include "pantallacargaenvios.h"
 #include "ui_pantallacargaenvios.h"
+#include<QFileDialog>
+#include<QFile>
+#include<QTextStream>
+#include<QMessageBox>
 
 PantallaCargaEnvios::PantallaCargaEnvios(QWidget *parent)
     : QWidget(parent)
@@ -67,6 +71,15 @@ std::vector<std::vector<QString>> PantallaCargaEnvios::parsearCSV(const QString 
     return matrizDatos;
 }
 
+/*Metodo que permite limpiar los datos por cada vez que se vuelva a cargar un nuevo csv*/
+void PantallaCargaEnvios::limpiarLogs(){
+
+    this->ui->labelTiempoGrafo->setText("Tiempo total: 0 ms");
+
+    this->ui->textEditCsv->clear();
+    this->ui->textGrafo->clear();
+}
+
 
 /*Destructor*/
 PantallaCargaEnvios::~PantallaCargaEnvios()
@@ -74,8 +87,28 @@ PantallaCargaEnvios::~PantallaCargaEnvios()
     delete ui;
 }
 
+/*Metodo que permite poder cargar el csv de envios*/
 void PantallaCargaEnvios::on_btnCargar_clicked()
 {
 
+    QString fileName = QFileDialog::getOpenFileName(this, "Seleccionar CSV", "", "CSV Files (*.csv);;All Files (*)");
+
+    if (fileName.isEmpty()) return;
+
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        ui->textEditCsv->append("<span style='color:red;'>Error al abrir archivo</span>");
+        return;
+    }
+
+    QString contenido = QTextStream(&file).readAll();
+    file.close();
+
+    ui->textEditCsv->clear();
+    this->limpiarLogs();
+
+    std::vector<std::vector<QString>> datos = parsearCSV(contenido);
+
+    emit csvEnviosCargado(datos);
 }
 

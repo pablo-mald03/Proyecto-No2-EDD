@@ -1,6 +1,7 @@
 #ifndef PANTALLASISTEMA_H
 #define PANTALLASISTEMA_H
 
+#include "controladornegocio.h"
 #include "pantallaagregarsucursal.h"
 #include "pantallacargaenvios.h"
 #include "pantallacargaproductos.h"
@@ -47,6 +48,9 @@ private slots:
 private:
     Ui::PantallaSistema *ui;
 
+    /*Controlador*/
+    ControladorNegocio * controladorGeneral;
+
     /*Referencias a las diferentes pantallas de la aplicacion*/
     PantallaCargaEnvios * pantallaCargadoEnvios = nullptr;
     PantallaCargaSucursales * pantallaCargadoSucursales = nullptr;
@@ -69,18 +73,23 @@ private:
     void mostrarVerSucursales();
     void mostrarVerEnvios();
 
-public slots:
-    void recibirCsvSucursales(const std::vector<std::vector<QString>> & data);
-    void recibirCsvConexiones(const std::vector<std::vector<QString>> &data);
-
 
 signals:
     void csvSucursalesCargado(const std::vector<std::vector<QString>> & data);
     void csvConexionesCargado(const std::vector<std::vector<QString>> &data);
 
-    void agregarLogGrafo(QString mensaje, QString color);
-    void agregarLogCarga(QString mensaje, QString color);
-    void agregarTiempo(int estructura, double milisegundos);
+    void agregarLogGrafoSucursal(QString mensaje, QString color);
+    void agregarLogCargaSucursal(QString mensaje, QString color);
+    void agregarTiempoSucursal(int estructura, double milisegundos);
+
+    /*Signals de carga de envios*/
+    void csvEnviosCargado(const std::vector<std::vector<QString>> &data);
+
+    void agregarLogGrafoEnvios(QString mensaje, QString color);
+    void agregarLogCargaEnvios(QString mensaje, QString color);
+    void agregarTiempoEnvios(int estructura, double milisegundos);
+
+
 };
 
 #endif // PANTALLASISTEMA_H

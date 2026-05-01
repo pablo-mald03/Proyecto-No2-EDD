@@ -33,13 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->pantallaInicio = new PantallaSistema(this);
 
-    this->controladorGeneral= new ControladorNegocio();
-
     this->ui->stackedWidget->addWidget(this->pantallaInicio);
-
-
-    connect(this->pantallaInicio, &PantallaSistema::csvSucursalesCargado, this->controladorGeneral, &ControladorNegocio::procesarCsvSucursal);
-    connect(this->pantallaInicio, &PantallaSistema::csvConexionesCargado, this->controladorGeneral, &ControladorNegocio::procesarCsvConexion);
 
    /* connect(this->controladorCrud, &Controlador::logArbolAvl,this->inicio, &PantallaPrincipal::appendAvlLog);
 
@@ -53,10 +47,6 @@ void MainWindow::mostrarInicio(){
 
     this->ui->stackedWidget->setCurrentWidget(this->pantallaInicio);
     this->pantallaInicio->setPantallanInicio();
-   /*this->ui->stackedWidget->setCurrentWidget(this->pantallaInicio);
-    this->controladorGeneral->evaluarEstadoCerrarCsv();
-    this->controladorGeneral->verificarRefrescado();
-    this->controladorGeneral->actualizarDatosIngresados();*/
 }
 
 /*Metodo utilizado para poder navegar a la ventana de buscar por rango*/

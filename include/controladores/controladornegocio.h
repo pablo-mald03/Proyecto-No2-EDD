@@ -15,6 +15,8 @@ public slots:
     void procesarCsvSucursal(const std::vector<std::vector<QString>> & data);
     void procesarCsvConexion(const std::vector<std::vector<QString>> & data);
 
+    void procesarCsvEnvios(const std::vector<std::vector<QString>> & data);
+
 signals:
 
     /*Metodos que permiten agregar enviar informacion sobre los logs de los datos de las sucursales*/
@@ -23,6 +25,14 @@ signals:
 
     /*Signal que permite setear el tiempo en el label*/
     void tiempoProcesoSucursales(int estructura, double milisegundos);
+
+
+    /*Metodos que permiten agregar enviar informacion sobre los logs de los datos de los envios*/
+    void logGrafoEnvios(QString mensaje, QString color);
+    void logCargaCsvEnvios(QString mensaje, QString color);
+
+    /*Signal que permite setear el tiempo en el label*/
+    void tiempoProcesoEnvios(int estructura, double milisegundos);
 };
 
 #endif // CONTROLADORNEGOCIO_H
