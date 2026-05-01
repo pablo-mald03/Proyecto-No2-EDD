@@ -37,22 +37,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->ui->stackedWidget->addWidget(this->pantallaInicio);
 
-/*
-    connect(this->inicio, &PantallaPrincipal::csvCargado, this->controladorCrud, &Controlador::procesarCsv);
-    connect(this->controladorCrud, &Controlador::logArbolAvl,this->inicio, &PantallaPrincipal::appendAvlLog);
-    connect(this->controladorCrud, &Controlador::logArbolB,this->inicio, &PantallaPrincipal::appendBLog);
-    connect(this->controladorCrud, &Controlador::logArbolBMas,this->inicio, &PantallaPrincipal::appendBMasLog);
-    connect(this->controladorCrud, &Controlador::logLista,this->inicio, &PantallaPrincipal::appendListLog);
-    connect(this->controladorCrud, &Controlador::logCargaCsv,this->inicio, &PantallaPrincipal::appendLogCarga);
-    connect(this->controladorCrud, &Controlador::tiempoProceso, this->inicio, &PantallaPrincipal::mostrarTiempo);
-    connect(this->inicio, &PantallaPrincipal::solicitarLogErrores, this->controladorCrud, &Controlador::prepararLogParaDescarga);
-    connect(this->controladorCrud, &Controlador::logDescargar, this->inicio, &PantallaPrincipal::logListoParaDescargar);
-    connect(this->controladorCrud, &Controlador::evaluarErroresLog, this->inicio, &PantallaPrincipal::evaluarErrores);
-    connect(this->controladorCrud, &Controlador::evaluarCerrarCsv, this->inicio, &PantallaPrincipal::evaluarCierreCsv);
-    connect(this->controladorCrud, &Controlador::refrescarDatos, this->inicio, &PantallaPrincipal::refrescarPantallaCsv);
 
-    connect(this->inicio, &PantallaPrincipal::solicitarGuardarCsv,this->controladorCrud, &Controlador::guardarArchivoCsv);
-    connect(this->controladorCrud, &Controlador::contenidoCsvListo, this->inicio, &PantallaPrincipal::recibirGuardadoCsv);
+    connect(this->pantallaInicio, &PantallaSistema::csvSucursalesCargado, this->controladorGeneral, &ControladorNegocio::procesarCsvSucursal);
+    connect(this->pantallaInicio, &PantallaSistema::csvConexionesCargado, this->controladorGeneral, &ControladorNegocio::procesarCsvConexion);
+
+   /* connect(this->controladorCrud, &Controlador::logArbolAvl,this->inicio, &PantallaPrincipal::appendAvlLog);
 
     connect(this->inicio, &PantallaPrincipal::solicitarLimpieza,this->controladorCrud, &Controlador::limpiarDatos);
    */

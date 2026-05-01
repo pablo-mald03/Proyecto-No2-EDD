@@ -12,7 +12,31 @@ PantallaSistema::PantallaSistema(QWidget *parent)
     this->ui->stackedWidget->addWidget(this->pantallaCargadoSucursales);
 
 
+    connect( this->pantallaCargadoSucursales, &PantallaCargaSucursales::csvSucursalesCargado,this,&PantallaSistema::recibirCsvSucursales);
+    connect( this->pantallaCargadoSucursales, &PantallaCargaSucursales::csvConexionesCargado,this, &PantallaSistema::recibirCsvConexiones);
+
+
+    connect( this,&PantallaSistema::agregarLogGrafo, this->pantallaCargadoSucursales, &PantallaCargaSucursales::appendGrafoLog);
+    connect( this, &PantallaSistema::agregarLogCarga, this->pantallaCargadoSucursales, &PantallaCargaSucursales::appendLogCarga);
+    connect( this, &PantallaSistema::agregarTiempo, this->pantallaCargadoSucursales, &PantallaCargaSucursales::mostrarTiempo);
+
+
 }
+
+
+/*-------Apartado de slots que sirven para poder enviar datos al controlador de la pantalla de carga de sucursales----------*/
+void PantallaSistema::recibirCsvSucursales(const std::vector<std::vector<QString>> & data){
+    emit csvSucursalesCargado(data);
+}
+
+
+void PantallaSistema::recibirCsvConexiones(const std::vector<std::vector<QString>> &data){
+    emit csvConexionesCargado(data);
+}
+
+
+
+/*-------Fin del Apartado de slots que sirven para poder enviar datos al controlador de la pantalla de carga de sucursales----------*/
 
 /*Metodos para poder comunicarse desde fuera con la pantalla*/
 void PantallaSistema::setPantallanInicio(){

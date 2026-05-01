@@ -68,6 +68,19 @@ private:
     void mostrarEliminarSucursal();
     void mostrarVerSucursales();
     void mostrarVerEnvios();
+
+public slots:
+    void recibirCsvSucursales(const std::vector<std::vector<QString>> & data);
+    void recibirCsvConexiones(const std::vector<std::vector<QString>> &data);
+
+
+signals:
+    void csvSucursalesCargado(const std::vector<std::vector<QString>> & data);
+    void csvConexionesCargado(const std::vector<std::vector<QString>> &data);
+
+    void agregarLogGrafo(QString mensaje, QString color);
+    void agregarLogCarga(QString mensaje, QString color);
+    void agregarTiempo(int estructura, double milisegundos);
 };
 
 #endif // PANTALLASISTEMA_H
