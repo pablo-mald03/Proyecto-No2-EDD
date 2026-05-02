@@ -177,6 +177,17 @@ set(EXCEPTIONS_HEADERS
 )
 
 
+set(MODULES_SOURCES
+
+    src/modules/nodografico.cpp
+)
+
+set(MODULES_HEADERS
+
+    include/modules/nodografico.h
+)
+
+
 qt_add_executable(ProyectoNo2-EDD
     WIN32 MACOSX_BUNDLE
     ${CONTROLADORES_SOURCES}
@@ -187,8 +198,11 @@ qt_add_executable(ProyectoNo2-EDD
     ${BACKEND_HEADERS}
     ${EXCEPTIONS_SOURCES}
     ${EXCEPTIONS_HEADERS}
+    ${MODULES_SOURCES}
+    ${MODULES_HEADERS}
     ${UI_FILES}
     recursos.qrc
+
 )
 
 target_include_directories(ProyectoNo2-EDD PRIVATE
@@ -198,6 +212,7 @@ target_include_directories(ProyectoNo2-EDD PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include/frontend/inicio
     ${CMAKE_CURRENT_SOURCE_DIR}/include/exceptions
     ${CMAKE_CURRENT_SOURCE_DIR}/include/controladores
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/modules
     ${CMAKE_CURRENT_BINARY_DIR}
 )
 

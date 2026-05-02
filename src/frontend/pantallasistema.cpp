@@ -187,6 +187,25 @@ void PantallaSistema::mostrarEliminarSucursal(){
 /*Metodo que permite mostrar la pantalla de ver sucursales*/
 void PantallaSistema::mostrarVerSucursales(){
 
+    if (!this->pantallaVistaSucursales) {
+
+        this->pantallaVistaSucursales = new PantallaVerSucursales(this);
+
+        this->ui->stackedWidget->addWidget(this->pantallaVistaSucursales);
+        /*
+        //Se conectan las signals para poder interactuar con la pantalla
+        connect(this->controladorGeneral, &ControladorNegocio::logEliminacionGrafo,this->pantallaEliminadoSucursal, &PantallaEliminarSucursal::appendGrafoLog);
+
+        connect(this->pantallaEliminadoSucursal, &PantallaEliminarSucursal::eliminarSucursal, this->controladorGeneral, &ControladorNegocio::eliminacionSucursal);
+
+        connect(this->controladorGeneral, &ControladorNegocio::tiempoProcesoEliminacionGrafo, this->pantallaEliminadoSucursal, &PantallaEliminarSucursal::mostrarTiempo);
+
+        connect(this->pantallaEliminadoSucursal, &PantallaEliminarSucursal::verSucursales, this, &PantallaSistema::mostrarVistaSucursales);
+    */
+    }
+
+    this->ui->stackedWidget->setCurrentWidget(this->pantallaVistaSucursales);
+    this->pantallaVistaSucursales->inicializarDatos();
     this->ui->labelTasks->setText("Ver Sucursales");
 }
 
