@@ -167,3 +167,4 @@ void PantallaVerSucursales::on_comboBox_currentIndexChanged(int index)
 
 }
 
+

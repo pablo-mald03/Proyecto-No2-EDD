@@ -14,7 +14,9 @@ public:
     NodoGrafico(QString id, QString nombre, QColor color = QColor(0x3d5afe), bool modoVista = false, QGraphicsItem *parent = nullptr);
 
     QRectF boundingRect() const override;
+
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    void actualizarColor(QColor nuevoColor);
 
 signals:
     void seleccionado(QString id);
