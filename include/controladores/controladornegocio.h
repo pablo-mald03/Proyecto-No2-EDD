@@ -28,6 +28,9 @@ public slots:
     /*Metodo que permite obtener los datos para poder descargar el Log de errores de productos*/
     void prepararLogParaDescargaProductos();
 
+    /*Metodo que permite insertar una sucursal*/
+    void insercionSucursal(int _id,const std::string &_nombre, const std::string &_ubicacion, double _ingreso, double _despacho, double _preparacion);
+
 signals:
 
     /*Metodos que permiten agregar enviar informacion sobre los logs de los datos de las sucursales*/
@@ -67,6 +70,11 @@ signals:
     /*Signal que permite enviar el log de errores de envios*/
     void logDescargarProductos(QString contenido);
     void evaluarErroresProductosLog(bool evaluacion);
+
+
+    /*Signals que permiten ir comunicandose con la UI para poder realizar las operaciones de insercion*/
+    void logInsertGrafo(QString mensaje, QString color);
+    void tiempoProcesoInsercionGrafo(double milisegundos);
 };
 
 #endif // CONTROLADORNEGOCIO_H

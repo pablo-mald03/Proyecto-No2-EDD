@@ -17,6 +17,13 @@ PantallaCargaProductos::PantallaCargaProductos(QWidget *parent)
     this->setStyleSheet("QWidget#PantallaCargaProductos { "
                         "border-image: url(:/assets/fondo/GrafosBackground.png) 0 0 0 0 stretch stretch; "
                         "} ");
+
+    this->ui->textEditAvl->setReadOnly(true);
+    this->ui->textEditB->setReadOnly(true);
+    this->ui->textEditBMas->setReadOnly(true);
+    this->ui->textEditCsv->setReadOnly(true);
+    this->ui->textTablaHash->setReadOnly(true);
+    this->ui->textEditLista->setReadOnly(true);
 }
 
 

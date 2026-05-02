@@ -17,6 +17,9 @@ PantallaCargaEnvios::PantallaCargaEnvios(QWidget *parent)
     this->setStyleSheet("QWidget#PantallaCargaEnvios { "
                         "border-image: url(:/assets/fondo/GrafosBackground.png) 0 0 0 0 stretch stretch; "
                         "} ");
+
+    this->ui->textGrafo->setReadOnly(true);
+    this->ui->textEditCsv->setReadOnly(true);
 }
 
 /*Metodo para poder agregar texto al log de carga*/

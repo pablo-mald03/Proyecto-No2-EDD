@@ -57,3 +57,13 @@ void ControladorNegocio::prepararLogParaDescargaProductos(){
 
 
 /*--------Fin del Metodos que permiten dar informacion en los logs de la carga de csv de sucursales---------*/
+
+/*--------Apartado de Metodos que permite procesar la insercion de una sucursal---------*/
+
+/*Metodo que permite insertar una sucursal*/
+void ControladorNegocio::insercionSucursal(int _id,const std::string &_nombre, const std::string &_ubicacion, double _ingreso, double _despacho, double _preparacion){
+
+}
+
+
+

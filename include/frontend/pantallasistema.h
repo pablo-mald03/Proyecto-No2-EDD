@@ -28,6 +28,9 @@ public:
     /*Metodos para poder comunicarse desde fuera con la pantalla*/
     void setPantallanInicio();
 
+public slots:
+    void mostrarVistaSucursales();
+
 private slots:
     void on_btnCargaSucursales_clicked();
 

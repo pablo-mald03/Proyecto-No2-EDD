@@ -20,6 +20,8 @@ PantallaCargaSucursales::PantallaCargaSucursales(QWidget *parent)
                         "} ");
 
     this->setCargaSucursales(true,"Log del Grafo de sucursales");
+    this->ui->textEditCsv->setReadOnly(true);
+    this->ui->textGrafo->setReadOnly(true);
 }
 
 

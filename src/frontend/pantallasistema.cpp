@@ -106,8 +106,32 @@ void PantallaSistema::mostrarCargaProductos(){
 /*Metodo que permite mostrar la pantalla de agregar sucursales*/
 void PantallaSistema::mostrarAgregarSucursal(){
 
+    if (!this->pantallaAgregadoSucursal) {
+
+        this->pantallaAgregadoSucursal = new PantallaAgregarSucursal(this);
+
+        this->ui->stackedWidget->addWidget(this->pantallaAgregadoSucursal);
+
+        //Se conectan las signals para poder interactuar con la pantalla
+        connect(this->controladorGeneral, &ControladorNegocio::logInsertGrafo,this->pantallaAgregadoSucursal, &PantallaAgregarSucursal::appendGrafoLog);
+
+        connect(this->pantallaAgregadoSucursal, &PantallaAgregarSucursal::insertarSucursal, this->controladorGeneral, &ControladorNegocio::insercionSucursal);
+
+        connect(this->controladorGeneral, &ControladorNegocio::tiempoProcesoInsercionGrafo, this->pantallaAgregadoSucursal, &PantallaAgregarSucursal::mostrarTiempo);
+
+        connect(this->pantallaAgregadoSucursal, &PantallaAgregarSucursal::verSucursales, this, &PantallaSistema::mostrarVistaSucursales);
+    }
+
+    this->pantallaAgregadoSucursal->limpiarPantalla();
+    this->ui->stackedWidget->setCurrentWidget(this->pantallaAgregadoSucursal);
     this->ui->labelTasks->setText("Agregar Sucursal");
 }
+
+/*Signal que permite viajar a ver las sucursales*/
+void PantallaSistema::mostrarVistaSucursales(){
+    this->mostrarVerSucursales();
+}
+
 
 /*Metodo que permite mostrar la pantalla de modificar sucursales*/
 void PantallaSistema::mostrarModificarSucursal(){
