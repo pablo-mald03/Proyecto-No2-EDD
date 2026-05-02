@@ -29,7 +29,11 @@ public slots:
     void prepararLogParaDescargaProductos();
 
     /*Metodo que permite insertar una sucursal*/
-    void insercionSucursal(int _id,const std::string &_nombre, const std::string &_ubicacion, double _ingreso, double _despacho, double _preparacion);
+    void insercionSucursal(const std::string &_id,const std::string &_nombre, const std::string &_ubicacion, double _ingreso, double _despacho, double _preparacion);
+
+    /*Metodo que permite insertar una sucursal*/
+    void eliminacionSucursal(const std::string &_id);
+
 
 signals:
 
@@ -75,6 +79,10 @@ signals:
     /*Signals que permiten ir comunicandose con la UI para poder realizar las operaciones de insercion*/
     void logInsertGrafo(QString mensaje, QString color);
     void tiempoProcesoInsercionGrafo(double milisegundos);
+
+    /*Signals que permiten ir comunicandose con la UI para poder realizar las operaciones de eliminacion*/
+    void logEliminacionGrafo(QString mensaje, QString color);
+    void tiempoProcesoEliminacionGrafo(double milisegundos);
 };
 
 #endif // CONTROLADORNEGOCIO_H

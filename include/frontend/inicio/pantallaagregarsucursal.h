@@ -39,7 +39,7 @@ private:
 
 signals:
     /*Metodo que permite insertar sucursal*/
-    void insertarSucursal(int _id,const std::string &_nombre, const std::string &_ubicacion, double _ingreso, double _despacho, double _preparacion);
+    void insertarSucursal(const std::string &_id,const std::string &_nombre, const std::string &_ubicacion, double _ingreso, double _despacho, double _preparacion);
     /*Metodo que permite viajar a mostrar los arboles*/
     void verSucursales();
 };

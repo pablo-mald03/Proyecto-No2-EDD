@@ -61,7 +61,12 @@ void ControladorNegocio::prepararLogParaDescargaProductos(){
 /*--------Apartado de Metodos que permite procesar la insercion de una sucursal---------*/
 
 /*Metodo que permite insertar una sucursal*/
-void ControladorNegocio::insercionSucursal(int _id,const std::string &_nombre, const std::string &_ubicacion, double _ingreso, double _despacho, double _preparacion){
+void ControladorNegocio::insercionSucursal(const std::string &_id,const std::string &_nombre, const std::string &_ubicacion, double _ingreso, double _despacho, double _preparacion){
+
+}
+
+/*Metodo que permite eliminar una sucursal*/
+void ControladorNegocio::eliminacionSucursal(const std::string &_id){
 
 }
 

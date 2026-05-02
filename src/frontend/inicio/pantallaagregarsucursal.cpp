@@ -63,10 +63,6 @@ bool PantallaAgregarSucursal::validarCampos() {
         return false;
     }
 
-    bool okId;
-    idStr.toInt(&okId);
-    if (!okId) return false;
-
     bool ok1, ok2, ok3;
     tIngreso.toDouble(&ok1);
     tDespacho.toDouble(&ok2);
@@ -100,11 +96,11 @@ void PantallaAgregarSucursal::on_btnAgregar_clicked()
 
     if (!validarCampos()) {
         QMessageBox::warning(this, "Campos invalidos",
-                             "Por favor, revisa los campos. El ID debe ser entero y los tiempos numéricos.");
+                             "Por favor, revisa los campos. Los tiempos deben ser numéricos.");
         return;
     }
 
-    int id = ui->textID->text().trimmed().toInt();
+    std::string id = ui->textID->text().trimmed().toStdString();
     std::string nombre = ui->textNombre->text().trimmed().toStdString();
     std::string ubicacion = ui->textUbicacion->text().trimmed().toStdString();
     double ingreso = ui->textITiempoIngreso->text().trimmed().toDouble();
