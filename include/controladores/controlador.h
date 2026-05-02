@@ -43,7 +43,7 @@ private:
 
     void insertarArbolBCsv(const std::vector<QString> & data);
 
-     void insertarArbolBMasCsv(const std::vector<QString> & data);
+    void insertarArbolBMasCsv(const std::vector<QString> & data);
 
     /*Metodo que permite avisar para determinar si dejar o no descargar el log de errores*/
     void verificarErrores();
@@ -171,6 +171,7 @@ signals:
     void logArbolB(QString mensaje, QString color);
     void logArbolBMas(QString mensaje, QString color);
     void logLista(QString mensaje, QString color);
+    void logHash(QString mensaje, QString color);
 
     void logCargaCsv(QString mensaje, QString color);
 

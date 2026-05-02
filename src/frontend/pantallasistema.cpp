@@ -21,6 +21,11 @@ PantallaSistema::PantallaSistema(QWidget *parent)
     connect( this->controladorGeneral, &ControladorNegocio::logCargaCsvSucursales, this->pantallaCargadoSucursales, &PantallaCargaSucursales::appendLogCarga);
     connect( this->controladorGeneral, &ControladorNegocio::tiempoProcesoSucursales, this->pantallaCargadoSucursales, &PantallaCargaSucursales::mostrarTiempo);
 
+    connect(this->pantallaCargadoSucursales, &PantallaCargaSucursales::solicitarLogErrores, this->controladorGeneral, &ControladorNegocio::prepararLogParaDescargaSucursales);
+
+    connect(this->controladorGeneral, &ControladorNegocio::evaluarErroresSucursalesLog, this->pantallaCargadoSucursales, &PantallaCargaSucursales::evaluarErrores);
+    connect(this->controladorGeneral, &ControladorNegocio::logDescargarSucursales, this->pantallaCargadoSucursales, &PantallaCargaSucursales::logListoParaDescargar);
+
 }
 
 
@@ -55,6 +60,12 @@ void PantallaSistema::mostrarCargaEnvios(){
         connect( this->controladorGeneral,&ControladorNegocio::logGrafoEnvios, this->pantallaCargadoEnvios, &PantallaCargaEnvios::appendGrafoLog);
         connect( this->controladorGeneral, &ControladorNegocio::logCargaCsvEnvios, this->pantallaCargadoEnvios, &PantallaCargaEnvios::appendLogCarga);
         connect( this->controladorGeneral, &ControladorNegocio::tiempoProcesoEnvios, this->pantallaCargadoEnvios, &PantallaCargaEnvios::mostrarTiempo);
+
+        connect(this->pantallaCargadoEnvios, &PantallaCargaEnvios::solicitarLogErrores, this->controladorGeneral, &ControladorNegocio::prepararLogParaDescargaEnvios);
+
+        connect(this->controladorGeneral, &ControladorNegocio::evaluarErroresEnviosLog, this->pantallaCargadoEnvios, &PantallaCargaEnvios::evaluarErrores);
+        connect(this->controladorGeneral, &ControladorNegocio::logDescargarEnvios, this->pantallaCargadoEnvios, &PantallaCargaEnvios::logListoParaDescargar);
+
     }
 
     this->ui->stackedWidget->setCurrentWidget(this->pantallaCargadoEnvios);
@@ -64,6 +75,31 @@ void PantallaSistema::mostrarCargaEnvios(){
 /*Metodo que permite mostrar la pantalla de carga de csv de productos*/
 void PantallaSistema::mostrarCargaProductos(){
 
+    if (!this->pantallaCargadoProductos) {
+
+        this->pantallaCargadoProductos = new PantallaCargaProductos(this);
+
+        this->ui->stackedWidget->addWidget(this->pantallaCargadoProductos);
+
+        //Se conectan las signals para poder interactuar con la pantalla
+        connect(this->pantallaCargadoProductos, &PantallaCargaProductos::csvProductosCargado, this->controladorGeneral, &ControladorNegocio::procesarCsvProductos);
+        connect(this->controladorGeneral, &ControladorNegocio::logArbolAvl,this->pantallaCargadoProductos, &PantallaCargaProductos::appendAvlLog);
+        connect(this->controladorGeneral, &ControladorNegocio::logArbolB,this->pantallaCargadoProductos, &PantallaCargaProductos::appendBLog);
+        connect(this->controladorGeneral, &ControladorNegocio::logArbolBMas,this->pantallaCargadoProductos, &PantallaCargaProductos::appendBMasLog);
+        connect(this->controladorGeneral, &ControladorNegocio::logLista,this->pantallaCargadoProductos, &PantallaCargaProductos::appendListLog);
+        connect(this->controladorGeneral, &ControladorNegocio::logHash,this->pantallaCargadoProductos, &PantallaCargaProductos::appendHashLog);
+        connect(this->controladorGeneral, &ControladorNegocio::logCargaCsvProductos,this->pantallaCargadoProductos, &PantallaCargaProductos::appendLogCarga);
+
+        connect(this->controladorGeneral, &ControladorNegocio::tiempoProcesoProductos, this->pantallaCargadoProductos, &PantallaCargaProductos::mostrarTiempo);
+
+        connect(this->pantallaCargadoProductos, &PantallaCargaProductos::solicitarLogErrores, this->controladorGeneral, &ControladorNegocio::prepararLogParaDescargaProductos);
+
+        connect(this->controladorGeneral, &ControladorNegocio::evaluarErroresProductosLog, this->pantallaCargadoProductos, &PantallaCargaProductos::evaluarErrores);
+        connect(this->controladorGeneral, &ControladorNegocio::logDescargarProductos, this->pantallaCargadoProductos, &PantallaCargaProductos::logListoParaDescargar);
+
+    }
+
+    this->ui->stackedWidget->setCurrentWidget(this->pantallaCargadoProductos);
     this->ui->labelTasks->setText("Cargar Productos");
 }
 

@@ -17,6 +17,17 @@ public slots:
 
     void procesarCsvEnvios(const std::vector<std::vector<QString>> & data);
 
+    void procesarCsvProductos(const std::vector<std::vector<QString>> & data);
+
+    /*Metodo que permite obtener los datos para poder descargar el Log de errores de sucursales*/
+    void prepararLogParaDescargaSucursales();
+
+    /*Metodo que permite obtener los datos para poder descargar el Log de errores de envios*/
+    void prepararLogParaDescargaEnvios();
+
+    /*Metodo que permite obtener los datos para poder descargar el Log de errores de productos*/
+    void prepararLogParaDescargaProductos();
+
 signals:
 
     /*Metodos que permiten agregar enviar informacion sobre los logs de los datos de las sucursales*/
@@ -26,13 +37,36 @@ signals:
     /*Signal que permite setear el tiempo en el label*/
     void tiempoProcesoSucursales(int estructura, double milisegundos);
 
+    /*Signal que permite enviar el log de errores de sucursales*/
+    void logDescargarSucursales(QString contenido);
+    void evaluarErroresSucursalesLog(bool evaluacion);
 
     /*Metodos que permiten agregar enviar informacion sobre los logs de los datos de los envios*/
     void logGrafoEnvios(QString mensaje, QString color);
     void logCargaCsvEnvios(QString mensaje, QString color);
 
+    /*Signal que permite enviar el log de errores de envios*/
+    void logDescargarEnvios(QString contenido);
+    void evaluarErroresEnviosLog(bool evaluacion);
+
     /*Signal que permite setear el tiempo en el label*/
     void tiempoProcesoEnvios(int estructura, double milisegundos);
+
+    /*Signals que permiten comunicarse con la pantalla del csv de productos */
+    void logArbolAvl(QString mensaje, QString color);
+    void logArbolB(QString mensaje, QString color);
+    void logArbolBMas(QString mensaje, QString color);
+    void logLista(QString mensaje, QString color);
+    void logHash(QString mensaje, QString color);
+
+    void logCargaCsvProductos(QString mensaje, QString color);
+
+    /*Signal que permite setear el tiempo en el label*/
+    void tiempoProcesoProductos(int estructura, double milisegundos);
+
+    /*Signal que permite enviar el log de errores de envios*/
+    void logDescargarProductos(QString contenido);
+    void evaluarErroresProductosLog(bool evaluacion);
 };
 
 #endif // CONTROLADORNEGOCIO_H

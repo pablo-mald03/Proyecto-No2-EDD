@@ -20,7 +20,9 @@ PantallaMain::PantallaMain(QWidget *parent)
     connect(this->controladorCrud, &Controlador::logArbolB,this->inicio, &PantallaPrincipal::appendBLog);
     connect(this->controladorCrud, &Controlador::logArbolBMas,this->inicio, &PantallaPrincipal::appendBMasLog);
     connect(this->controladorCrud, &Controlador::logLista,this->inicio, &PantallaPrincipal::appendListLog);
+    connect(this->controladorCrud, &Controlador::logHash,this->inicio, &PantallaPrincipal::appendHashLog);
     connect(this->controladorCrud, &Controlador::logCargaCsv,this->inicio, &PantallaPrincipal::appendLogCarga);
+
     connect(this->controladorCrud, &Controlador::tiempoProceso, this->inicio, &PantallaPrincipal::mostrarTiempo);
     connect(this->inicio, &PantallaPrincipal::solicitarLogErrores, this->controladorCrud, &Controlador::prepararLogParaDescarga);
     connect(this->controladorCrud, &Controlador::logDescargar, this->inicio, &PantallaPrincipal::logListoParaDescargar);

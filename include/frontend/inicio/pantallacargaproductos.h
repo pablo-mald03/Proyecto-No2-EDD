@@ -49,7 +49,7 @@ private:
     void descargarLogErrores(const QString &contenido);
 
 signals:
-    void csvEnviosCargado(const std::vector<std::vector<QString>> & data);
+    void csvProductosCargado(const std::vector<std::vector<QString>> & data);
 
     void solicitarLogErrores();
 
