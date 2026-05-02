@@ -229,6 +229,13 @@ void PantallaPrincipal::appendListLog(QString mensaje, QString color){
         );
 }
 
+void PantallaPrincipal::appendHashLog(QString mensaje, QString color){
+
+    this->ui->textTablaHash->append(
+        "<span style='color:" + color + ";'>" + mensaje + "</span>"
+        );
+}
+
 
 /*---***--- Fin del Apartado de metodos que permiten comunicar a la UI los logs que se van a mostrar----***--*/
 
@@ -239,6 +246,7 @@ void PantallaPrincipal::appendListLog(QString mensaje, QString color){
 * 2 -> B
 * 3 -> B+
 * 4 -> LISTA
+* 5 -> HASH
 *
 */
 void PantallaPrincipal::mostrarTiempo(int estructura, double milisegundos){
@@ -261,6 +269,9 @@ void PantallaPrincipal::mostrarTiempo(int estructura, double milisegundos){
 
         case 4:
             this->ui->labelTiempoLista->setText(tiempoTexto);
+            break;
+        case 5:
+            this->ui->labelTiempoHash->setText(tiempoTexto);
             break;
     }
 

@@ -49,8 +49,10 @@ public slots:
     void appendBLog(QString mensaje, QString color);
     void appendBMasLog(QString mensaje, QString color);
     void appendListLog(QString mensaje, QString color);
+    void appendHashLog(QString mensaje, QString color);
 
     void appendLogCarga(QString mensaje, QString color);
+
 
     void mostrarTiempo(int estructura, double milisegundos);
 

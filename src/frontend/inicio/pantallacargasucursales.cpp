@@ -111,6 +111,52 @@ void PantallaCargaSucursales::mostrarTiempo(int estructura, double milisegundos)
     this->ui->labelTiempoGrafo->setText(tiempoTexto);
 }
 
+/*Metodo que permite verificar si hay errores para habilitar la descarga del log*/
+void PantallaCargaSucursales::evaluarErrores(bool evaluacion){
+    this->ui->btnErrores->setEnabled(evaluacion);
+}
+
+/*Metodo que permite solicitar la lista de errores para poder armar el errors.log*/
+void PantallaCargaSucursales::logListoParaDescargar(const QString &contenido){
+    this->descargarLogErrores(contenido);
+}
+
+/*Metodo de la clase que permite desplegar el dialog de descarga*/
+void PantallaCargaSucursales::descargarLogErrores(const QString &contenido){
+
+    QString fileName = QFileDialog::getSaveFileName(
+        this,
+        "Guardar Log de Errores",
+        "errors.log",
+        "Log Files (*.log);;Text Files (*.txt)"
+        );
+
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    QFile file(fileName);
+
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&file);
+        out << contenido;
+        file.close();
+
+        QMessageBox::information(
+            this,
+            "Exportación Exitosa",
+            "El archivo de log se ha guardado correctamente en:\n" + fileName
+            );
+
+    } else {
+        QMessageBox::critical(
+            this,
+            "Error de Archivo",
+            "No se pudo crear el archivo. Verifique los permisos de escritura."
+            );
+    }
+}
+
 /*Metodo que permite cargar archivos csv*/
 void PantallaCargaSucursales::on_btnCargar_clicked()
 {
@@ -139,5 +185,11 @@ void PantallaCargaSucursales::on_btnCargar_clicked()
         emit csvConexionesCargado(datos);
     }
 
+}
+
+/*Boton que permite descargar los errores*/
+void PantallaCargaSucursales::on_btnErrores_clicked()
+{
+    emit solicitarLogErrores(this->cargarSucursales);
 }
 
