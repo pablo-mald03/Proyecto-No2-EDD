@@ -136,6 +136,26 @@ void PantallaSistema::mostrarVistaSucursales(){
 /*Metodo que permite mostrar la pantalla de modificar sucursales*/
 void PantallaSistema::mostrarModificarSucursal(){
 
+    if (!this->pantallaModificadoSucursal) {
+
+        this->pantallaModificadoSucursal = new PantallaModificarSucursal(this);
+
+        this->ui->stackedWidget->addWidget(this->pantallaModificadoSucursal);
+
+        //Se conectan las signals para poder interactuar con la pantalla
+        connect(this->controladorGeneral, &ControladorNegocio::logModificacionGrafo,this->pantallaModificadoSucursal, &PantallaModificarSucursal::appendGrafoLog);
+
+        connect(this->pantallaModificadoSucursal, &PantallaModificarSucursal::modificarSucursal, this->controladorGeneral, &ControladorNegocio::modificacionSucursal);
+
+        connect(this->controladorGeneral, &ControladorNegocio::tiempoProcesoModificacionGrafo, this->pantallaModificadoSucursal, &PantallaModificarSucursal::mostrarTiempo);
+
+        connect(this->pantallaModificadoSucursal, &PantallaModificarSucursal::verSucursales, this, &PantallaSistema::mostrarVistaSucursales);
+    }
+
+    this->pantallaModificadoSucursal->limpiarPantalla();
+    this->ui->stackedWidget->setCurrentWidget(this->pantallaModificadoSucursal);
+
+    this->pantallaModificadoSucursal->inicializarCombo();
     this->ui->labelTasks->setText("Modificar Sucursal");
 }
 

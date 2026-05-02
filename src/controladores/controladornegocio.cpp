@@ -70,5 +70,10 @@ void ControladorNegocio::eliminacionSucursal(const std::string &_id){
 
 }
 
+/*Metodo que permite modificar una sucursal*/
+void ControladorNegocio::modificacionSucursal(const std::string &_id,const std::string &_nombre, const std::string &_ubicacion, double _ingreso, double _despacho, double _preparacion){
+
+}
+
 
 

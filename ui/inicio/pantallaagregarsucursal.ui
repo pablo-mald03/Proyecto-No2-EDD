@@ -768,49 +768,14 @@ QPushButton#btnSucursales:pressed {
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QWidget" name="widget_content_2" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_6">
-         <item>
-          <widget class="QWidget" name="widget_9" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>200</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>250</height>
-            </size>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_13"/>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
        <widget class="QWidget" name="widget_content_3" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_5">
-         <item>
-          <widget class="QWidget" name="widget_10" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>200</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>250</height>
-            </size>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_14"/>
-          </widget>
-         </item>
-        </layout>
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>0</height>
+         </size>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_5"/>
        </widget>
       </item>
       <item>
@@ -925,25 +890,13 @@ QPushButton#btnSucursales:pressed {
       </item>
       <item>
        <widget class="QWidget" name="widget_content_5" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_16">
-         <item>
-          <widget class="QWidget" name="widget_15" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>200</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>250</height>
-            </size>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_17"/>
-          </widget>
-         </item>
-        </layout>
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>0</height>
+         </size>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_16"/>
        </widget>
       </item>
      </layout>

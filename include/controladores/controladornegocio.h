@@ -34,6 +34,10 @@ public slots:
     /*Metodo que permite insertar una sucursal*/
     void eliminacionSucursal(const std::string &_id);
 
+    /*Metodo que permite modificar una sucursal*/
+    void modificacionSucursal(const std::string &_id,const std::string &_nombre, const std::string &_ubicacion, double _ingreso, double _despacho, double _preparacion);
+
+
 
 signals:
 
@@ -83,6 +87,10 @@ signals:
     /*Signals que permiten ir comunicandose con la UI para poder realizar las operaciones de eliminacion*/
     void logEliminacionGrafo(QString mensaje, QString color);
     void tiempoProcesoEliminacionGrafo(double milisegundos);
+
+    /*Signals que permiten ir comunicandose con la UI para poder realizar las operaciones de modificacion*/
+    void logModificacionGrafo(QString mensaje, QString color);
+    void tiempoProcesoModificacionGrafo(double milisegundos);
 };
 
 #endif // CONTROLADORNEGOCIO_H
