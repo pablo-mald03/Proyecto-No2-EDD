@@ -17,6 +17,9 @@ private:
     /*Instancia que permite manejar toda la logica de negocio de las sucursales*/
     GestorMapa * gestorMapeo = nullptr;
 
+    /*Metodo que verifica si hay errores en la carga de sucursales*/
+    void verificarErroresSucursales(int parametro);
+
 public slots:
     void procesarCsvSucursal(const std::vector<std::vector<QString>> & data);
     void procesarCsvConexion(const std::vector<std::vector<QString>> & data);

@@ -38,10 +38,28 @@ public:
     /*Metodo que permite validar las filas del csv de conexiones de las sucursales*/
     bool validarFilaCsvConexion(const std::vector<QString>& fila, double& tiempo, double& costo, QString& error);
 
+    /*Metodo que permite obtener el log de errores*/
+    void agregarError(std::string error, int fila, int caso);
+
+    /*Metodo que permite generar el log de errores*/
+    QString generarContenidoLog(int caso);
+
+    /*Metodo que permite evaluar si tiene errores*/
+    bool tieneErrores(int parametro) const;
+
 private:
     Grafo * grafoSucursales = nullptr;
 
 
+
+    /*Lista de logs de errores*/
+    ListaEnlazada<ErroresLectura> * listaErroresSucursales = nullptr;
+
+    /*Lista de logs de envios*/
+    ListaEnlazada<ErroresLectura> * listaErroresEnvios = nullptr;
+
+    /*Lista de logs de productos*/
+    ListaEnlazada<ErroresLectura> * listaErroresProductos = nullptr;
 };
 
 #endif // GESTORMAPA_H

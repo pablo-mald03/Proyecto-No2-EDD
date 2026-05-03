@@ -1,16 +1,33 @@
 #include "gestormapa.h"
 /*Clase delegada para poder implementar la comunicacion con las estructuras de datos y las sucursales*/
-GestorMapa::GestorMapa():
-    grafoSucursales(new Grafo())
-{
+GestorMapa::GestorMapa()
+    : grafoSucursales(new Grafo()),
+    listaErroresSucursales(new ListaEnlazada<ErroresLectura>()),
+    listaErroresEnvios(new ListaEnlazada<ErroresLectura>()),
+    listaErroresProductos(new ListaEnlazada<ErroresLectura>())
 
-}
+{}
 
 /*Destructor*/
 GestorMapa::~GestorMapa(){
 
     if(this->grafoSucursales != nullptr){
         delete this->grafoSucursales;
+    }
+
+    if(this->listaErroresSucursales != nullptr){
+        delete this->listaErroresSucursales;
+        this->listaErroresSucursales = nullptr;
+    }
+
+    if(this->listaErroresEnvios != nullptr){
+        delete this->listaErroresEnvios;
+        this->listaErroresEnvios = nullptr;
+    }
+
+    if(this->listaErroresProductos != nullptr){
+        delete this->listaErroresProductos;
+        this->listaErroresProductos = nullptr;
     }
 }
 
@@ -120,3 +137,103 @@ bool GestorMapa::validarFilaCsvConexion(const std::vector<QString>& fila, double
 
     return true;
 }
+
+
+
+/*Metodo que permite registrar errores en las listas*/
+/*
+* 1 -> sucursales
+* 2 -> envios
+* 3 -> productos
+*/
+void GestorMapa::agregarError(std::string error, int fila, int caso){
+
+    switch (caso) {
+    case 1:
+        this->listaErroresSucursales->insertarAtras(ErroresLectura(error,fila));
+        break;
+    case 2:
+        this->listaErroresEnvios->insertarAtras(ErroresLectura(error,fila));
+        break;
+    case 3:
+        this->listaErroresProductos->insertarAtras(ErroresLectura(error,fila));
+        break;
+    }
+}
+
+/*Metodo que permite armar el log de errores*/
+/*
+* 1 -> sucursales
+* 2 -> envios
+* 3 -> productos
+*/
+QString GestorMapa::generarContenidoLog(int caso) {
+
+    QString log;
+    QDateTime current = QDateTime::currentDateTime();
+    QString fechaStr = current.toString("yyyy-MM-dd hh:mm:ss");
+
+    log += "--------------------------------------------------\n";
+    log += "LOG DE ERRORES --- PROCESAMIENTO CSV ---\n";
+    log += "Fecha: " + fechaStr + "\n";
+    log += "--------------------------------------------------\n\n";
+
+    ListaEnlazada<ErroresLectura>* listaAProcesar = nullptr;
+    QString tituloSistema;
+
+    switch (caso) {
+    case 1:
+        listaAProcesar = this->listaErroresSucursales;
+        tituloSistema = "SISTEMA DE GESTION DE SUCURSALES";
+        break;
+    case 2:
+        listaAProcesar = this->listaErroresEnvios;
+        tituloSistema = "SISTEMA DE GESTION DE ENVIOS";
+        break;
+    case 3:
+        listaAProcesar = this->listaErroresProductos;
+        tituloSistema = "SISTEMA DE GESTION DE PRODUCTOS";
+        break;
+    default:
+        return "Error: Caso de log no definido.";
+    }
+
+    log += "--------------------------------------------------\n";
+    log += "--- " + tituloSistema + " --- \n";
+    log += "--------------------------------------------------\n\n";
+
+    if (listaAProcesar && listaAProcesar->getLongitud() > 0) {
+        for (int i = 0; i < listaAProcesar->getLongitud(); ++i) {
+            ErroresLectura err = listaAProcesar->getValor(i);
+            log += "[" + fechaStr + "] [ERROR] ";
+            log += "Fila " + QString::number(err.getLinea()) + ": ";
+            log += QString::fromStdString(err.getMensaje()) + "\n";
+        }
+    } else {
+        log += "No se reportaron errores en la ultima carga.\n";
+    }
+
+    return log;
+}
+
+/*Metodo para saber si tiene errores la lista*/
+/*
+* 1 -> sucursales
+* 2 -> envios
+* 3 -> productos
+*/
+bool GestorMapa::tieneErrores(int parametro) const {
+
+    switch (parametro) {
+    case 1:
+        return !this->listaErroresSucursales->esVacia();
+    case 2:
+        return !this->listaErroresEnvios->esVacia();
+    case 3:
+        return !this->listaErroresProductos->esVacia();
+    default:
+        return false;
+    }
+
+}
+
