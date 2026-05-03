@@ -1,6 +1,7 @@
 #ifndef PANTALLAAGREGARSUCURSAL_H
 #define PANTALLAAGREGARSUCURSAL_H
 
+#include "sucursal.h"
 #include <QWidget>
 
 namespace Ui {
@@ -18,7 +19,7 @@ public:
     void limpiarPantalla();
 
     /*Metodo que permite llenar los combos*/
-    void inicializarCombos();
+    void inicializarCombos(const std::vector<Sucursal*>& sucursales);
 
 private slots:
     void on_btnAgregar_clicked();
@@ -36,6 +37,9 @@ public slots:
 
     /*Metodo que permite dar el mensaje de exito o de error*/
     void confirmarAsociacion(QString mensaje, bool estado);
+
+    /*Slot que permite actualizar los combos*/
+    void actualizarCombos(const std::vector<Sucursal*>& sucursales);
 
 private:
     Ui::PantallaAgregarSucursal *ui;

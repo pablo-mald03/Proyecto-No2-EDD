@@ -39,6 +39,8 @@ void PantallaAgregarSucursal::limpiarDatos(){
     this->ui->textITiempoIngreso->clear();
     this->ui->textTiempoDesapacho->clear();
     this->ui->textITiempoPreparacion->clear();
+    this->ui->textCostoTraspaso->clear();
+    this->ui->textTraspaso->clear();
 }
 
 /*Metodo que permite limpiar los logs*/
@@ -110,21 +112,26 @@ void PantallaAgregarSucursal::on_btnAgregar_clicked()
     emit insertarSucursal(id,nombre,ubicacion,ingreso,despacho,preparacion);
 }
 
+/*Slot que permite actualizar los combos*/
+void PantallaAgregarSucursal::actualizarCombos(const std::vector<Sucursal*>& sucursales){
+    this->inicializarCombos(sucursales);
+}
+
 /*Metodo que permite inicializar los comboBox de asociacion de conexiones*/
-void PantallaAgregarSucursal::inicializarCombos() {
+void PantallaAgregarSucursal::inicializarCombos(const std::vector<Sucursal*>& sucursales) {
 
     ui->comboOrigen->blockSignals(true);
     ui->comboDestino->blockSignals(true);
     ui->comboOrigen->clear();
     ui->comboDestino->clear();
 
-    ui->comboDestino->addItem("Sucursal Central - Ciudad", "ID_001");
-    ui->comboDestino->addItem("Sucursal Norte - Petén", "ID_002");
-    ui->comboDestino->addItem("Sucursal Occidente - Xela", "ID_003");
+    for (Sucursal* suc : sucursales) {
+        QString nombreVisible = QString::fromStdString(suc->getNombre());
+        QString idOculto = QString::fromStdString(suc->getId());
 
-    ui->comboOrigen->addItem("Sucursal Central - Ciudad", "ID_001");
-    ui->comboOrigen->addItem("Sucursal Norte - Petén", "ID_002");
-    ui->comboOrigen->addItem("Sucursal Occidente - Xela", "ID_003");
+        ui->comboDestino->addItem(nombreVisible, idOculto);
+        ui->comboOrigen->addItem(nombreVisible, idOculto);
+    }
 
     ui->comboDestino->setCurrentIndex(-1);
 

@@ -104,6 +104,7 @@ signals:
     /*Signals que permiten ir comunicandose con la UI para poder realizar las operaciones de insercion*/
     void logInsertGrafo(QString mensaje, QString color);
     void tiempoProcesoInsercionGrafo(double milisegundos);
+    void actualizacionCombos(const std::vector<Sucursal*>& sucursales);
     void mensajeConfirmacionConexion(QString mensaje, bool estado);
 
     /*Signals que permiten ir comunicandose con la UI para poder realizar las operaciones de eliminacion*/

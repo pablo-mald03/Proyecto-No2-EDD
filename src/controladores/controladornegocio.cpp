@@ -203,11 +203,38 @@ void ControladorNegocio::prepararLogParaDescargaProductos(){
 /*Metodo que permite insertar una sucursal*/
 void ControladorNegocio::insercionSucursal(const std::string &_id,const std::string &_nombre, const std::string &_ubicacion, double _ingreso, double _despacho, double _preparacion){
 
+    QElapsedTimer timer;
+    timer.start();
+
+    try {
+        this->gestorMapeo->insertarSucursal(_id, _nombre, _ubicacion,
+                                            _ingreso, _preparacion, _despacho);
+
+        emit logInsertGrafo(
+            QString::fromStdString("Sucursal [ " + _nombre + " ] agregada correctamente."), "green");
+
+    } catch (const std::exception &e) {
+        emit logInsertGrafo("Error al insertar: " +
+                                    QString::fromStdString(e.what()),
+                                "red");
+    }
+
+    double tiempoTotalMs = timer.elapsed();
+
+    emit tiempoProcesoInsercionGrafo(tiempoTotalMs);
+    emit actualizacionCombos(this->gestorMapeo->getGrafo()->getNodos());
 }
 
 /*Metodo que permite conectar una sucursal con otra*/
 void  ControladorNegocio::conexionSucursal(const std::string &_Origen, const std::string &_Destino,double _tiempo,double _costo){
 
+    try {
+        this->gestorMapeo->insertarConexion(_Origen, _Destino, _tiempo, _costo);
+        emit mensajeConfirmacionConexion(QString::fromStdString("Conexion entre sucursales { " + _Origen + " -> " + _Destino + " } agregada."), true);
+
+    } catch (const std::exception& e) {
+        emit mensajeConfirmacionConexion(QString::fromStdString(e.what()), false);
+    }
 }
 
 /*Metodo que permite eliminar una sucursal*/
