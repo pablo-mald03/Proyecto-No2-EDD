@@ -4,23 +4,15 @@
 #include <QWidget>
 #include <QGraphicsScene>
 #include <QGraphicsLineItem>
+#include "conexion.h"
+#include "grafo.h"
 #include "graphicsviewzoom.h"
 #include "nodografico.h"
 
 #include <QHash>
 #include <QList>
+#include "sucursal.h"
 
-//SUCURSALES HARDCODEADAS PENDIENTE INTEGRACION REAL
-struct SucursalMock {
-    QString id;
-    QString nombre;
-};
-
-//CONEXIONES HARDCODEADAS PENDIENTE INTEGRACION REAL
-struct ConexionMock {
-    QString origenId;
-    QString destinoId;
-};
 
 namespace Ui {
 class PantallaVerSucursales;
@@ -36,8 +28,8 @@ public:
 
     std::string codigoSeleccionado;
 
-    /*Metodo que permite reiniciar el estado de lo seleccionado en el combo*/
-    void inicializarDatos();
+    /*Metodo que permite inicializar la red del grafo*/
+    void inicializarRed(Grafo * referenciaGrafo);
 
 private:
     Ui::PantallaVerSucursales *ui;
@@ -49,15 +41,19 @@ private:
     QHash<QString, NodoGrafico*> nodosRenderizados;
 
     // Metodos que permiten ir construyendo los nodos
-    void dibujarNodos(const QList<SucursalMock> &sucursales);
-    void dibujarAristas(const QList<ConexionMock> &conexiones);
-    void renderizarGrafoPrueba();
+    void dibujarNodos(const std::vector<Sucursal*> &sucursales) ;
+    void dibujarAristas(const std::vector<Sucursal*> &nodos,
+                                               const std::vector<std::vector<Conexion*>> &matriz);
+
+    /*Metodo que permite reiniciar el estado de lo seleccionado en el combo*/
+    void inicializarDatos(const std::vector<Sucursal*>& sucursales);
+
+    void cargarGrafo(const std::vector<Sucursal *> &nodos,
+                     const std::vector<std::vector<Conexion *>> &matriz);
 
     /*Metodo que permite inicializar el comboBox con el grafo actual*/
-    void inicializarCombo();
+    void inicializarCombo(const std::vector<Sucursal*>& sucursales);
 
-    /*METODO HARDCODEADO*/
-    SucursalMock buscarEnHashHardcoded(QString id);
 
 private slots:
     void on_btnViajar_clicked();

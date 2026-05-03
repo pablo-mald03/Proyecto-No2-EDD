@@ -44,7 +44,6 @@ private:
 
     std::vector<std::vector<QString>> parsearCSV(const QString &contenido);
 
-
     /*Metodo para descargar el log de errores*/
     void descargarLogErrores(const QString &contenido);
 

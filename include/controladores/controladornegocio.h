@@ -13,6 +13,9 @@ public:
     explicit ControladorNegocio(QObject *parent = nullptr);
     ~ControladorNegocio();
 
+    /*Metodo que permite obtener la referencia del grafo*/
+    Grafo * obtenerGrafo() const;
+
 private:
     /*Instancia que permite manejar toda la logica de negocio de las sucursales*/
     GestorMapa * gestorMapeo = nullptr;

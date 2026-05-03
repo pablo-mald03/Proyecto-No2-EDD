@@ -1,4 +1,5 @@
 #include "pantallaversucursales.h"
+
 #include "ui_pantallaversucursales.h"
 #include <QDebug>
 #include <QtMath>
@@ -25,8 +26,12 @@ PantallaVerSucursales::PantallaVerSucursales(QWidget *parent)
     this->ui->verticalLayout->replaceWidget(ui->graphicsView, this->zoomView);
 
     ui->graphicsView->hide();
+}
 
-    renderizarGrafoPrueba();
+/*Metodo que permite inicializar la red del grafo*/
+void PantallaVerSucursales::inicializarRed(Grafo * referenciaGrafo){
+    this->cargarGrafo(referenciaGrafo->getNodos(),referenciaGrafo->getMatriz());
+    this->inicializarDatos(referenciaGrafo->getNodos());
 }
 
 /*Metodo que permite procesar el click y emitir el signal hacia el controlador*/
@@ -41,100 +46,103 @@ PantallaVerSucursales::~PantallaVerSucursales()
 }
 
 /*Metodo que permite dibujar los nodos*/
-void PantallaVerSucursales::dibujarNodos(const QList<SucursalMock> &sucursales) {
+void PantallaVerSucursales::dibujarNodos(const std::vector<Sucursal*> &sucursales) {
     int totalNodos = sucursales.size();
-    int radioCirculo = 150; // Qué tan separadas estarán las bolitas
+    if (totalNodos == 0) return;
+
+    double factorExpansion = 220.0;
+    double anguloPaso = 1.3;
 
     for (int i = 0; i < totalNodos; ++i) {
-        SucursalMock suc = sucursales[i];
+        Sucursal* suc = sucursales[i];
+        QString idQt = QString::fromStdString(suc->getId());
+        QString nombreQt = QString::fromStdString(suc->getNombre());
 
-        NodoGrafico *nodo = new NodoGrafico(suc.id, suc.nombre, QColor(0x3d5afe), false);
+        NodoGrafico *nodo = new NodoGrafico(idQt, nombreQt, QColor(0x3d5afe), false);
 
-        double angulo = (2.0 * M_PI * i) / totalNodos;
-        double x = radioCirculo * qCos(angulo);
-        double y = radioCirculo * qSin(angulo);
+        double angulo = i * anguloPaso;
+        double radio = factorExpansion * angulo;
+
+        double x = radio * qCos(angulo);
+        double y = radio * qSin(angulo);
+
         nodo->setPos(x, y);
-
         escena->addItem(nodo);
-        nodosRenderizados.insert(suc.id, nodo);
+        nodosRenderizados.insert(idQt, nodo);
         connect(nodo, &NodoGrafico::seleccionado, this, &PantallaVerSucursales::procesarClicNodo);
     }
 }
 
-/*Metodo que permite dibujar las aristas del grafo*/
-void PantallaVerSucursales::dibujarAristas(const QList<ConexionMock> &conexiones) {
-    QPen penArista(Qt::lightGray, 3, Qt::SolidLine);
+/*Metodo que permite dibujar las aristas del grafo desde la matriz de adyacencia*/
+void PantallaVerSucursales::dibujarAristas(const std::vector<Sucursal*> &nodos,
+                                           const std::vector<std::vector<Conexion*>> &matriz) {
+    QPen penArista(Qt::lightGray, 2, Qt::SolidLine);
 
-    for (const ConexionMock &conexion : conexiones) {
-        if (nodosRenderizados.contains(conexion.origenId) && nodosRenderizados.contains(conexion.destinoId)) {
+    int n = nodos.size();
 
-            NodoGrafico *origen = nodosRenderizados[conexion.origenId];
-            NodoGrafico *destino = nodosRenderizados[conexion.destinoId];
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            Conexion* conexion = matriz[i][j];
 
-            QGraphicsLineItem *linea = new QGraphicsLineItem(
-                origen->pos().x(), origen->pos().y(),
-                destino->pos().x(), destino->pos().y()
-                );
+            if (conexion != nullptr && conexion->getExiste()) {
+                QString idOrigen = QString::fromStdString(nodos[i]->getId());
+                QString idDestino = QString::fromStdString(nodos[j]->getId());
 
-            linea->setPen(penArista);
-            linea->setZValue(0);
-            escena->addItem(linea);
-        } else {
-            qDebug() << "Error: Se intentó conectar un nodo que no está renderizado.";
+                if (nodosRenderizados.contains(idOrigen) && nodosRenderizados.contains(idDestino)) {
+                    NodoGrafico *u = nodosRenderizados[idOrigen];
+                    NodoGrafico *v = nodosRenderizados[idDestino];
+
+                    QGraphicsLineItem *linea = new QGraphicsLineItem(
+                        u->pos().x(), u->pos().y(),
+                        v->pos().x(), v->pos().y()
+                        );
+
+                    linea->setPen(penArista);
+                    linea->setZValue(-1);
+                    escena->addItem(linea);
+                }
+            }
         }
     }
 }
 
-// Método temporal para probar todo
-void PantallaVerSucursales::renderizarGrafoPrueba() {
+//Metodo que permite mostrar el grafo
+void PantallaVerSucursales::cargarGrafo(const std::vector<Sucursal*>& nodos,
+                                            const std::vector<std::vector<Conexion*>>& matriz) {
     escena->clear();
     nodosRenderizados.clear();
 
-    QList<SucursalMock> listaSucursales = {
-        {"101", "Central"}, {"102", "Norte"}, {"103", "Sur"}, {"104", "Este"}
-    };
+    if (nodos.empty()) return;
 
-    QList<ConexionMock> listaConexiones = {
-        {"101", "102"}, {"101", "103"}, {"102", "104"}, {"103", "104"}
-    };
+    dibujarNodos(nodos);
 
-    dibujarNodos(listaSucursales);
-    dibujarAristas(listaConexiones);
+    dibujarAristas(nodos, matriz);
+
+    ui->graphicsView->setSceneRect(escena->itemsBoundingRect().adjusted(-50, -50, 50, 50));
 }
 
 /*Metodo que permite inicializar el comboBox*/
-void PantallaVerSucursales::inicializarCombo() {
-
+void PantallaVerSucursales::inicializarCombo(const std::vector<Sucursal*>& sucursales) {
     ui->comboBox->blockSignals(true);
     ui->comboBox->clear();
 
-    ui->comboBox->addItem("Sucursal Central - Ciudad", "ID_001");
-    ui->comboBox->addItem("Sucursal Norte - Petén", "ID_002");
-    ui->comboBox->addItem("Sucursal Occidente - Xela", "ID_003");
+    for (Sucursal* suc : sucursales) {
+        QString nombreVisible = QString::fromStdString(suc->getNombre());
+        QString idOculto = QString::fromStdString(suc->getId());
 
+        ui->comboBox->addItem(nombreVisible, idOculto);
+    }
+
+    ui->comboBox->setPlaceholderText("Seleccione una sucursal...");
     ui->comboBox->setCurrentIndex(-1);
-
     ui->comboBox->blockSignals(false);
 }
 
-/*METODO PROVISIONAL*/
-SucursalMock PantallaVerSucursales::buscarEnHashHardcoded(QString id) {
-    SucursalMock s;
-    if (id == "ID_001") {
-        s = {"ID_001", "Sucursal Central"};
-    } else if (id == "ID_002") {
-        s = {"ID_002", "Sucursal Norte"};
-    } else {
-        s = {"ID_003", "Sucursal Occidente"};
-    }
-    return s;
-}
-
 /*Metodo que permite reiniciar el estado de los parametros*/
-void PantallaVerSucursales::inicializarDatos(){
+void PantallaVerSucursales::inicializarDatos(const std::vector<Sucursal*>& sucursales){
 
     this->codigoSeleccionado = "";
-    this->inicializarCombo();
+    this->inicializarCombo(sucursales);
 }
 
 
@@ -159,8 +167,6 @@ void PantallaVerSucursales::on_comboBox_currentIndexChanged(int index)
     QString idSeleccionado = ui->comboBox->currentData().toString();
 
     if (idSeleccionado.isEmpty()) return;
-
-    SucursalMock datos = buscarEnHashHardcoded(idSeleccionado);
 
     this->codigoSeleccionado = idSeleccionado.toStdString();
 

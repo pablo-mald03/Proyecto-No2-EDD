@@ -47,10 +47,10 @@ public:
     /*Metodo que permite evaluar si tiene errores*/
     bool tieneErrores(int parametro) const;
 
+    Grafo * getGrafo() const;
+
 private:
     Grafo * grafoSucursales = nullptr;
-
-
 
     /*Lista de logs de errores*/
     ListaEnlazada<ErroresLectura> * listaErroresSucursales = nullptr;

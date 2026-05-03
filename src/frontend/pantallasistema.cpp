@@ -212,8 +212,8 @@ void PantallaSistema::mostrarVerSucursales(){
     }
 
     this->ui->stackedWidget->setCurrentWidget(this->pantallaVistaSucursales);
-    this->pantallaVistaSucursales->inicializarDatos();
     this->ui->labelTasks->setText("Ver Sucursales");
+    this->pantallaVistaSucursales->inicializarRed(this->controladorGeneral->obtenerGrafo());
 }
 
 /*Metodo que permite mostrar la pantalla de ver envios*/

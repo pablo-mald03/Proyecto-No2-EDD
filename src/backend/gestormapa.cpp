@@ -30,6 +30,10 @@ GestorMapa::~GestorMapa(){
         this->listaErroresProductos = nullptr;
     }
 }
+/*Metodo que permite obtener la referencia del grafo*/
+Grafo * GestorMapa::getGrafo() const{
+    return this->grafoSucursales;
+}
 
 /*Metodo que permite insertar una nueva sucursal*/
 void GestorMapa::insertarSucursal(const std::string &id, const std::string &nombre, const std::string &ubicacion,

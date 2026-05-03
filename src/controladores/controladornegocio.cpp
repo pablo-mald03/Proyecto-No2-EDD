@@ -17,6 +17,11 @@ ControladorNegocio::~ControladorNegocio(){
 
 }
 
+/*Metodo que permite obtener la referencia del grafo*/
+Grafo * ControladorNegocio::obtenerGrafo() const{
+    return this->gestorMapeo->getGrafo();
+}
+
 /*Metodo que verifica si hay errores en la carga de sucursales*/
 /*
 * 1 -> sucursales
