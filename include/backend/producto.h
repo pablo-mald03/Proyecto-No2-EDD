@@ -36,6 +36,7 @@ public:
     void setMarca(const std::string &_marca);
     void setPrecio(double _precio);
     void setStock(int _stock);
+    std::string getToString() const;
 
 };
 

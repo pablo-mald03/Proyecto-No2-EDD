@@ -23,6 +23,9 @@ private:
     /*Metodo que verifica si hay errores en la carga de sucursales*/
     void verificarErroresSucursales(int parametro);
 
+    /*Metodo que permite vaciar las sucursales cada que se cargan nuevas*/
+    void vaciarSucursales();
+
 public slots:
     void procesarCsvSucursal(const std::vector<std::vector<QString>> & data);
     void procesarCsvConexion(const std::vector<std::vector<QString>> & data);

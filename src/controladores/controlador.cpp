@@ -1,7 +1,6 @@
 #include "controlador.h"
 #include "deleteexception.h"
 #include "insertexception.h"
-#include "readercsvexception.h"
 #include<QElapsedTimer>
 
 
@@ -124,8 +123,9 @@ void Controlador::procesarCsv(const std::vector<std::vector<QString>> & data){
         }
 
         double precio; int stock; QString msj;
+
         if (!this->gestorBackend->validarFilaCsvProducto(fila, precio, stock, msj)) {
-            emit logCargaCsv("Error en la Fila: " + QString::number(i + 1) + ": " + msj, "red");
+            emit logCargaCsv(QString::number(i + 1) + ". Error: " + msj, "red");
             this->gestorBackend->agregarErrorLista(msj.toStdString(), (i + 1));
             errores++;
             continue;
@@ -141,7 +141,9 @@ void Controlador::procesarCsv(const std::vector<std::vector<QString>> & data){
         nuevoProd.setStock(stock);
 
         productosListos.push_back(nuevoProd);
-        //emit logCargaCsv(lineaLimpia, "white");
+        std::string infoProducto = std::to_string(i + 1) + ". " + nuevoProd.getToString();
+
+        emit logCargaCsv(QString::fromStdString(infoProducto), "white");
     }
 
     if (!productosListos.empty()) {
@@ -152,7 +154,7 @@ void Controlador::procesarCsv(const std::vector<std::vector<QString>> & data){
         this->insertarArbolBMasCsv(productosListos);
         this->insertarTablaHashCsv(productosListos);
 
-        emit logCargaCsv("Proceso finalizado. Filas a insertar: " + QString::number(productosListos.size()), "green");
+        emit logCargaCsv("Proceso finalizado. Filas a insertar: " + QString::number(productosListos.size()), "orange");
 
         /*Orden base*/
         this->gestorBackend->generarListaOrdenada(1);
@@ -178,15 +180,20 @@ void Controlador::insertarArbolAvlCsv(const std::vector<Producto> &productosList
 
     int filaActual = 1;
 
+    int insertadas = 0;
+    int errores = 0;
+
     for(const Producto &product : productosListos) {
 
         try{
             this->gestorBackend->insertarArbolAvl(product.getNombre(), product.getCodigoBarra(), product.getCategoria(),
                                                   product.getFechaExpiracion(), product.getMarca(), product.getPrecio(), product.getStock());
-            emit logArbolAvl(QString::number(filaActual)+". Insertado: " + QString::fromStdString(product.getCodigoBarra()), "green");
+            emit logArbolAvl(QString::number(filaActual)+ ". Producto ID: {" + QString::fromStdString(product.getCodigoBarra() ) + "} insertado correctamente", "green");
+            insertadas++;
         }
         catch (const std::exception& ex) {
             emit logArbolAvl("Error en insercion: " + QString::fromStdString(ex.what()) + ". Fila: " + QString::number(filaActual) , "red");
+            errores++;
         }
 
         filaActual++;
@@ -194,6 +201,8 @@ void Controlador::insertarArbolAvlCsv(const std::vector<Producto> &productosList
 
     double tiempo = timer.nsecsElapsed() / 1000000.0;
     emit tiempoProceso(1, tiempo);
+    emit logArbolAvl("--- INSERCION FINALIZADA | Exitos: " + QString::number(insertadas) + " | Errores: " + QString::number(errores) + " ---", "orange");
+
 }
 
 
@@ -205,6 +214,8 @@ void Controlador::insertarArbolBCsv(const std::vector<Producto> &productosListos
     timer.start();
 
     int filaActual = 1;
+    int insertadas = 0;
+    int errores = 0;
 
     for(const Producto &product : productosListos) {
 
@@ -212,10 +223,12 @@ void Controlador::insertarArbolBCsv(const std::vector<Producto> &productosListos
 
             this->gestorBackend->insertarArbolB(product.getNombre(), product.getCodigoBarra(), product.getCategoria(),
                                                 product.getFechaExpiracion(), product.getMarca(), product.getPrecio(), product.getStock());
-            emit logArbolB(QString::number(filaActual)+". Insertado: " + QString::fromStdString(product.getCodigoBarra()), "green");
+            emit logArbolB(QString::number(filaActual)+ ". Producto ID: {" + QString::fromStdString(product.getCodigoBarra() ) + "} insertado correctamente", "green");
+           insertadas++;
         }
         catch (const std::exception& ex) {
             emit logArbolB("Error en insercion: " + QString::fromStdString(ex.what()) + ". Fila: " + QString::number(filaActual) , "red");
+            errores++;
         }
 
         filaActual++;
@@ -223,6 +236,8 @@ void Controlador::insertarArbolBCsv(const std::vector<Producto> &productosListos
 
     double tiempo = timer.nsecsElapsed() / 1000000.0;
     emit tiempoProceso(2, tiempo);
+    emit logArbolB("--- INSERCION FINALIZADA | Exitos: " + QString::number(insertadas) + " | Errores: " + QString::number(errores) + " ---", "orange");
+
 }
 
 
@@ -233,6 +248,8 @@ void Controlador::insertarArbolBMasCsv(const std::vector<Producto> &productosLis
     timer.start();
 
     int filaActual = 1;
+    int insertadas = 0;
+    int errores = 0;
 
     for(const Producto &product : productosListos) {
 
@@ -240,10 +257,12 @@ void Controlador::insertarArbolBMasCsv(const std::vector<Producto> &productosLis
 
             this->gestorBackend->insertarArbolBMas(product.getNombre(), product.getCodigoBarra(), product.getCategoria(),
                                                    product.getFechaExpiracion(), product.getMarca(), product.getPrecio(), product.getStock());
-            emit logArbolBMas(QString::number(filaActual)+". Insertado: " + QString::fromStdString(product.getCodigoBarra()), "green");
+            emit logArbolBMas(QString::number(filaActual)+ ". Producto ID: {" + QString::fromStdString(product.getCodigoBarra() ) + "} insertado correctamente", "green");
+            insertadas++;
         }
         catch (const std::exception& ex) {
             emit logArbolBMas("Error en insercion: " + QString::fromStdString(ex.what()) + ". Fila: " + QString::number(filaActual) , "red");
+            errores++;
         }
 
         filaActual++;
@@ -251,6 +270,8 @@ void Controlador::insertarArbolBMasCsv(const std::vector<Producto> &productosLis
 
     double tiempo = timer.nsecsElapsed() / 1000000.0;
     emit tiempoProceso(3, tiempo);
+    emit logArbolBMas("--- INSERCION FINALIZADA | Exitos: " + QString::number(insertadas) + " | Errores: " + QString::number(errores) + " ---", "orange");
+
 }
 
 
@@ -261,7 +282,8 @@ void Controlador::insertarListaCsv(const std::vector<Producto> &productosListos)
     timer.start();
 
     int filaActual = 1;
-
+    int insertadas = 0;
+    int errores = 0;
     for(const Producto &product : productosListos) {
 
         try{
@@ -269,11 +291,12 @@ void Controlador::insertarListaCsv(const std::vector<Producto> &productosListos)
             this->gestorBackend->insertarListasCsv(product.getNombre(), product.getCodigoBarra(), product.getCategoria(),
                                                    product.getFechaExpiracion(), product.getMarca(), product.getPrecio(), product.getStock());
 
-            emit logLista(QString::number(filaActual)+". Insertado: " + QString::fromStdString(product.getCodigoBarra()), "green");
-
+            emit logLista(QString::number(filaActual)+ ". Producto ID: {" + QString::fromStdString(product.getCodigoBarra() ) + "} insertado correctamente", "green");
+            insertadas++;
         }
         catch (const std::exception& ex) {
             emit logLista("Error inesperado: " + QString::fromStdString(ex.what()) + ". Fila: " + QString::number(filaActual) , "red");
+            errores++;
         }
 
         filaActual++;
@@ -281,6 +304,8 @@ void Controlador::insertarListaCsv(const std::vector<Producto> &productosListos)
 
     double tiempo = timer.nsecsElapsed() / 1000000.0;
     emit tiempoProceso(4, tiempo);
+    emit logLista("--- INSERCION FINALIZADA | Exitos: " + QString::number(insertadas) + " | Errores: " + QString::number(errores) + " ---", "orange");
+
 }
 
 /*Metodo utilizado para insertar los datos dentro de la tabla hash*/
@@ -290,16 +315,20 @@ void Controlador::insertarTablaHashCsv(const std::vector<Producto> &productosLis
     timer.start();
 
     int filaActual = 1;
+    int insertadas = 0;
+    int errores = 0;
 
     for(const Producto &product : productosListos) {
 
         try{
             this->gestorBackend->insertarTablaHash(product.getNombre(), product.getCodigoBarra(), product.getCategoria(),
                                                   product.getFechaExpiracion(), product.getMarca(), product.getPrecio(), product.getStock());
-            emit logHash(QString::number(filaActual)+". Insertado: " + QString::fromStdString(product.getCodigoBarra()), "green");
+            emit logHash(QString::number(filaActual)+ ". Producto ID: {" + QString::fromStdString(product.getCodigoBarra() ) + "} insertado correctamente", "green");
+            insertadas++;
         }
         catch (const std::exception& ex) {
             emit logHash("Error en insercion: " + QString::fromStdString(ex.what()) + ". Fila: " + QString::number(filaActual) , "red");
+            errores++;
         }
 
         filaActual++;
@@ -307,6 +336,8 @@ void Controlador::insertarTablaHashCsv(const std::vector<Producto> &productosLis
 
     double tiempo = timer.nsecsElapsed() / 1000000.0;
     emit tiempoProceso(5, tiempo);
+    emit logHash("--- INSERCION FINALIZADA | Exitos: " + QString::number(insertadas) + " | Errores: " + QString::number(errores) + " ---", "orange");
+
 }
 
 /*Metodo que permite insertar los productos

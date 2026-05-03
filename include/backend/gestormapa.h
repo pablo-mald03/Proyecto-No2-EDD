@@ -8,6 +8,9 @@ public:
     GestorMapa();
     ~GestorMapa();
 
+    /*Metodo principal que permite limpiar por completo toda la informacion del almacen de la sucursal*/
+    void limpiarRegistros();
+
     /*Metodo que permite insertar una nueva sucursal*/
     void insertarSucursal(const std::string &id, const std::string &nombre, const std::string &ubicacion,
                           double _ingreso, double _preparacion, double _despacho);
@@ -60,6 +63,9 @@ private:
 
     /*Lista de logs de productos*/
     ListaEnlazada<ErroresLectura> * listaErroresProductos = nullptr;
+
+    /*Metodo que permite limpiar las estructuras totalmente*/
+    void limpiarEstrucuturas();
 };
 
 #endif // GESTORMAPA_H

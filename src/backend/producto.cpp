@@ -1,4 +1,5 @@
 #include "producto.h"
+#include <sstream>
 
 /*Constructor por defecto*/
 
@@ -79,4 +80,19 @@ void Producto::setPrecio(double _precio){
 
 void Producto::setStock(int _stock){
     this->stock = _stock;
+}
+
+/*Metodo que permite devolver el string de los campos*/
+std::string Producto::getToString() const {
+    std::stringstream ss;
+
+    ss << "\"" << this->nombre << "\", "
+       << "\"" << this->codigoBarra << "\", "
+       << "\"" << this->categoria << "\", "
+       << "\"" << this->fechaExpiracion << "\", "
+       << "\"" << this->marca << "\", "
+       << "\"" << this->precio << "\", "
+       << "\"" << this->stock << "\"";
+
+    return ss.str();
 }

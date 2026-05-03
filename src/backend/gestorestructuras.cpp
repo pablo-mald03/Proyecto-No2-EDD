@@ -983,7 +983,7 @@ bool GestorEstructuras::validarFilaCsvProducto(const std::vector<QString>& fila,
 
     for (int i = 0; i < 5; ++i) {
         if (fila[i].trimmed().isEmpty()) {
-            error = "Error: Campos de texto no pueden estar vacíos.";
+            error = "Error: Campos de texto no pueden estar vacios.";
             return false;
         }
     }

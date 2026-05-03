@@ -11,6 +11,12 @@ GestorMapa::GestorMapa()
 /*Destructor*/
 GestorMapa::~GestorMapa(){
 
+    this->limpiarEstrucuturas();
+}
+
+/*Metodo que permite reiniciar totalmente todas las estrucuturas*/
+void GestorMapa::limpiarEstrucuturas(){
+
     if(this->grafoSucursales != nullptr){
         delete this->grafoSucursales;
     }
@@ -30,6 +36,18 @@ GestorMapa::~GestorMapa(){
         this->listaErroresProductos = nullptr;
     }
 }
+
+/*Metodo que permite reiniciar los registros de todo el gestor*/
+void GestorMapa::limpiarRegistros(){
+
+    this->limpiarEstrucuturas();
+
+    this->grafoSucursales = new Grafo();
+    this->listaErroresSucursales= new ListaEnlazada<ErroresLectura>();
+    this->listaErroresEnvios=new ListaEnlazada<ErroresLectura>();
+    this->listaErroresProductos= new ListaEnlazada<ErroresLectura>();
+}
+
 /*Metodo que permite obtener la referencia del grafo*/
 Grafo * GestorMapa::getGrafo() const{
     return this->grafoSucursales;

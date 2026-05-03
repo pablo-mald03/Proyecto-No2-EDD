@@ -40,10 +40,17 @@ void ControladorNegocio::verificarErroresSucursales(int parametro){
     }
 }
 
+/*Metodo que permite limpiar el backend (sucursales almacenadas)*/
+void ControladorNegocio::vaciarSucursales(){
+    this->gestorMapeo->limpiarRegistros();
+}
 
 /*--------Metodos que permiten dar informacion en los logs de la carga de csv de sucursales---------*/
 
 void ControladorNegocio::procesarCsvSucursal(const std::vector<std::vector<QString>> & data){
+
+    this->vaciarSucursales();
+
     emit logGrafoSucursales("--- INICIANDO CARGA DE SUCURSALES ---", "orange");
 
     QElapsedTimer timer;
