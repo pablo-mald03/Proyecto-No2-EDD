@@ -70,6 +70,7 @@ PantallaEliminarSucursal::~PantallaEliminarSucursal()
     delete ui;
 }
 
+/*Metodo que permite notificar si se elimino una sucursal*/
 void PantallaEliminarSucursal::on_btnEliminar_clicked()
 {
 

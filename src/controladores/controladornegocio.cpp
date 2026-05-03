@@ -240,6 +240,25 @@ void  ControladorNegocio::conexionSucursal(const std::string &_Origen, const std
 /*Metodo que permite eliminar una sucursal*/
 void ControladorNegocio::eliminacionSucursal(const std::string &_id){
 
+    QElapsedTimer timer;
+    timer.start();
+
+    try {
+        this->gestorMapeo->eliminarSucursal(_id);
+
+        emit logEliminacionGrafo(
+            QString::fromStdString("La sucursal con el ID: {"+_id+"} eliminada correctamente."), "green");
+
+    } catch (const std::exception &e) {
+        emit logEliminacionGrafo("Error al eliminar: " +
+                                      QString::fromStdString(e.what()),
+                                  "red");
+    }
+
+    double tiempoTotalMs = timer.elapsed();
+
+    emit tiempoProcesoEliminacionGrafo(tiempoTotalMs);
+
 }
 
 /*Metodo que permite modificar una sucursal*/
