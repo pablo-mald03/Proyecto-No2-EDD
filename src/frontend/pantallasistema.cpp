@@ -217,6 +217,10 @@ void PantallaSistema::mostrarVerSucursales(){
         this->ui->stackedWidget->addWidget(this->pantallaVistaSucursales);
 
         connect(this->pantallaVistaSucursales, &PantallaVerSucursales::navegarASucursal, this->controladorGeneral, &ControladorNegocio::cargarSucursal);
+
+        connect(this->pantallaVistaSucursales, &PantallaVerSucursales::solicitarGraphvizGrafo, this->controladorGeneral, &ControladorNegocio::generarGraphvizGrafo);
+
+        connect(this->controladorGeneral, &ControladorNegocio::enviarGraphvizGrafo, this->pantallaVistaSucursales, &PantallaVerSucursales::generarGraphviz);
     }
 
     this->ui->stackedWidget->setCurrentWidget(this->pantallaVistaSucursales);

@@ -303,6 +303,12 @@ void ControladorNegocio::cargarSucursal(const std::string &id){
     emit abrirSucursal(sucursalEncontrada, this->obtenerGrafo());
 }
 
+
+/*Metodo que permite generar el graphviz del grafo*/
+void ControladorNegocio::generarGraphvizGrafo(){
+    emit enviarGraphvizGrafo(this->gestorMapeo->obtenerGraphvizGrafo());
+}
+
 /*Metodo que permite retornar la sucursal en donde se puede visualizar los viajes*/
 void ControladorNegocio::buscarEnvios(std::string id){
 

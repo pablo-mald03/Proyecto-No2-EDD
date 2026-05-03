@@ -140,7 +140,11 @@ std::string Grafo::generarGraphviz() const {
     std::ostringstream oss;
 
     oss << "digraph GrafoSucursales {\n";
-    oss << "    node [shape=circle, style=filled, color=lightblue];\n";
+    oss << "    layout=\"fdp\";\n";
+    oss << "    overlap=false;\n";
+    oss << "    splines=true;\n";
+    oss << "    node [shape=circle, style=filled, color=lightblue, fontname=\"Arial\"];\n";
+    oss << "    edge [fontname=\"Arial\", fontsize=10];\n";
 
     for (size_t i = 0; i < nodos.size(); ++i) {
         oss << "    \"" << nodos[i]->getId() << "\" [label=\""
@@ -151,8 +155,8 @@ std::string Grafo::generarGraphviz() const {
         for (size_t j = 0; j < matriz[i].size(); ++j) {
             if (matriz[i][j]->getExiste()) {
                 oss << "    \"" << nodos[i]->getId() << "\" -> \"" << nodos[j]->getId() << "\" "
-                    << "[label=\"T:" << matriz[i][j]->getTiempo()
-                    << " C:" << matriz[i][j]->getCosto() << "\"];\n";
+                    << "[label=\"T: " << matriz[i][j]->getTiempo()
+                    << "\\nC: " << matriz[i][j]->getCosto() << "\"];\n";
             }
         }
     }

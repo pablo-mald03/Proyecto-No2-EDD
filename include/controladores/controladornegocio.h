@@ -61,6 +61,8 @@ public slots:
     /*Metodo que permite retornar el estado de la pila de envios de una sucursal*/
     void buscarEnvios(std::string id);
 
+    /*Metodo que permite generar el graphviz del grafo*/
+    void generarGraphvizGrafo();
 
 signals:
 
@@ -126,6 +128,9 @@ signals:
 
     /*Metodo que permite ir refrescando los datos de una sucursal*/
     void actualizarEnvio(QString idEnvio, QStringList idsPasados, QString idSiguiente);
+
+    /*Metodo que permite enviar la descarga del graphviz del grafo*/
+    void enviarGraphvizGrafo(std::string graph);
 };
 
 #endif // CONTROLADORNEGOCIO_H

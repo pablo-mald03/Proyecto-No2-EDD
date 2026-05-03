@@ -4,6 +4,13 @@
 #include <QDebug>
 #include <QtMath>
 #include<QMessageBox>
+#include <QFileDialog>
+#include <QProcess>
+#include <QFile>
+#include <QTextStream>
+#include <QDir>
+#include <QDesktopServices>
+#include <QUrl>
 
 PantallaVerSucursales::PantallaVerSucursales(QWidget *parent)
     : QWidget(parent)
@@ -172,4 +179,69 @@ void PantallaVerSucursales::on_comboBox_currentIndexChanged(int index)
 
 }
 
+/*Metodo que permite generar el graphviz del arbol B*/
+void PantallaVerSucursales::generarGraphviz(std::string graph){
+
+    QString rutaImagen = QFileDialog::getSaveFileName(
+        this,
+        "Guardar arbol como imagen",
+        "",
+        "Imagen PNG (*.png)"
+        );
+
+    if (rutaImagen.isEmpty()) return;
+
+    QFileInfo info(rutaImagen);
+    QString rutaBase = info.absolutePath() + "/" + info.baseName();
+    QString dotPath = rutaBase + ".dot";
+
+    QFile file(dotPath);
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QMessageBox::critical(this, "Error", "No se pudo crear el archivo fuente (.dot) temporal.");
+        return;
+    }
+
+    QTextStream out(&file);
+
+    out << QString::fromStdString(graph);
+
+    file.close();
+
+#ifdef Q_OS_WIN
+    QString programa = "C:/Program Files/Graphviz/bin/dot.exe";
+#else
+    QString programa = "dot";
+#endif
+
+    QProcess proceso;
+    QStringList argumentos;
+    argumentos << "-Tpng" << dotPath << "-o" << rutaImagen;
+
+    proceso.start(programa, argumentos);
+
+    if (!proceso.waitForFinished()) {
+        QMessageBox::critical(this, "Error", "No se pudo ejecutar Graphviz.");
+        return;
+    }
+
+    if (QFile::exists(rutaImagen)) {
+
+        QMessageBox::information(this, "Exito",
+                                 "Archivos generados correctamente:\n" +
+                                     info.baseName() + ".png\n" +
+                                     info.baseName() + ".dot");
+        QDesktopServices::openUrl(QUrl::fromLocalFile(rutaImagen));
+
+    } else {
+        QString errorGraphviz = proceso.readAllStandardError();
+        QMessageBox::critical(this, "Error", "Fallo la generacion de la imagen.\nDetalle:\n" + errorGraphviz);
+    }
+}
+
+/*Metodo que permite descargar el graphviz del grafo*/
+void PantallaVerSucursales::on_btnDescargar_clicked()
+{
+    emit solicitarGraphvizGrafo();
+}
 

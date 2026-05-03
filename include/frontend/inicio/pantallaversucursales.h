@@ -54,6 +54,8 @@ private:
     /*Metodo que permite inicializar el comboBox con el grafo actual*/
     void inicializarCombo(const std::vector<Sucursal*>& sucursales);
 
+public slots:
+    void generarGraphviz(std::string graph);
 
 private slots:
     void on_btnViajar_clicked();
@@ -61,10 +63,13 @@ private slots:
 
     void on_comboBox_currentIndexChanged(int index);
 
+    void on_btnDescargar_clicked();
+
 signals:
     void navegarASucursal(std::string id);
 
-    /*Signal que permite buscar la informacion de una susucral*/
+    /*Signal que permite descargar el graphviz del grafo*/
+    void solicitarGraphvizGrafo();
 
 };
 
