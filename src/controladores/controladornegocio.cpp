@@ -21,7 +21,7 @@ ControladorNegocio::~ControladorNegocio(){
 /*--------Metodos que permiten dar informacion en los logs de la carga de csv de sucursales---------*/
 
 void ControladorNegocio::procesarCsvSucursal(const std::vector<std::vector<QString>> & data){
-    emit logCargaCsvSucursales("--- INICIANDO CARGA DE SUCURSALES ---", "blue");
+    emit logGrafoSucursales("--- INICIANDO CARGA DE SUCURSALES ---", "orange");
 
     QElapsedTimer timer;
     timer.start();
@@ -31,6 +31,14 @@ void ControladorNegocio::procesarCsvSucursal(const std::vector<std::vector<QStri
 
     for (size_t i = 0; i < data.size(); ++i) {
         const auto& fila = data[i];
+
+        QStringList listaFila;
+        for(const QString& campo : fila) {
+            listaFila << campo.trimmed();
+        }
+        QString lineaPorComas = listaFila.join(", ");
+
+        emit logCargaCsvSucursales(lineaPorComas, "yellow");
 
         if (i == 0 && fila.size() > 0 && fila[0].trimmed().toUpper() == "ID") {
             continue;
@@ -40,7 +48,7 @@ void ControladorNegocio::procesarCsvSucursal(const std::vector<std::vector<QStri
         QString msjError;
 
         if (!this->gestorMapeo->validarFilaCsvSucursal(fila, tIngreso, tTraspaso, tDespacho, msjError)) {
-            emit logCargaCsvSucursales("Fila " + QString::number(i + 1) + " rechazada: " + msjError, "red");
+            emit logGrafoSucursales("Fila " + QString::number(i + 1) + " rechazada: " + msjError, "red");
             errores++;
             continue;
         }
@@ -49,14 +57,15 @@ void ControladorNegocio::procesarCsvSucursal(const std::vector<std::vector<QStri
         std::string nombreStr = fila[1].trimmed().toStdString();
         std::string ubicacionStr = fila[2].trimmed().toStdString();
 
+
         try {
             this->gestorMapeo->insertarSucursal(idStr, nombreStr, ubicacionStr, tIngreso, tTraspaso, tDespacho);
 
-            emit logCargaCsvSucursales("Sucursal { " + fila[0].trimmed() + " } agregada.", "green");
+            emit logGrafoSucursales("Sucursal { " + fila[0].trimmed() + " } agregada.", "green");
             insertadas++;
 
         } catch (const std::exception& e) {
-            emit logCargaCsvSucursales("Error en fila " + QString::number(i + 1) + ": " + QString::fromStdString(e.what()), "orange");
+            emit logGrafoSucursales("Error en fila " + QString::number(i + 1) + ": " + QString::fromStdString(e.what()), "red");
             errores++;
         }
     }
@@ -65,13 +74,13 @@ void ControladorNegocio::procesarCsvSucursal(const std::vector<std::vector<QStri
 
     emit tiempoProcesoSucursales(1, tiempoTotalMs);
 
-    QString colorResumen = (errores == 0) ? "green" : (insertadas == 0 ? "red" : "orange");
-    emit logCargaCsvSucursales("--- CARGA FINALIZADA | Exitos: " + QString::number(insertadas) + " | Errores: " + QString::number(errores) + " ---", colorResumen);
+    QString colorResumen = (errores == 0) ? "orange" : (insertadas == 0 ? "red" : "yellow");
+    emit logGrafoSucursales("--- CARGA FINALIZADA | Exitos: " + QString::number(insertadas) + " | Errores: " + QString::number(errores) + " ---", colorResumen);
 }
 
 /*Metodo que permite procesar el csv de conexiones entre sucursales*/
 void ControladorNegocio::procesarCsvConexion(const std::vector<std::vector<QString>> & data){
-    emit logCargaCsvSucursales("--- INICIANDO CARGA DE CONEXIONES ---", "blue");
+    emit logGrafoSucursales("--- INICIANDO CARGA DE CONEXIONES ---", "orange");
 
     QElapsedTimer timer;
     timer.start();
@@ -82,6 +91,14 @@ void ControladorNegocio::procesarCsvConexion(const std::vector<std::vector<QStri
     for (size_t i = 0; i < data.size(); ++i) {
         const auto& fila = data[i];
 
+        QStringList listaFila;
+        for(const QString& campo : fila) {
+            listaFila << campo.trimmed();
+        }
+        QString lineaPorComas = listaFila.join(", ");
+
+        emit logCargaCsvSucursales(lineaPorComas, "white");
+
         if (i == 0 && fila.size() > 0 && fila[0].trimmed().toUpper() == "ORIGENID") {
             continue;
         }
@@ -90,7 +107,7 @@ void ControladorNegocio::procesarCsvConexion(const std::vector<std::vector<QStri
         QString msjError;
 
         if (!this->gestorMapeo->validarFilaCsvConexion(fila, tiempo, costo, msjError)) {
-            emit logCargaCsvSucursales("Fila " + QString::number(i + 1) + " rechazada: " + msjError, "red");
+            emit logGrafoSucursales("Fila " + QString::number(i + 1) + " rechazada: " + msjError, "red");
             errores++;
             continue;
         }
@@ -101,11 +118,11 @@ void ControladorNegocio::procesarCsvConexion(const std::vector<std::vector<QStri
         try {
             this->gestorMapeo->insertarConexion(idOrigen, idDestino, tiempo, costo);
 
-            emit logCargaCsvSucursales("Conexion { " + fila[0].trimmed() + " -> " + fila[1].trimmed() + " } agregada.", "green");
+            emit logGrafoSucursales("Conexion { " + fila[0].trimmed() + " -> " + fila[1].trimmed() + " } agregada.", "green");
             insertadas++;
 
         } catch (const std::exception& e) {
-            emit logCargaCsvSucursales("Error en fila " + QString::number(i + 1) + ": " + QString::fromStdString(e.what()), "orange");
+            emit logGrafoSucursales("Error en fila " + QString::number(i + 1) + ": " + QString::fromStdString(e.what()), "red");
             errores++;
         }
     }
@@ -114,19 +131,19 @@ void ControladorNegocio::procesarCsvConexion(const std::vector<std::vector<QStri
 
     emit tiempoProcesoSucursales(1, tiempoTotalMs);
 
-    QString colorResumen = (errores == 0) ? "green" : (insertadas == 0 ? "red" : "orange");
-    emit logCargaCsvSucursales("--- CARGA FINALIZADA | Exitos: " + QString::number(insertadas) + " | Errores: " + QString::number(errores) + " ---", colorResumen);
+    QString colorResumen = (errores == 0) ? "orange" : (insertadas == 0 ? "red" : "yellow");
+    emit logGrafoSucursales("--- CARGA FINALIZADA | Exitos: " + QString::number(insertadas) + " | Errores: " + QString::number(errores) + " ---", colorResumen);
 }
 
-
+/*Metodo que permite procesar el csv de envios entre sucursales*/
 void ControladorNegocio::procesarCsvEnvios(const std::vector<std::vector<QString>> & data){
 
 }
 
+/*Metodo que permite procesar csv*/
 void ControladorNegocio::procesarCsvProductos(const std::vector<std::vector<QString>> & data){
 
 }
-
 
 /*--------Metodos que permiten dar informacion en los logs de la carga de csv de sucursales---------*/
 

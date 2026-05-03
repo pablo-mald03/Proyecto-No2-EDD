@@ -4,7 +4,7 @@
 #include <QWidget>
 
 /*STRUCT TEMPORAL PENDIENTE REMOVER*/
-struct Sucursal {
+struct Sucursal1 {
     QString id;
     QString nombre;
     QString ubicacion;
@@ -34,7 +34,7 @@ private:
     void limpiarDatos();
     void limpiarLogs();
 
-    Sucursal buscarEnHashHardcoded(QString id);
+    Sucursal1 buscarEnHashHardcoded(QString id);
 
 public slots:
     void appendGrafoLog(QString mensaje, QString color);

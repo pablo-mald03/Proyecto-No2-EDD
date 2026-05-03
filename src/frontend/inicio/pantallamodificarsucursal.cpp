@@ -127,8 +127,8 @@ void PantallaModificarSucursal::inicializarCombo() {
 }
 
 /*METODO PROVISIONAL*/
-Sucursal PantallaModificarSucursal::buscarEnHashHardcoded(QString id) {
-    Sucursal s;
+Sucursal1 PantallaModificarSucursal::buscarEnHashHardcoded(QString id) {
+    Sucursal1 s;
     if (id == "ID_001") {
         s = {"ID_001", "Sucursal Central", "Ciudad de Guatemala"};
     } else if (id == "ID_002") {
@@ -155,7 +155,7 @@ void PantallaModificarSucursal::on_comboBox_currentIndexChanged(int index)
 
     if (idSeleccionado.isEmpty()) return;
 
-    Sucursal datos = buscarEnHashHardcoded(idSeleccionado);
+    Sucursal1 datos = buscarEnHashHardcoded(idSeleccionado);
 
     ui->textID->setText(datos.id);
     ui->textNombre->setText(datos.nombre);

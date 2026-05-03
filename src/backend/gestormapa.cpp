@@ -88,6 +88,7 @@ bool GestorMapa::validarFilaCsvSucursal(const std::vector<QString>& fila, double
 
 /*Metodo que permite validar el formato csv de las conexiones*/
 bool GestorMapa::validarFilaCsvConexion(const std::vector<QString>& fila, double& tiempo, double& costo, QString& error) {
+
     if (fila.size() != 4) {
         error = "Formato invalido: Se esperaban 4 columnas, se recibieron " + QString::number(fila.size());
         return false;
