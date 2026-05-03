@@ -29,7 +29,6 @@ PantallaVerEnvios::PantallaVerEnvios(QWidget *parent)
 
 /*Metodo que permite procesar el click y emitir el signal hacia el controlador*/
 void PantallaVerEnvios::procesarClicNodo(QString id) {
-    qDebug() << "Navegando hacia los inventarios de la sucursal:" << id;
     emit navegarASucursal(id.toStdString());
 }
 
@@ -188,27 +187,13 @@ void PantallaVerEnvios::inicializarDatos(){
     this->inicializarCombo();
 }
 
-/*Metodo que permite ver los envios de la sucursal*/
-void PantallaVerEnvios::on_btnEnvios_clicked()
-{
-    if(this->codigoSeleccionado.empty()){
-
-        QMessageBox::warning(this, "Sucursal no seleccionada",
-                             "Por favor selecciona la sucursal a la que quieres ver.");
-        return;
-    }
-
-    emit verificarEnvios(this->codigoSeleccionado );
-
-}
-
 /*Permite actualizar el estado de envios de las sucursales*/
 void PantallaVerEnvios::on_comboBox_currentIndexChanged(int index)
 {
 
     if (index == -1) return;
 
-    QString idSeleccionado = ui->comboBox->currentData().toString();
+    QString idSeleccionado = ui->comboBox->currentData().toString().trimmed();
 
     QList<Envio> enviosDeEstaSucursal;
 
@@ -223,6 +208,8 @@ void PantallaVerEnvios::on_comboBox_currentIndexChanged(int index)
     dibujarEnviosHorizontal(enviosDeEstaSucursal);
 
     this->ui->lblInfoEnvio->setText("Mostrando " + QString::number(enviosDeEstaSucursal.size()) + " envíos activos.");
+
+    emit verificarEnvios(idSeleccionado.toStdString());
 }
 
 

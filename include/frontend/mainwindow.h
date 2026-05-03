@@ -34,9 +34,14 @@ private:
 
     /*Metodos para navegar por la UI*/
     void mostrarInicio();
-    void mostrarGestion();
+    void mostrarGestion(GestorEstructuras * _estructuras, std::string _idSucursal);
 
     /*Metodos signals que permiten dar ordenes a las pantallas hijas para que hagan acciones*/
+
+public slots:
+    void abrirSucursal(GestorEstructuras * _estructuras, std::string _idSucursal);
+    void regresarPantalla();
+
 signals:
     void regresoInicio();
 

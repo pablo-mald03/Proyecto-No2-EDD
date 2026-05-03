@@ -14,6 +14,10 @@ PantallaSistema::PantallaSistema(QWidget *parent)
     this->ui->stackedWidget->addWidget(this->pantallaCargadoSucursales);
 
 
+    /*Connects que permiten interactuar con el contenedor padre de la main window*/
+    connect( this->controladorGeneral, &ControladorNegocio::abrirSucursal, this, &PantallaSistema::cargarSucursal);
+
+    /*Connects que permiten interactuar con la pantalla de sucursales*/
     connect( this->pantallaCargadoSucursales, &PantallaCargaSucursales::csvSucursalesCargado,this->controladorGeneral,&ControladorNegocio::procesarCsvSucursal);
     connect( this->pantallaCargadoSucursales, &PantallaCargaSucursales::csvConexionesCargado,this->controladorGeneral, &ControladorNegocio::procesarCsvConexion);
 
@@ -29,7 +33,13 @@ PantallaSistema::PantallaSistema(QWidget *parent)
 }
 
 
-/*-------Fin del Apartado de slots que sirven para poder enviar datos al controlador de la pantalla de carga de sucursales----------*/
+/*Metodo que permite comunicarle al padre que abra otra ventana con la sucursal seleccionada*/
+void PantallaSistema::cargarSucursal(GestorEstructuras * _estructuras, std::string _idSucursal){
+
+    emit solicitarApertura(_estructuras,_idSucursal);
+}
+
+/*------- Apartado de slots que sirven para poder enviar datos al controlador de la pantalla de carga de sucursales----------*/
 
 /*Metodos para poder comunicarse desde fuera con la pantalla*/
 void PantallaSistema::setPantallanInicio(){
@@ -197,16 +207,8 @@ void PantallaSistema::mostrarVerSucursales(){
         this->pantallaVistaSucursales = new PantallaVerSucursales(this);
 
         this->ui->stackedWidget->addWidget(this->pantallaVistaSucursales);
-        /*
-        //Se conectan las signals para poder interactuar con la pantalla
-        connect(this->controladorGeneral, &ControladorNegocio::logEliminacionGrafo,this->pantallaEliminadoSucursal, &PantallaEliminarSucursal::appendGrafoLog);
 
-        connect(this->pantallaEliminadoSucursal, &PantallaEliminarSucursal::eliminarSucursal, this->controladorGeneral, &ControladorNegocio::eliminacionSucursal);
-
-        connect(this->controladorGeneral, &ControladorNegocio::tiempoProcesoEliminacionGrafo, this->pantallaEliminadoSucursal, &PantallaEliminarSucursal::mostrarTiempo);
-
-        connect(this->pantallaEliminadoSucursal, &PantallaEliminarSucursal::verSucursales, this, &PantallaSistema::mostrarVistaSucursales);
-    */
+        connect(this->pantallaVistaSucursales, &PantallaVerSucursales::navegarASucursal, this->controladorGeneral, &ControladorNegocio::cargarSucursal);
     }
 
     this->ui->stackedWidget->setCurrentWidget(this->pantallaVistaSucursales);
@@ -222,16 +224,12 @@ void PantallaSistema::mostrarVerEnvios(){
         this->pantallaEnvios = new PantallaVerEnvios(this);
 
         this->ui->stackedWidget->addWidget(this->pantallaEnvios);
-        /*
-        //Se conectan las signals para poder interactuar con la pantalla
-        connect(this->controladorGeneral, &ControladorNegocio::logEliminacionGrafo,this->pantallaEliminadoSucursal, &PantallaEliminarSucursal::appendGrafoLog);
 
-        connect(this->pantallaEliminadoSucursal, &PantallaEliminarSucursal::eliminarSucursal, this->controladorGeneral, &ControladorNegocio::eliminacionSucursal);
+        connect(this->pantallaEnvios, &PantallaVerEnvios::navegarASucursal, this->controladorGeneral, &ControladorNegocio::cargarSucursal);
 
-        connect(this->controladorGeneral, &ControladorNegocio::tiempoProcesoEliminacionGrafo, this->pantallaEliminadoSucursal, &PantallaEliminarSucursal::mostrarTiempo);
+        connect(this->pantallaEnvios, &PantallaVerEnvios::verificarEnvios, this->controladorGeneral, &ControladorNegocio::buscarEnvios);
 
-        connect(this->pantallaEliminadoSucursal, &PantallaEliminarSucursal::verSucursales, this, &PantallaSistema::mostrarVistaSucursales);
-    */
+        connect(this->controladorGeneral, &ControladorNegocio::actualizarEnvio, this->pantallaEnvios, &PantallaVerEnvios::actualizarTrayectoria);
     }
 
     this->ui->stackedWidget->setCurrentWidget(this->pantallaEnvios);

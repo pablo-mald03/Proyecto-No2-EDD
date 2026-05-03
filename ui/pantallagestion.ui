@@ -72,8 +72,6 @@
     padding: 5px;
     border-image: url(:/assets/fondo/homeIcon.png) 0 0 0 0 stretch stretch;         
     qproperty-iconSize: 24px 24px;
-    
-    transition: background-color 0.3s ease;
 }
 
 QPushButton#btnHome:hover {
@@ -232,7 +230,6 @@ QPushButton#btnHome:pressed {
     border-image: url(:/assets/fondo/ShopIcon.png) 0 0 0 0 stretch stretch;         
     qproperty-iconSize: 24px 24px;
     
-    transition: background-color 0.3s ease;
 }
 
 QPushButton#btnTienda:hover {
@@ -278,7 +275,6 @@ QPushButton#btnTienda:pressed {
     border-image: url(:/assets/fondo/ProductIcon.png) 0 0 0 0 stretch stretch;         
     qproperty-iconSize: 24px 24px;
     
-    transition: background-color 0.3s ease;
 }
 
 QPushButton#btnProductos:hover {

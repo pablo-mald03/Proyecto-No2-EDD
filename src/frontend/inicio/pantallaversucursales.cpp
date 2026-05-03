@@ -31,7 +31,6 @@ PantallaVerSucursales::PantallaVerSucursales(QWidget *parent)
 
 /*Metodo que permite procesar el click y emitir el signal hacia el controlador*/
 void PantallaVerSucursales::procesarClicNodo(QString id) {
-    qDebug() << "Navegando hacia los inventarios de la sucursal:" << id;
     emit navegarASucursal(id.toStdString());
 }
 

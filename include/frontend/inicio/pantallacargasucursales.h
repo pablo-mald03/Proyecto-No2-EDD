@@ -1,6 +1,7 @@
 #ifndef PANTALLACARGASUCURSALES_H
 #define PANTALLACARGASUCURSALES_H
 
+#include "gestorestructuras.h"
 #include <QWidget>
 
 namespace Ui {

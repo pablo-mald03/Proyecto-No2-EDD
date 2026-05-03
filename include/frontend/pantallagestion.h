@@ -1,6 +1,7 @@
 #ifndef PANTALLAGESTION_H
 #define PANTALLAGESTION_H
 
+#include "controladorsucursal.h"
 #include "pantallamain.h"
 #include "pantallasucursal.h"
 #include <QWidget>
@@ -17,6 +18,10 @@ public:
     explicit PantallaGestion(QWidget *parent = nullptr);
     ~PantallaGestion();
 
+    /*Metodo que permite setear la sucursal que se va a mostrar*/
+    void setSucursal(GestorEstructuras * _estructuras, std::string _idSucursal);
+
+    void setPantallaInicio();
 
 private:
     Ui::PantallaGestion *ui;
@@ -24,6 +29,8 @@ private:
     /*Atributos para poder cambiar las pantallas*/
     PantallaSucursal * pantallaSucursal = nullptr;
     PantallaMain * pantallaMain = nullptr;
+
+    ControladorSucursal * controladorGestion = nullptr;
 
 
     /*Metodos de control de ventanas*/
@@ -34,6 +41,10 @@ public slots:
     void cambiarLabel(QString _titulo);
 private slots:
     void on_btnHome_clicked();
+
+signals:
+    void solicitarRegreso();
+
 };
 
 #endif // PANTALLAGESTION_H

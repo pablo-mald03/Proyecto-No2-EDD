@@ -81,8 +81,6 @@ private slots:
 
     void on_comboBox_currentIndexChanged(int index);
 
-    void on_btnEnvios_clicked();
-
 public slots:
     void actualizarTrayectoria(QString idEnvio, QStringList idsPasados, QString idSiguiente);
 

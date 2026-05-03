@@ -35,11 +35,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->ui->stackedWidget->addWidget(this->pantallaInicio);
 
-   /* connect(this->controladorCrud, &Controlador::logArbolAvl,this->inicio, &PantallaPrincipal::appendAvlLog);
-
+    connect(this->pantallaInicio, &PantallaSistema::solicitarApertura, this, &MainWindow::abrirSucursal);
+    /*
     connect(this->inicio, &PantallaPrincipal::solicitarLimpieza,this->controladorCrud, &Controlador::limpiarDatos);
    */
     mostrarInicio();
+}
+
+/*Metodo que permite comunicar que se va a cambiar a una sucursal*/
+void MainWindow::abrirSucursal(GestorEstructuras * _estructuras, std::string _idSucursal){
+    this->mostrarGestion(_estructuras,_idSucursal);
 }
 
 /*Region de metodos para poder mostrar las diferentes vistas*/
@@ -49,40 +54,26 @@ void MainWindow::mostrarInicio(){
     this->pantallaInicio->setPantallanInicio();
 }
 
+void MainWindow::regresarPantalla(){
+    this->mostrarInicio();
+
+}
 /*Metodo utilizado para poder navegar a la ventana de buscar por rango*/
-void MainWindow::mostrarGestion(){
-/*
-    if (!this->pantallaEliminar) {
+void MainWindow::mostrarGestion(GestorEstructuras * _estructuras, std::string _idSucursal){
 
-        this->pantallaEliminar = new PantallaEliminarProducto(this);
+    if (!this->pantallaGestion) {
 
-        ui->stackedWidget->addWidget(this->pantallaEliminar);
+        this->pantallaGestion = new PantallaGestion(this);
 
-        //Se conectan las signlas para poder interactuar con las pantallas PENDIENTE
-        connect(this->controladorCrud, &Controlador::logEliminarArbolAvl,this->pantallaEliminar, &PantallaEliminarProducto::appendAvlLog);
-        connect(this->controladorCrud, &Controlador::logEliminarArbolB,this->pantallaEliminar, &PantallaEliminarProducto::appendBLog);
-        connect(this->controladorCrud, &Controlador::logEliminarArbolBMas,this->pantallaEliminar, &PantallaEliminarProducto::appendBMasLog);
-        connect(this->controladorCrud, &Controlador::logEliminarListaOrdenada,this->pantallaEliminar, &PantallaEliminarProducto::appendListOrdenadaLog);
-        connect(this->controladorCrud, &Controlador::logEliminarListaNoOrdenada,this->pantallaEliminar, &PantallaEliminarProducto::appendListNoOrdenadaLog);
+        ui->stackedWidget->addWidget(this->pantallaGestion);
 
-
-        connect(this->controladorCrud, &Controlador::tiempoEliminarProceso, this->pantallaEliminar, &PantallaEliminarProducto::mostrarTiempo);
-
-
-        connect(this->pantallaEliminar, &PantallaEliminarProducto::eliminarProducto, this->controladorCrud, &Controlador::eliminarProducto);
-
-        connect(this->pantallaEliminar, &PantallaEliminarProducto::verArboles, this, &MainWindow::mostrarVerArboles);
-
-        connect(this->controladorCrud, &Controlador::tiempoEliminarProceso, this->pantallaEliminar, &PantallaEliminarProducto::mostrarTiempo);
-
-        connect(this, &MainWindow::limpiarEliminar, this->pantallaEliminar, &PantallaEliminarProducto::limpiarPantalla);
+        //Se conectan las signlas para poder interactuar con las pantallas
+        connect(this->pantallaGestion, &PantallaGestion::solicitarRegreso, this, &MainWindow::regresarPantalla);
     }
 
-    emit this->limpiarEliminar();
-    this->controladorCrud->ordenarListado(4);
-    this->ui->labelTasks->setText("Eliminar productos");
-    this->ui->stackedWidget->setCurrentWidget(this->pantallaEliminar);
-*/
+    this->pantallaGestion->setSucursal(_estructuras,_idSucursal);
+    this->ui->stackedWidget->setCurrentWidget(this->pantallaGestion);
+    this->pantallaGestion->setPantallaInicio();
 }
 
 

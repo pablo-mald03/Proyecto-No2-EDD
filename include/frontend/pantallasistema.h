@@ -31,6 +31,8 @@ public:
 public slots:
     void mostrarVistaSucursales();
 
+    void cargarSucursal(GestorEstructuras * _estructuras, std::string _idSucursal);
+
 private slots:
     void on_btnCargaSucursales_clicked();
 
@@ -78,20 +80,9 @@ private:
 
 
 signals:
-    void csvSucursalesCargado(const std::vector<std::vector<QString>> & data);
-    void csvConexionesCargado(const std::vector<std::vector<QString>> &data);
 
-    void agregarLogGrafoSucursal(QString mensaje, QString color);
-    void agregarLogCargaSucursal(QString mensaje, QString color);
-    void agregarTiempoSucursal(int estructura, double milisegundos);
-
-    /*Signals de carga de envios*/
-    void csvEnviosCargado(const std::vector<std::vector<QString>> &data);
-
-    void agregarLogGrafoEnvios(QString mensaje, QString color);
-    void agregarLogCargaEnvios(QString mensaje, QString color);
-    void agregarTiempoEnvios(int estructura, double milisegundos);
-
+    /*Metodo que permite solicitar la apertura al padre*/
+    void solicitarApertura(GestorEstructuras * _estructuras, std::string _idSucursal);
 
 };
 

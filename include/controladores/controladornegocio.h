@@ -1,6 +1,7 @@
 #ifndef CONTROLADORNEGOCIO_H
 #define CONTROLADORNEGOCIO_H
 
+#include "gestorestructuras.h"
 #include <QObject>
 
 /*Controlador que permite llevar toda la logica para el manejo principal de las redes de sucursales*/
@@ -40,6 +41,12 @@ public slots:
     /*Metodo que permite modificar una sucursal*/
     void modificacionSucursal(const std::string &_id,const std::string &_nombre, const std::string &_ubicacion, double _ingreso, double _despacho, double _preparacion);
 
+
+    /*Metodo que permite generar el viaje hacia la sucursal*/
+    void cargarSucursal(std::string id);
+
+    /*Metodo que permite retornar el estado de la pila de envios de una sucursal*/
+    void buscarEnvios(std::string id);
 
 
 signals:
@@ -95,6 +102,12 @@ signals:
     /*Signals que permiten ir comunicandose con la UI para poder realizar las operaciones de modificacion*/
     void logModificacionGrafo(QString mensaje, QString color);
     void tiempoProcesoModificacionGrafo(double milisegundos);
+
+    /*Metodo que permite viajar hacia otra sucursal*/
+    void abrirSucursal(GestorEstructuras * _estructuras, std::string _idSucursal);
+
+    /*Metodo que permite ir refrescando los datos de una sucursal*/
+    void actualizarEnvio(QString idEnvio, QStringList idsPasados, QString idSiguiente);
 };
 
 #endif // CONTROLADORNEGOCIO_H

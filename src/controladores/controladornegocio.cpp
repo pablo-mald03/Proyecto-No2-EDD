@@ -66,7 +66,7 @@ void ControladorNegocio::insercionSucursal(const std::string &_id,const std::str
 }
 
 /*Metodo que permite conectar una sucursal con otra*/
-void conexionSucursal(const std::string &_Origen, const std::string &_Destino,double _tiempo,double _costo){
+void  ControladorNegocio::conexionSucursal(const std::string &_Origen, const std::string &_Destino,double _tiempo,double _costo){
 
 }
 
@@ -80,5 +80,16 @@ void ControladorNegocio::modificacionSucursal(const std::string &_id,const std::
 
 }
 
+/*Metodo que permite buscar en el grafo las sucursales registradas*/
+void ControladorNegocio::cargarSucursal(std::string id){
+
+    emit abrirSucursal(new GestorEstructuras(), id);
+}
+
+/*Metodo que permite retornar la sucursal en donde se puede visualizar los viajes*/
+void ControladorNegocio::buscarEnvios(std::string id){
+
+   // emit abrirSucursal(new GestorEstructuras(), id);
+}
 
 

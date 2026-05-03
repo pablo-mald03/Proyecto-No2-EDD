@@ -11,7 +11,18 @@ PantallaGestion::PantallaGestion(QWidget *parent)
 
     this->ui->stackedWidget->addWidget(this->pantallaSucursal);
 
-    connect(this->pantallaMain, &PantallaMain::cambiarTitulo, this, &PantallaGestion::cambiarLabel);
+    connect(this->pantallaSucursal, &PantallaSucursal::cambiarTitulo, this, &PantallaGestion::cambiarLabel);
+}
+
+/*Metodo que permite tomar la referencia que traen de la sucursal y setearla a los controladores*/
+void PantallaGestion::setSucursal(GestorEstructuras * _estructuras, std::string _idSucursal){
+
+}
+
+/*Metodo que permite mostar la primera pantalla de inicio*/
+void PantallaGestion::setPantallaInicio(){
+
+    this->mostrarSucursal();
 }
 
 /*Metodo que permite cambiar el label en la pantalla*/
@@ -68,6 +79,6 @@ PantallaGestion::~PantallaGestion()
 /*Boton que permite regresar al menu principal*/
 void PantallaGestion::on_btnHome_clicked()
 {
-
+    emit solicitarRegreso();
 }
 
