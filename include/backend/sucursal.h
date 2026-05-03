@@ -16,7 +16,7 @@ private:
     GestorEstructuras * almacen;
 
 public:
-    Sucursal(std::string id, std::string nombre, std::string ubicacion,
+    Sucursal(const std::string &id, const std::string &nombre, const std::string &ubicacion,
              double t_ingreso, double t_preparacion, double t_despacho);
 
     ~Sucursal();

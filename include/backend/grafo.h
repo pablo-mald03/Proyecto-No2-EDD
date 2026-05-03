@@ -34,7 +34,11 @@ public:
     const std::vector<Sucursal*>& getNodos() const;
     const std::vector<std::vector<Conexion*>>& getMatriz() const;
 
+    /*Metodo que permite obtejer el graphviz del grafo*/
     std::string generarGraphviz() const;
+
+    /*Metodo que permite implementar el algoritmo dijkstra*/
+    std::vector<Sucursal*> obtenerRutaOptima(const std::string& origen, const std::string& destino, bool porTiempo) const;
 };
 
 #endif // GRAFO_H

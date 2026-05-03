@@ -6,7 +6,7 @@
 Grafo::Grafo() {
 
 }
-
+/*Destructor del grafo*/
 Grafo::~Grafo() {
     for (size_t i = 0; i < nodos.size(); ++i) {
         delete nodos[i];
@@ -142,7 +142,6 @@ std::string Grafo::generarGraphviz() const {
     oss << "digraph GrafoSucursales {\n";
     oss << "    node [shape=circle, style=filled, color=lightblue];\n";
 
-    // 1. Declarar todos los nodos
     for (size_t i = 0; i < nodos.size(); ++i) {
         oss << "    \"" << nodos[i]->getId() << "\" [label=\""
             << nodos[i]->getId() << "\\n" << nodos[i]->getNombre() << "\"];\n";
@@ -161,6 +160,84 @@ std::string Grafo::generarGraphviz() const {
     oss << "}\n";
 
     return oss.str();
+}
+
+/*Implementacion del algoritmo dijkstra*/
+std::vector<Sucursal*> Grafo::obtenerRutaOptima(const std::string& origen, const std::string& destino, bool porTiempo) const {
+
+    std::vector<Sucursal*> rutaFinal;
+
+    int idxOrigen = this->obtenerIndice(origen);
+    int idxDestino = obtenerIndice(destino);
+
+    if(idxOrigen == -1 || idxDestino == -1){
+        return rutaFinal;
+    }
+
+    int n = this->nodos.size();
+
+    /*Arreglos de estados :)*/
+    std::vector<double> distancias(n, std::numeric_limits<double>::infinity());
+    std::vector<int> nodosPrevios(n, -1);
+
+    std::vector<bool> visitados(n, false);
+
+    distancias[idxOrigen] = 0.0;
+
+    for(int count = 0; count < n; count++){
+
+        /*Evaluacion del minimo*/
+        double min = std::numeric_limits<double>::infinity();
+        int u = -1;
+
+        for (int v = 0; v < n; v++) {
+            if (!visitados[v] && distancias[v] <= min) {
+                min = distancias[v];
+                u = v;
+            }
+        }
+
+
+        /*Si u sigue siendo -1, esto significa que los nodos restantes no tienen camino*/
+        if (u == -1 || distancias[u] == std::numeric_limits<double>::infinity()) {
+            break;
+        }
+
+        /*Si se encontro el destino se asegura que es el camino mas corto*/
+        if (u == idxDestino) {
+            break;
+        }
+
+        /*Se marga como ruta mas corta*/
+        visitados[u] = true;
+
+        /*Se evaluan si existe conexion entre u y v (Segun lo visto en clase :) )*/
+        for(int v = 0; v <n; v++){
+            if(!visitados[v] && matriz[u][v]->getExiste()){
+                double pesoArista = (porTiempo)? matriz[u][v]->getTiempo(): matriz[u][v]->getCosto();
+
+                /*Evaluacion de camino mas barato*/
+
+                if(distancias[u] + pesoArista < distancias[v]){
+                    distancias[v] = distancias[u] + pesoArista;
+                    nodosPrevios[v]= u;
+                }
+            }
+        }
+    }
+
+    if (distancias[idxDestino] == std::numeric_limits<double>::infinity()) {
+        return rutaFinal;
+    }
+
+    for (int at = idxDestino; at != -1; at = nodosPrevios[at]) {
+        rutaFinal.push_back(nodos[at]);
+    }
+
+    std::reverse(rutaFinal.begin(), rutaFinal.end());
+
+    return rutaFinal;
+
 }
 
 

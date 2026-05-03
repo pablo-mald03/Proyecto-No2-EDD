@@ -2,6 +2,7 @@
 #define CONTROLADORNEGOCIO_H
 
 #include "gestorestructuras.h"
+#include "gestormapa.h"
 #include <QObject>
 
 /*Controlador que permite llevar toda la logica para el manejo principal de las redes de sucursales*/
@@ -11,6 +12,10 @@ class ControladorNegocio : public QObject
 public:
     explicit ControladorNegocio(QObject *parent = nullptr);
     ~ControladorNegocio();
+
+private:
+    /*Instancia que permite manejar toda la logica de negocio de las sucursales*/
+    GestorMapa * gestorMapeo = nullptr;
 
 public slots:
     void procesarCsvSucursal(const std::vector<std::vector<QString>> & data);

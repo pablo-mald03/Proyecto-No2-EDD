@@ -42,6 +42,10 @@ public slots:
 private slots:
     void on_btnHome_clicked();
 
+    void on_btnTienda_clicked();
+
+    void on_btnProductos_clicked();
+
 signals:
     void solicitarRegreso();
 
