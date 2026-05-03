@@ -17,6 +17,7 @@ PantallaGestion::PantallaGestion(QWidget *parent)
 /*Metodo que permite tomar la referencia que traen de la sucursal y setearla a los controladores*/
 void PantallaGestion::setSucursal(GestorEstructuras * _estructuras, std::string _idSucursal){
 
+
 }
 
 /*Metodo que permite mostar la primera pantalla de inicio*/
@@ -80,5 +81,17 @@ PantallaGestion::~PantallaGestion()
 void PantallaGestion::on_btnHome_clicked()
 {
     emit solicitarRegreso();
+}
+
+/*Metodo que permite viajar a la sucursal*/
+void PantallaGestion::on_btnTienda_clicked()
+{
+    this->mostrarSucursal();
+}
+
+/*Metodo que permite viajar a los productos de la sucursal*/
+void PantallaGestion::on_btnProductos_clicked()
+{
+    this->mostrarProductos();
 }
 

@@ -37,6 +37,11 @@ PantallaMain::PantallaMain(QWidget *parent)
     mostrarInicio();
 }
 
+/*Metodo que permite setear el gestor que va a tener el controlador*/
+void PantallaMain::setGestorSucursal(GestorEstructuras *gestor){
+    this->controladorCrud->setBackend(gestor);
+}
+
 /*Signal que permite poder cambiar el texto de un label*/
 void PantallaMain::solicitarTitulo(QString titulo){
     emit cambiarTitulo(titulo);

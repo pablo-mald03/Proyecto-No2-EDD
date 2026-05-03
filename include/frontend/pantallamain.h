@@ -31,6 +31,9 @@ public:
     /*Metodo para reestablecer la Ui al inicio*/
     void mostrarInicio();
 
+    /*Metodo que permite establecer el gestor asociado a la sucursal*/
+    void setGestorSucursal(GestorEstructuras *gestor);
+
 private slots:
     void on_btnCsv_clicked();
 
