@@ -2,6 +2,7 @@
 #define PANTALLAGESTION_H
 
 #include "controladorsucursal.h"
+#include "grafo.h"
 #include "pantallamain.h"
 #include "pantallasucursal.h"
 #include <QWidget>
@@ -19,7 +20,7 @@ public:
     ~PantallaGestion();
 
     /*Metodo que permite setear la sucursal que se va a mostrar*/
-    void setSucursal(GestorEstructuras * _estructuras, std::string _idSucursal);
+    void setSucursal(Sucursal * _sucursal, Grafo * _redGrafo);
 
     void setPantallaInicio();
 

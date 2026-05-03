@@ -221,9 +221,10 @@ void ControladorNegocio::modificacionSucursal(const std::string &_id,const std::
 }
 
 /*Metodo que permite buscar en el grafo las sucursales registradas*/
-void ControladorNegocio::cargarSucursal(std::string id){
+void ControladorNegocio::cargarSucursal(const std::string &id){
 
-    emit abrirSucursal(new GestorEstructuras(), id);
+    Sucursal * sucursalEncontrada = this->gestorMapeo->buscarSucursal(id);
+    emit abrirSucursal(sucursalEncontrada, this->obtenerGrafo());
 }
 
 /*Metodo que permite retornar la sucursal en donde se puede visualizar los viajes*/

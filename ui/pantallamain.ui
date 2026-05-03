@@ -14,6 +14,21 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>4</number>
+   </property>
+   <property name="leftMargin">
+    <number>2</number>
+   </property>
+   <property name="topMargin">
+    <number>2</number>
+   </property>
+   <property name="rightMargin">
+    <number>2</number>
+   </property>
+   <property name="bottomMargin">
+    <number>2</number>
+   </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -450,7 +465,7 @@ QPushButton#btnCompararBusqueda:pressed {
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton#btnArboles {
+           <string notr="true">QPushButton#btnEstructuras {
     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
                         stop:0 rgb(99, 69, 44), 
                         stop:1 rgb(248, 200, 141));
@@ -467,7 +482,7 @@ QPushButton#btnCompararBusqueda:pressed {
     padding: 10px 25px;
 }
 
-QPushButton#btnArboles:hover {
+QPushButton#btnEstructuras:hover {
     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, 
                         stop:0 rgba(41, 128, 185, 255), 
                         stop:1 rgba(142, 68, 173, 255));
@@ -475,7 +490,7 @@ QPushButton#btnArboles:hover {
 }
 
 
-QPushButton#btnArboles:pressed {
+QPushButton#btnEstructuras:pressed {
     background-color: #2c3e50;
     padding-top: 12px;
     padding-left: 27px;

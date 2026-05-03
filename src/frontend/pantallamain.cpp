@@ -34,7 +34,6 @@ PantallaMain::PantallaMain(QWidget *parent)
     connect(this->controladorCrud, &Controlador::contenidoCsvListo, this->inicio, &PantallaPrincipal::recibirGuardadoCsv);
 
     connect(this->inicio, &PantallaPrincipal::solicitarLimpieza,this->controladorCrud, &Controlador::limpiarDatos);
-    mostrarInicio();
 }
 
 /*Metodo que permite setear el gestor que va a tener el controlador*/
@@ -310,7 +309,6 @@ void PantallaMain::mostrarVerArboles(){
         connect(this->controladorCrud, &Controlador::enviarGraphvizArbolAvl,
                 this->pantallaVerArboles, &PantallaVerArboles::recibirGrapvizAvl);
 
-
         /*Signals del arbol B*/
         connect(this->pantallaVerArboles, &PantallaVerArboles::solicitarArbolB,
                 this->controladorCrud, &Controlador::obtenerArbolB);
@@ -323,8 +321,6 @@ void PantallaMain::mostrarVerArboles(){
 
         connect(this->controladorCrud, &Controlador::enviarGraphvizArbolB,
                 this->pantallaVerArboles, &PantallaVerArboles::recibirGrapvizB);
-
-
 
         connect(this->pantallaVerArboles, &PantallaVerArboles::solicitarArbolBMas,
                 this->controladorCrud, &Controlador::obtenerArbolBMas);
@@ -402,12 +398,12 @@ void PantallaMain::on_btnListarNombre_clicked()
 
 void PantallaMain::on_btnEstructuras_clicked()
 {
-
+    this->mostrarVerArboles();
 }
 
 /*Metodo que permite navegar a la pantalla de mostrar el estado de los arboles*/
 void PantallaMain::on_btnCompararBusqueda_clicked()
 {
-    this->mostrarVerArboles();
+
 }
 

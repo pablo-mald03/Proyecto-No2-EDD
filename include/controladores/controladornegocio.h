@@ -54,7 +54,7 @@ public slots:
 
 
     /*Metodo que permite generar el viaje hacia la sucursal*/
-    void cargarSucursal(std::string id);
+    void cargarSucursal(const std::string &id);
 
     /*Metodo que permite retornar el estado de la pila de envios de una sucursal*/
     void buscarEnvios(std::string id);
@@ -115,7 +115,7 @@ signals:
     void tiempoProcesoModificacionGrafo(double milisegundos);
 
     /*Metodo que permite viajar hacia otra sucursal*/
-    void abrirSucursal(GestorEstructuras * _estructuras, std::string _idSucursal);
+    void abrirSucursal(Sucursal * _sucursal, Grafo * redGrafo);
 
     /*Metodo que permite ir refrescando los datos de una sucursal*/
     void actualizarEnvio(QString idEnvio, QStringList idsPasados, QString idSiguiente);

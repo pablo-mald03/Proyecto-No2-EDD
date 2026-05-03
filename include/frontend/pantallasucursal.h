@@ -1,6 +1,8 @@
 #ifndef PANTALLASUCURSAL_H
 #define PANTALLASUCURSAL_H
 
+#include "controladorsucursal.h"
+#include "grafo.h"
 #include <QWidget>
 
 namespace Ui {
@@ -14,6 +16,12 @@ class PantallaSucursal : public QWidget
 public:
     explicit PantallaSucursal(QWidget *parent = nullptr);
     ~PantallaSucursal();
+
+    ControladorSucursal * controlador = nullptr;
+
+    /*Metodo que permite agregar los recursos que se utilizaran en el backend*/
+    void setRecursos(Sucursal * _sucursal, Grafo * _redGrafo);
+
 
 private:
     Ui::PantallaSucursal *ui;

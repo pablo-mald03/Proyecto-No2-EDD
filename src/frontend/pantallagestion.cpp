@@ -7,17 +7,26 @@ PantallaGestion::PantallaGestion(QWidget *parent)
 {
     ui->setupUi(this);
 
+    this->setStyleSheet("PantallaGestion { background-color: #1a1a1a; } ");
+
     this->pantallaSucursal = new PantallaSucursal(this);
 
     this->ui->stackedWidget->addWidget(this->pantallaSucursal);
 
+    this->pantallaMain = new PantallaMain(this);
+
+    this->ui->stackedWidget->addWidget(this->pantallaMain);
+
+    connect(this->pantallaMain, &PantallaMain::cambiarTitulo, this, &PantallaGestion::cambiarLabel);
     connect(this->pantallaSucursal, &PantallaSucursal::cambiarTitulo, this, &PantallaGestion::cambiarLabel);
 }
 
 /*Metodo que permite tomar la referencia que traen de la sucursal y setearla a los controladores*/
-void PantallaGestion::setSucursal(GestorEstructuras * _estructuras, std::string _idSucursal){
+void PantallaGestion::setSucursal(Sucursal * _sucursal, Grafo * _redGrafo){
 
-
+    this->ui->labelAdmin->setText(QString::fromStdString(_sucursal->getNombre()));
+    this->pantallaMain->setGestorSucursal(_sucursal->getAlmacen());
+    this->pantallaSucursal->setRecursos(_sucursal,_redGrafo);
 }
 
 /*Metodo que permite mostar la primera pantalla de inicio*/
@@ -34,38 +43,14 @@ void PantallaGestion::cambiarLabel(QString _titulo){
 void PantallaGestion::mostrarSucursal(){
 
     this->ui->stackedWidget->setCurrentWidget(this->pantallaSucursal);
-    /*pendientes las acciones*/
+
 }
 
 /*Metodo que permite mostrar la ventana de productos de la UI*/
 void PantallaGestion::mostrarProductos(){
 
-    if (!this->pantallaMain) {
-
-        this->pantallaMain = new PantallaMain(this);
-
-        this->ui->stackedWidget->addWidget(this->pantallaMain);
-
-        //Se conectan las signals para poder interactuar con la pantalla
-        connect(this->pantallaMain, &PantallaMain::cambiarTitulo, this, &PantallaGestion::cambiarLabel);
-
-        /*connect(this->controladorCrud, &Controlador::logInsertArbolB,this->pantallaAgregar, &PantallaAgregar::appendBLog);
-
-        connect(this->controladorCrud, &Controlador::logInsertArbolBMas,this->pantallaAgregar, &PantallaAgregar::appendBMasLog);
-
-        connect(this->controladorCrud, &Controlador::logInsertListaOrdenada,this->pantallaAgregar, &PantallaAgregar::appendListOrdenadaLog);
-
-        connect(this->controladorCrud, &Controlador::logInsertListaNoOrdenada,this->pantallaAgregar, &PantallaAgregar::appendListNoOrdenadaLog);
-
-        connect(this->controladorCrud, &Controlador::tiempoProcesoInsert, this->pantallaAgregar, &PantallaAgregar::mostrarTiempo);
-
-        connect(this->pantallaAgregar, &PantallaAgregar::insertarProducto, this->controladorCrud, &Controlador::insercionProducto);
-
-        connect(this->pantallaAgregar, &PantallaAgregar::verArboles, this, &PantallaMain::mostrarVerArboles);
-
-        connect(this->controladorCrud, &Controlador::tiempoProcesoInsert, this->pantallaAgregar, &PantallaAgregar::mostrarTiempo);
-
-        connect(this, &PantallaMain::limpiarAgregar, this->pantallaAgregar, &PantallaAgregar::limpiarPantalla);*/
+    if(!this->pantallaMain){
+        return;
     }
 
     this->ui->stackedWidget->setCurrentWidget(this->pantallaMain);

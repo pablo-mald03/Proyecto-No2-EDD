@@ -43,8 +43,8 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 /*Metodo que permite comunicar que se va a cambiar a una sucursal*/
-void MainWindow::abrirSucursal(GestorEstructuras * _estructuras, std::string _idSucursal){
-    this->mostrarGestion(_estructuras,_idSucursal);
+void MainWindow::abrirSucursal(Sucursal * _sucursal, Grafo * redGrafo){
+    this->mostrarGestion(_sucursal,redGrafo);
 }
 
 /*Region de metodos para poder mostrar las diferentes vistas*/
@@ -59,7 +59,7 @@ void MainWindow::regresarPantalla(){
 
 }
 /*Metodo utilizado para poder navegar a la ventana de buscar por rango*/
-void MainWindow::mostrarGestion(GestorEstructuras * _estructuras, std::string _idSucursal){
+void MainWindow::mostrarGestion(Sucursal * _sucursal, Grafo * redGrafo){
 
     if (!this->pantallaGestion) {
 
@@ -71,7 +71,7 @@ void MainWindow::mostrarGestion(GestorEstructuras * _estructuras, std::string _i
         connect(this->pantallaGestion, &PantallaGestion::solicitarRegreso, this, &MainWindow::regresarPantalla);
     }
 
-    this->pantallaGestion->setSucursal(_estructuras,_idSucursal);
+    this->pantallaGestion->setSucursal(_sucursal,redGrafo);
     this->ui->stackedWidget->setCurrentWidget(this->pantallaGestion);
     this->pantallaGestion->setPantallaInicio();
 }
