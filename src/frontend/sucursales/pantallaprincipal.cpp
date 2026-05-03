@@ -92,46 +92,58 @@ void PantallaPrincipal::limpiarLogs(){
 
 }
 
+/*Metodo utilizado para cargar archivos .csv*/
+std::vector<std::vector<QString>> PantallaPrincipal::parsearCSV(const QString &contenido) {
+    std::vector<std::vector<QString>> matrizDatos;
+    const QStringList lineas = contenido.split('\n');
+
+    for (const QString &linea : lineas) {
+        if (linea.trimmed().isEmpty()) continue;
+
+        std::vector<QString> fila;
+        QString celda;
+        bool dentroDeComillas = false;
+
+        for (int i = 0; i < linea.length(); ++i) {
+            QChar caracterActual = linea[i];
+
+            if (caracterActual == '"') {
+                dentroDeComillas = !dentroDeComillas;
+            } else if (caracterActual == ',' && !dentroDeComillas) {
+                fila.push_back(celda.trimmed());
+                celda.clear();
+            } else {
+                celda.append(caracterActual);
+            }
+        }
+        fila.push_back(celda.trimmed());
+        matrizDatos.push_back(fila);
+    }
+    return matrizDatos;
+}
+
 /*Metodo que permite seleccionar el archivo csv*/
 void PantallaPrincipal::on_btnCargar_clicked()
-{ 
-    QString fileName = QFileDialog::getOpenFileName(
-        this,
-        "Seleccionar CSV",
-        "",
-        "CSV Files (*.csv);;All Files (*)"
-        );
+{
+    QString fileName = QFileDialog::getOpenFileName(this, "Seleccionar CSV", "", "CSV Files (*.csv);;All Files (*)");
 
-    if(fileName.isEmpty()){
-        return;
-    }
+    if (fileName.isEmpty()) return;
 
     QFile file(fileName);
-
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        this->ui->textEditCsv->append("<span style='color:red;'>Error al abrir archivo</span>");
+        ui->textEditCsv->append("<span style='color:red;'>Error al abrir archivo</span>");
         return;
     }
 
-    QTextStream in(&file);
-
-    std::vector<QString> buffer;
-
-    this->ui->textEditCsv->clear();
-
-
-    while (!in.atEnd()) {
-        QString line = in.readLine();
-        line.remove('"');
-        line = line.trimmed();
-        buffer.push_back(line);
-    }
-
+    QString contenido = QTextStream(&file).readAll();
     file.close();
 
+    ui->textEditCsv->clear();
     this->limpiarLogs();
 
-    emit csvCargado(buffer);
+    std::vector<std::vector<QString>> datos = parsearCSV(contenido);
+
+    emit csvCargado(datos);
 
 }
 

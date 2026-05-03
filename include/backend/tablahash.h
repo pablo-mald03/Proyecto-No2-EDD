@@ -39,6 +39,9 @@ public:
 
     /*Metodo que permite generar el graphviz de la tabla hash*/
     std::string generarGraphviz();
+
+    /*Metodo que permite obtener la referencia hacia el arreglo de la tabla hash para poderl agraficar*/
+    ListaEnlazada<Producto>** getTabla();
 };
 
 #endif // TABLAHASH_H

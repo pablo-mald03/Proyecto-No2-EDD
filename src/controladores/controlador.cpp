@@ -84,22 +84,24 @@ void Controlador::actualizarDatosIngresados(){
 }
 
 
+/*Metodo que permite limpiar el backend (productos de la sucursal)*/
+void Controlador::vaciarAlmacen(){
+    this->gestorBackend->limpiarRegistros();
+}
+
 /*Metodo que permite comunicar a la ui para poder enviar el csv procesado*/
  /*
     * 1 -> AVL
     * 2 -> B
     * 3 -> B+
     * 4 -> LISTA
+    * 5 -> TABLA HASH
 */
-void Controlador::procesarCsv(const std::vector<QString> & data){
+void Controlador::procesarCsv(const std::vector<std::vector<QString>> & data){
 
-    if(this->gestorBackend != nullptr){
-        delete this->gestorBackend;
-        this->gestorBackend = nullptr;
-    }
+    this->vaciarAlmacen();
 
-    this->gestorBackend = new GestorEstructuras();
-
+    emit logCargaCsv("--- INICIANDO CARGA DE PRODUCTOS ---", "orange");
 
     if (data.empty()) {
         this->gestorBackend->agregarErrorLista("El archivo de entrada esta vacio", 0);
@@ -107,44 +109,50 @@ void Controlador::procesarCsv(const std::vector<QString> & data){
         return;
     }
 
-    int filaActual = 1;
+    std::vector<Producto> productosListos;
+    int errores = 0;
 
-    /*Buffer filtrado*/
-    std::vector<QString> datosValidados;
+    for (size_t i = 0; i < data.size(); ++i) {
+        const auto& fila = data[i];
 
-    for (const QString &linea : data) {
-
-        if (linea.trimmed().isEmpty()) {
-            filaActual++;
+        if (fila.empty()) {
             continue;
         }
 
-        try {
-            QStringList columnas = linea.split(",");
-
-            this->gestorBackend->validarCsv(columnas, filaActual);
-
-            datosValidados.push_back(linea.trimmed());
-
-            emit logCargaCsv(linea.trimmed(), "white");
-
-        }catch (const ReaderCsvException& e) {
-            emit logCargaCsv(QString::fromUtf8(e.what()), "red");
+        if (i == 0 && fila[0].trimmed().toUpper() == "NOMBRE") {
+            continue;
         }
-        catch (const std::exception& e) {
-            emit logCargaCsv("Error inesperado: " + QString::fromStdString(e.what()), "red");
+
+        double precio; int stock; QString msj;
+        if (!this->gestorBackend->validarFilaCsvProducto(fila, precio, stock, msj)) {
+            emit logCargaCsv("Error en la Fila: " + QString::number(i + 1) + ": " + msj, "red");
+            this->gestorBackend->agregarErrorLista(msj.toStdString(), (i + 1));
+            errores++;
+            continue;
         }
-        filaActual++;
+
+        Producto nuevoProd;
+        nuevoProd.setNombre(fila[0].trimmed().toStdString());
+        nuevoProd.setCodigoBarra(fila[1].trimmed().toStdString());
+        nuevoProd.setCategoria(fila[2].trimmed().toStdString());
+        nuevoProd.setFechaExpiracion(fila[3].trimmed().toStdString());
+        nuevoProd.setMarca(fila[4].trimmed().toStdString());
+        nuevoProd.setPrecio(precio);
+        nuevoProd.setStock(stock);
+
+        productosListos.push_back(nuevoProd);
+        //emit logCargaCsv(lineaLimpia, "white");
     }
 
-    if (!datosValidados.empty()) {
+    if (!productosListos.empty()) {
 
-        this->insertarListaCsv(datosValidados);
-        this->insertarArbolAvlCsv(datosValidados);
-        this->insertarArbolBCsv(datosValidados);
-        this->insertarArbolBMasCsv(datosValidados);
+        this->insertarListaCsv(productosListos);
+        this->insertarArbolAvlCsv(productosListos);
+        this->insertarArbolBCsv(productosListos);
+        this->insertarArbolBMasCsv(productosListos);
+        this->insertarTablaHashCsv(productosListos);
 
-        emit logCargaCsv("Proceso finalizado. Filas a insertar: " + QString::number(datosValidados.size()), "green");
+        emit logCargaCsv("Proceso finalizado. Filas a insertar: " + QString::number(productosListos.size()), "green");
 
         /*Orden base*/
         this->gestorBackend->generarListaOrdenada(1);
@@ -155,7 +163,6 @@ void Controlador::procesarCsv(const std::vector<QString> & data){
         this->verificarErrores();
 
         this->evaluarEstadoCerrarCsv();
-
     }
     else {
         emit logCargaCsv("No se inserto nada: Todas las lineas tenian errores.", "yellow");
@@ -164,56 +171,22 @@ void Controlador::procesarCsv(const std::vector<QString> & data){
 
 
 /*Metodo utilizado para insertar los datos dentro del arbol AVL*/
-void Controlador::insertarArbolAvlCsv(const std::vector<QString> & data){
+void Controlador::insertarArbolAvlCsv(const std::vector<Producto> &productosListos){
 
     QElapsedTimer timer;
     timer.start();
 
     int filaActual = 1;
 
-    for(const QString &linea: data){
+    for(const Producto &product : productosListos) {
 
-        QStringList columnas = linea.split(",");
-
-        if (columnas.size() < 7) {
-            this->gestorBackend->agregarErrorLista("Fila con columnas insuficientes", filaActual);
-            emit logArbolAvl("Error: Fila malformada en linea " + QString::number(filaActual), "red");
-            filaActual++;
-            continue;
-        }
-
-        std::string nombre = columnas[0].trimmed().toStdString();
-        std::string key = columnas[1].trimmed().toStdString();
-        std::string categoria = columnas[2].trimmed().toStdString();
-        std::string fechaExp = columnas[3].trimmed().toStdString();
-        std::string marca = columnas[4].trimmed().toStdString();
-
-        bool okPrecio;
-        bool okStock;
-
-        double precio = columnas[5].trimmed().toDouble(&okPrecio);
-        int stock = columnas[6].trimmed().toInt(&okStock);
-
-        if (!okPrecio || !okStock) {
-            emit logArbolAvl(QString::number(filaActual)+". Error en conversion numerica: " + linea, "red");
-            continue;
-        }
         try{
-
-            this->gestorBackend->insertarArbolAvl(nombre,key,categoria,fechaExp,marca,precio,stock);
-            emit logArbolAvl(QString::number(filaActual)+". Insertado: " + QString::fromStdString(key), "green");
-        }
-        catch (const InsertException& e) {
-            this->gestorBackend->agregarErrorLista(e.what(), filaActual);
-            emit logArbolAvl("Fila: " + QString::number(filaActual) + " " + QString::fromStdString(e.what()), "red");
-        }
-        catch (const ReaderCsvException& e) {
-
-            this->gestorBackend->agregarErrorLista(e.what(), filaActual);
-            emit logArbolAvl("Fila: " + QString::number(filaActual) + " " + QString::fromStdString(e.what()), "red");
+            this->gestorBackend->insertarArbolAvl(product.getNombre(), product.getCodigoBarra(), product.getCategoria(),
+                                                  product.getFechaExpiracion(), product.getMarca(), product.getPrecio(), product.getStock());
+            emit logArbolAvl(QString::number(filaActual)+". Insertado: " + QString::fromStdString(product.getCodigoBarra()), "green");
         }
         catch (const std::exception& ex) {
-            emit logArbolAvl("Error inesperado: " + QString::fromStdString(ex.what()) + ". Fila: " + QString::number(filaActual) , "red");
+            emit logArbolAvl("Error en insercion: " + QString::fromStdString(ex.what()) + ". Fila: " + QString::number(filaActual) , "red");
         }
 
         filaActual++;
@@ -226,56 +199,23 @@ void Controlador::insertarArbolAvlCsv(const std::vector<QString> & data){
 
 
 /*Metodo utilizado para insertar los datos dentro del arbol B*/
-void Controlador::insertarArbolBCsv(const std::vector<QString> & data){
+void Controlador::insertarArbolBCsv(const std::vector<Producto> &productosListos){
 
     QElapsedTimer timer;
     timer.start();
 
     int filaActual = 1;
 
-    for(const QString &linea: data){
+    for(const Producto &product : productosListos) {
 
-        QStringList columnas = linea.split(",");
-
-        if (columnas.size() < 7) {
-            this->gestorBackend->agregarErrorLista("Fila con columnas insuficientes", filaActual);
-            emit logArbolB("Error: Fila malformada en linea " + QString::number(filaActual), "red");
-            filaActual++;
-            continue;
-        }
-
-        std::string nombre = columnas[0].trimmed().toStdString();
-        std::string key = columnas[1].trimmed().toStdString();
-        std::string categoria = columnas[2].trimmed().toStdString();
-        std::string fechaExp = columnas[3].trimmed().toStdString();
-        std::string marca = columnas[4].trimmed().toStdString();
-
-        bool okPrecio;
-        bool okStock;
-
-        double precio = columnas[5].trimmed().toDouble(&okPrecio);
-        int stock = columnas[6].trimmed().toInt(&okStock);
-
-        if (!okPrecio || !okStock) {
-            emit logArbolB(QString::number(filaActual)+". Error en conversion numerica: " + linea, "red");
-            continue;
-        }
         try{
 
-            this->gestorBackend->insertarArbolB(nombre,key,categoria,fechaExp,marca,precio,stock);
-            emit logArbolB(QString::number(filaActual)+". Insertado: " + QString::fromStdString(key), "green");
-        }
-        catch (const InsertException& e) {
-            this->gestorBackend->agregarErrorLista(e.what(), filaActual);
-            emit logArbolB("Fila: " + QString::number(filaActual) + " " + QString::fromStdString(e.what()), "red");
-        }
-        catch (const ReaderCsvException& e) {
-
-            this->gestorBackend->agregarErrorLista(e.what(), filaActual);
-            emit logArbolB("Fila: " + QString::number(filaActual) + " " + QString::fromStdString(e.what()), "red");
+            this->gestorBackend->insertarArbolB(product.getNombre(), product.getCodigoBarra(), product.getCategoria(),
+                                                product.getFechaExpiracion(), product.getMarca(), product.getPrecio(), product.getStock());
+            emit logArbolB(QString::number(filaActual)+". Insertado: " + QString::fromStdString(product.getCodigoBarra()), "green");
         }
         catch (const std::exception& ex) {
-            emit logArbolB("Error inesperado: " + QString::fromStdString(ex.what()) + ". Fila: " + QString::number(filaActual) , "red");
+            emit logArbolB("Error en insercion: " + QString::fromStdString(ex.what()) + ". Fila: " + QString::number(filaActual) , "red");
         }
 
         filaActual++;
@@ -287,55 +227,23 @@ void Controlador::insertarArbolBCsv(const std::vector<QString> & data){
 
 
 /*Metodo utilizado para insertar los datos dentro del arbol B+*/
-void Controlador::insertarArbolBMasCsv(const std::vector<QString> & data){
+void Controlador::insertarArbolBMasCsv(const std::vector<Producto> &productosListos){
 
     QElapsedTimer timer;
     timer.start();
 
     int filaActual = 1;
 
-    for(const QString &linea: data){
+    for(const Producto &product : productosListos) {
 
-        QStringList columnas = linea.split(",");
-
-        if (columnas.size() < 7) {
-            this->gestorBackend->agregarErrorLista("Fila con columnas insuficientes", filaActual);
-            emit logArbolBMas("Error: Fila malformada en linea " + QString::number(filaActual), "red");
-            filaActual++;
-            continue;
-        }
-
-        std::string nombre = columnas[0].trimmed().toStdString();
-        std::string key = columnas[1].trimmed().toStdString();
-        std::string categoria = columnas[2].trimmed().toStdString();
-        std::string fechaExp = columnas[3].trimmed().toStdString();
-        std::string marca = columnas[4].trimmed().toStdString();
-
-        bool okPrecio;
-        bool okStock;
-
-        double precio = columnas[5].trimmed().toDouble(&okPrecio);
-        int stock = columnas[6].trimmed().toInt(&okStock);
-
-        if (!okPrecio || !okStock) {
-            emit logArbolBMas(QString::number(filaActual)+". Error en conversion numerica: " + linea, "red");
-            continue;
-        }
         try{
 
-            this->gestorBackend->insertarArbolBMas(nombre,key,categoria,fechaExp,marca,precio,stock);
-            emit logArbolBMas(QString::number(filaActual)+". Insertado: " + QString::fromStdString(key), "green");
-        }
-        catch (const InsertException& e) {
-            this->gestorBackend->agregarErrorLista(e.what(), filaActual);
-            emit logArbolBMas("Fila: " + QString::number(filaActual) + " " + QString::fromStdString(e.what()), "red");
-        }
-        catch (const ReaderCsvException& e) {
-            this->gestorBackend->agregarErrorLista(e.what(), filaActual);
-            emit logArbolBMas("Fila: " + QString::number(filaActual) + " " + QString::fromStdString(e.what()), "red");
+            this->gestorBackend->insertarArbolBMas(product.getNombre(), product.getCodigoBarra(), product.getCategoria(),
+                                                   product.getFechaExpiracion(), product.getMarca(), product.getPrecio(), product.getStock());
+            emit logArbolBMas(QString::number(filaActual)+". Insertado: " + QString::fromStdString(product.getCodigoBarra()), "green");
         }
         catch (const std::exception& ex) {
-            emit logArbolBMas("Error inesperado: " + QString::fromStdString(ex.what()) + ". Fila: " + QString::number(filaActual) , "red");
+            emit logArbolBMas("Error en insercion: " + QString::fromStdString(ex.what()) + ". Fila: " + QString::number(filaActual) , "red");
         }
 
         filaActual++;
@@ -347,50 +255,22 @@ void Controlador::insertarArbolBMasCsv(const std::vector<QString> & data){
 
 
 /*Metodo que permite llenar las listas con el arreglo de entrada del csv*/
-void Controlador::insertarListaCsv(const std::vector<QString> & data){
+void Controlador::insertarListaCsv(const std::vector<Producto> &productosListos){
 
     QElapsedTimer timer;
     timer.start();
 
     int filaActual = 1;
 
-    for(const QString &linea: data){
+    for(const Producto &product : productosListos) {
 
-        QStringList columnas = linea.split(",");
-
-        if (columnas.size() < 7) {
-            this->gestorBackend->agregarErrorLista("Fila con columnas insuficientes", filaActual);
-            emit logLista("Error: Fila malformada en linea " + QString::number(filaActual), "red");
-            filaActual++;
-            continue;
-        }
-
-        std::string nombre = columnas[0].trimmed().toStdString();
-        std::string key = columnas[1].trimmed().toStdString();
-        std::string categoria = columnas[2].trimmed().toStdString();
-        std::string fechaExp = columnas[3].trimmed().toStdString();
-        std::string marca = columnas[4].trimmed().toStdString();
-
-        bool okPrecio;
-        bool okStock;
-
-        double precio = columnas[5].trimmed().toDouble(&okPrecio);
-        int stock = columnas[6].trimmed().toInt(&okStock);
-
-        if (!okPrecio || !okStock) {
-            emit logLista(QString::number(filaActual)+". Error en conversion numerica: " + linea, "red");
-            continue;
-        }
         try{
 
-            this->gestorBackend->insertarListasCsv(nombre,key,categoria,fechaExp,marca,precio,stock);
+            this->gestorBackend->insertarListasCsv(product.getNombre(), product.getCodigoBarra(), product.getCategoria(),
+                                                   product.getFechaExpiracion(), product.getMarca(), product.getPrecio(), product.getStock());
 
-            emit logLista(QString::number(filaActual)+". Insertado: " + QString::fromStdString(key), "green");
+            emit logLista(QString::number(filaActual)+". Insertado: " + QString::fromStdString(product.getCodigoBarra()), "green");
 
-        }catch (const ReaderCsvException& e) {
-
-            this->gestorBackend->agregarErrorLista(e.what(), filaActual);
-            emit logLista("Fila: " + QString::number(filaActual) + " " + QString::fromStdString(e.what()), "red");
         }
         catch (const std::exception& ex) {
             emit logLista("Error inesperado: " + QString::fromStdString(ex.what()) + ". Fila: " + QString::number(filaActual) , "red");
@@ -403,6 +283,32 @@ void Controlador::insertarListaCsv(const std::vector<QString> & data){
     emit tiempoProceso(4, tiempo);
 }
 
+/*Metodo utilizado para insertar los datos dentro de la tabla hash*/
+void Controlador::insertarTablaHashCsv(const std::vector<Producto> &productosListos){
+
+    QElapsedTimer timer;
+    timer.start();
+
+    int filaActual = 1;
+
+    for(const Producto &product : productosListos) {
+
+        try{
+            this->gestorBackend->insertarTablaHash(product.getNombre(), product.getCodigoBarra(), product.getCategoria(),
+                                                  product.getFechaExpiracion(), product.getMarca(), product.getPrecio(), product.getStock());
+            emit logHash(QString::number(filaActual)+". Insertado: " + QString::fromStdString(product.getCodigoBarra()), "green");
+        }
+        catch (const std::exception& ex) {
+            emit logHash("Error en insercion: " + QString::fromStdString(ex.what()) + ". Fila: " + QString::number(filaActual) , "red");
+        }
+
+        filaActual++;
+    }
+
+    double tiempo = timer.nsecsElapsed() / 1000000.0;
+    emit tiempoProceso(5, tiempo);
+}
+
 /*Metodo que permite insertar los productos
 *
 * 1 -> AVL
@@ -410,6 +316,7 @@ void Controlador::insertarListaCsv(const std::vector<QString> & data){
 * 3 -> B+
 * 4 -> LISTA ORDENADA
 * 5 -> LISTA NO ORDENADA
+* 6 -> TABLA HASH
 *
 */
 void Controlador::insercionProducto(const std::string &_nombre,const std::string &_codigoBarra, const std::string &_categoria, const std::string &_fechaExpiracion, const std::string &_marca, const std::string &_precio, const std::string &_stock){

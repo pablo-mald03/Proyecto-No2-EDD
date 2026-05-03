@@ -28,6 +28,15 @@ public:
     double getPrecio() const;
     int getStock() const;
 
+    /*Metodos setter */
+    void setNombre(const std::string &_nombre);
+    void setCodigoBarra(const std::string &_codigoBarra);
+    void setCategoria(const std::string &_categoria);
+    void setFechaExpiracion(const std::string &_fechaExpiracion);
+    void setMarca(const std::string &_marca);
+    void setPrecio(double _precio);
+    void setStock(int _stock);
+
 };
 
 #endif // PRODUCTO_H

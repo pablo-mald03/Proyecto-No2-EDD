@@ -17,14 +17,14 @@ TablaHash::TablaHash(int capacidadInicial):
 /*Metodo delegado para poder inicializar la tabla hash*/
 void TablaHash::inicializarTabla(){
 
-    for (int i = 0; i < capacidad; i++) {
+    for (int i = 0; i < this->capacidad; i++) {
         this->tabla[i] = new ListaEnlazada<Producto>();
     }
 }
 
 /*Destructor*/
 TablaHash::~TablaHash() {
-    for (int i = 0; i < capacidad; i++) {
+    for (int i = 0; i < this->capacidad; i++) {
         delete this->tabla[i];
     }
     delete[] this->tabla;
@@ -60,9 +60,13 @@ unsigned int TablaHash::calcularIndice(const std::string& clave) {
     hash *= 0xc2b2ae35;
     hash ^= hash >> 16;
 
-    return hash % capacidad;
+    return hash % this->capacidad;
 }
 
+/*Metodo que permite obtener la referencia hacia el arreglo de la tabla hash para poderl agraficar*/
+ListaEnlazada<Producto>** TablaHash::getTabla(){
+    return this->tabla;
+}
 
 /*Metodo que permite insertar un producto en la tabla hash*/
 void TablaHash::insertar(const Producto& nuevoProducto) {
@@ -74,7 +78,7 @@ void TablaHash::insertar(const Producto& nuevoProducto) {
                                 "} ya existe.");
     }
 
-    float factorCarga = (float)elementos / capacidad;
+    float factorCarga = (float)elementos / this->capacidad;
 
     if(factorCarga> 0.75){
         this->redimensionarHash();
@@ -82,7 +86,7 @@ void TablaHash::insertar(const Producto& nuevoProducto) {
 
     unsigned int indice = calcularIndice(nuevoProducto.getCodigoBarra());
     tabla[indice]->insertarAtras(nuevoProducto);
-    elementos++;
+    this->elementos++;
 
 }
 
@@ -127,7 +131,7 @@ bool TablaHash::eliminar(const std::string& codigoBarra) {
         if (almacen->getValor(i).getCodigoBarra() == codigoBarra) {
 
             almacen->eliminar(i);
-            elementos--;
+            this->elementos--;
             return true;
         }
     }
@@ -165,7 +169,7 @@ void TablaHash::redimensionarHash() {
         delete listaVieja;
     }
 
-    elementos = elementosTemporales;
+    this->elementos = elementosTemporales;
     delete[] tablaAntigua;
 }
 
@@ -179,15 +183,15 @@ std::string TablaHash::generarGraphviz() {
     dot << "  node [shape=record, width=.1, height=.1];\n\n";
 
     dot << "  tabla [label = \"";
-    for (int i = 0; i < capacidad; i++) {
+    for (int i = 0; i < this->capacidad; i++) {
         dot << "<f" << i << "> " << i;
-        if (i < capacidad - 1) dot << " | ";
+        if (i < this->capacidad - 1) dot << " | ";
     }
     dot << "\", height=2.5];\n\n";
 
     dot << "  node [shape=box, style=filled, fillcolor=white];\n";
 
-    for (int i = 0; i < capacidad; i++) {
+    for (int i = 0; i < this->capacidad; i++) {
         ListaEnlazada<Producto>* lista = tabla[i];
 
         if (lista->getLongitud() > 0) {

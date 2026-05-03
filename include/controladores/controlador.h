@@ -35,15 +35,20 @@ public:
 private:
     GestorEstructuras * gestorBackend = nullptr;
 
+    /*Metodo que permite limpiar el backend (productos de la sucursal)*/
+    void vaciarAlmacen();
+
     /*Metodos para insertar datos desde el csv*/
 
-    void insertarListaCsv(const std::vector<QString> & data);
+    void insertarListaCsv(const std::vector<Producto> &productosListos);
 
-    void insertarArbolAvlCsv(const std::vector<QString> & data);
+    void insertarArbolAvlCsv(const std::vector<Producto> &productosListos);
 
-    void insertarArbolBCsv(const std::vector<QString> & data);
+    void insertarArbolBCsv(const std::vector<Producto> &productosListos);
 
-    void insertarArbolBMasCsv(const std::vector<QString> & data);
+    void insertarArbolBMasCsv(const std::vector<Producto> &productosListos);
+
+    void insertarTablaHashCsv(const std::vector<Producto> &productosListos);
 
     /*Metodo que permite avisar para determinar si dejar o no descargar el log de errores*/
     void verificarErrores();
@@ -93,7 +98,7 @@ public slots:
     void guardarArchivoCsv();
 
     /*Metodo que permite procesar el csv*/
-    void procesarCsv(const std::vector<QString> & data);
+    void procesarCsv(const std::vector<std::vector<QString>> & data);
 
     /*Metodos que permiten realizar el CRUD de la aplicacion*/
     void insercionProducto(const std::string &_nombre,const std::string &_codigoBarra, const std::string &_categoria, const std::string &_fechaExpiracion, const std::string &_marca, const std::string &_precio, const std::string &_stock);

@@ -50,3 +50,33 @@ double Producto::getPrecio() const{
 int Producto::getStock() const{
     return this->stock;
 }
+
+
+/*Metodos setter de la clase*/
+void Producto::setNombre(const std::string &_nombre){
+    this->nombre = _nombre;
+}
+
+void Producto::setCodigoBarra(const std::string &_codigoBarra){
+    this->codigoBarra = _codigoBarra;
+}
+
+void Producto::setCategoria(const std::string &_categoria){
+    this->categoria = _categoria;
+}
+
+void Producto::setFechaExpiracion(const std::string &_fechaExpiracion){
+    this->fechaExpiracion = _fechaExpiracion;
+}
+
+void Producto::setMarca(const std::string &_marca){
+    this->marca = _marca;
+}
+
+void Producto::setPrecio(double _precio){
+    this->precio = _precio;
+}
+
+void Producto::setStock(int _stock){
+    this->stock = _stock;
+}

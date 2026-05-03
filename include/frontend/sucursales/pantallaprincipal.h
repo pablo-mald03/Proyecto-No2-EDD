@@ -25,7 +25,7 @@ private slots:
     void on_btnCerrar_clicked();
 
 signals:
-    void csvCargado(const std::vector<QString>& data);
+    void csvCargado(const std::vector<std::vector<QString>> & data);
 
     void solicitarLogErrores();
 
@@ -76,6 +76,9 @@ private:
 
     /*Metodo que permite limpiar los datos por cada vez que se vuelva a cargar un nuevo csv*/
     void limpiarLogs();
+
+    /*Metodo que permite leer los csv (METODO MEJORADO)*/
+    std::vector<std::vector<QString>> parsearCSV(const QString &contenido);
 
 };
 

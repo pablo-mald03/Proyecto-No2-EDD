@@ -8,6 +8,7 @@
 #include "erroreslectura.h"
 #include"listaenlazada.h"
 #include"producto.h"
+#include "tablahash.h"
 #include <QStringList>
 #include <QDate>
 
@@ -17,6 +18,9 @@ class GestorEstructuras
 public:
     GestorEstructuras();
     ~GestorEstructuras();
+
+    /*Metodo principal que permite limpiar por completo toda la informacion del almacen de la sucursal*/
+    void limpiarRegistros();
 
     /*Metodos para insertar datos en las estructuras provinientes del csv*/
     void insertarListasCsv(const std::string &nombre,const std::string &key,const std::string &categoria, const std::string &fecha, const std::string &marca, double precio, int stock);
@@ -51,6 +55,10 @@ public:
 
     /*Metodo para insertar en lista no ordenada*/
     void insertarListaOrdenada(const std::string &nombre,const std::string &key,const std::string &categoria, const std::string &fecha, const std::string &marca, double precio, int stock);
+
+
+    /*Metodo para insertar datos en la tabla hash*/
+    void insertarTablaHash(const std::string &nombre,const std::string &key,const std::string &categoria, const std::string &fecha, const std::string &marca, double precio, int stock);
 
     /*Metodo de validacion del csv delegado para validar*/
     void validarCsv(const QStringList& columnas, int fila);
@@ -143,6 +151,9 @@ public:
     /*Metodo que permite obtener los extremos por intevalos (especializados para el arbol B)*/
     ListaEnlazada<Producto> getProductosExtremosIntervalo();
 
+    /*Metodo que permite validar las filas del csv cargado*/
+    bool validarFilaCsvProducto(const std::vector<QString>& fila, double& precio, int& stock, QString& error) ;
+
 private:
 
     /*Arbol AVL*/
@@ -161,6 +172,9 @@ private:
     /*Lista de errores*/
     ListaEnlazada<ErroresLectura> * listaErrores = nullptr;
 
+    /*Tabla hash*/
+    TablaHash * tablaHash = nullptr;
+
     /*Atributo flag de carga de csv para saber si guardar o refrescar*/
     bool cargoArchivo;
 
@@ -172,6 +186,9 @@ private:
 
     /*Metodo que permite verificar la integridad de la listaEnlazada ordenada*/
     bool existeProductoListaOrdenada(const std::string &codigo);
+
+    /*Metodo que permite limpiar todas las estructuras*/
+    void limpiarEstrucuturas();
 
 };
 

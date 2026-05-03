@@ -17,14 +17,19 @@ GestorEstructuras::GestorEstructuras():
     arbolAvl(new ArbolAvl()),
     arbolB(new ArbolB(5)),
     arbolBMas(new ArbolBMas(10)),
+    tablaHash(new TablaHash(500)),
     cargoArchivo(false)
 {
     srand(time(NULL));
 }
 
 /*Destructor*/
-GestorEstructuras::~GestorEstructuras(){
+GestorEstructuras::~GestorEstructuras() {
+    this->limpiarEstrucuturas();
+}
 
+/*Metodo que permite limpiar por completo todas las estrucutras y liberar memoria*/
+void GestorEstructuras::limpiarEstrucuturas(){
     if(this->arbolAvl != nullptr){
         delete this->arbolAvl;
         this->arbolAvl = nullptr;
@@ -34,7 +39,6 @@ GestorEstructuras::~GestorEstructuras(){
         delete this->arbolB;
         this->arbolB = nullptr;
     }
-
 
     if(this->arbolBMas != nullptr){
         delete this->arbolBMas;
@@ -55,6 +59,26 @@ GestorEstructuras::~GestorEstructuras(){
         delete this->listaErrores;
         this->listaErrores = nullptr;
     }
+
+    if(this->tablaHash != nullptr){
+        delete this->tablaHash;
+        this->tablaHash = nullptr;
+    }
+}
+
+/*Metodo principal que permite limpiar por completo toda la informacion del almacen de la sucursal*/
+void GestorEstructuras::limpiarRegistros(){
+
+    this->limpiarEstrucuturas();
+
+    this->listaNoOrdenada = new ListaEnlazada<Producto>();
+    this->listaOrdenada = new ListaEnlazada<Producto>();
+    this->listaErrores = new ListaEnlazada<ErroresLectura>();
+    this->arbolAvl = new ArbolAvl();
+    this->arbolB = new ArbolB(5);
+    this->arbolBMas = new ArbolBMas(10);
+    this->tablaHash = new TablaHash(500);
+    this->cargoArchivo = false;
 }
 
 /*Metodo que permite exportar el csv*/
@@ -319,6 +343,12 @@ void GestorEstructuras::insertarListaOrdenada(const std::string &nombre,const st
     }
 
     this->listaOrdenada->insertarAtras(Producto(nombre,key,categoria,fecha,marca,precio,stock));
+}
+
+/*Metodo que permite insertar datos en la tabla hash*/
+void GestorEstructuras::insertarTablaHash(const std::string &nombre,const std::string &key,const std::string &categoria, const std::string &fecha, const std::string &marca, double precio, int stock){
+
+    this->tablaHash->insertar(Producto(nombre,key,categoria,fecha,marca,precio,stock));
 }
 
 
@@ -942,6 +972,46 @@ ListaEnlazada<Producto> GestorEstructuras::getRangosAleatorios(){
     productosAleatorios.insertarFrente(pSuperior);
 
     return productosAleatorios;
+}
+
+/*Metodo que permite validar la filas del csv cargado*/
+bool GestorEstructuras::validarFilaCsvProducto(const std::vector<QString>& fila, double& precio, int& stock, QString& error) {
+    if (fila.size() != 7) {
+        error = "Formato inválido: Se esperaban 7 columnas.";
+        return false;
+    }
+
+    for (int i = 0; i < 5; ++i) {
+        if (fila[i].trimmed().isEmpty()) {
+            error = "Error: Campos de texto no pueden estar vacíos.";
+            return false;
+        }
+    }
+
+    QString fechaStr = fila[3].trimmed();
+
+    QDate fecha = QDate::fromString(fechaStr, Qt::ISODate);
+
+    if (!fecha.isValid()) {
+        error = "Fecha no valida o formato incorrecto. Use el formato YYYY-MM-DD.";
+        return false;
+    }
+
+    bool okPrecio, okStock;
+    precio = fila[5].trimmed().toDouble(&okPrecio);
+    stock = fila[6].trimmed().toInt(&okStock);
+
+    if (!okPrecio || !okStock) {
+        error = "Precio o Stock deben ser numericos.";
+        return false;
+    }
+
+    if (precio < 0 || stock < 0) {
+        error = "Precio y Stock no pueden ser negativos.";
+        return false;
+    }
+
+    return true;
 }
 
 
