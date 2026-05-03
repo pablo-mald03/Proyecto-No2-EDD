@@ -148,6 +148,7 @@ set(BACKEND_SOURCES
     src/backend/sucursal.cpp
     src/backend/grafo.cpp
     src/backend/gestormapa.cpp
+    src/backend/tablahash.cpp
 )
 
 
@@ -168,6 +169,7 @@ set(BACKEND_HEADERS
     include/backend/sucursal.h
     include/backend/grafo.h
     include/backend/gestormapa.h
+    include/backend/tablahash.h
 )
 
 set(EXCEPTIONS_SOURCES
@@ -212,7 +214,6 @@ qt_add_executable(ProyectoNo2-EDD
     ${MODULES_HEADERS}
     ${UI_FILES}
     recursos.qrc
-
 
 )
 
