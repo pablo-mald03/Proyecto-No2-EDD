@@ -65,7 +65,6 @@ void PantallaVerEnvios::dibujarNodos(const QList<SucursalMock2> &sucursales, QSt
 void PantallaVerEnvios::dibujarAristas(const QList<ConexionMock2> &conexiones, QString idEnvio) {
     QPen penArista(Qt::lightGray, 3, Qt::SolidLine);
 
-    // Obtenemos el sub-mapa de este envío específico
     QHash<QString, NodoGrafico*> &nodosDeEsteEnvio = mapaNodosPorEnvio[idEnvio];
 
     for (const ConexionMock2 &conexion : conexiones) {
@@ -89,9 +88,8 @@ void PantallaVerEnvios::dibujarAristas(const QList<ConexionMock2> &conexiones, Q
 /*Metodo que permite dibujar los envios que se van haciendo*/
 void PantallaVerEnvios::dibujarEnviosHorizontal(QList<Envio> enviosActivos) {
     escena->clear();
-    mapaNodosPorEnvio.clear(); // Limpiamos las referencias anteriores
+    mapaNodosPorEnvio.clear();
 
-    // Datos de ejemplo para la estructura (esto luego vendrá de tu controlador/DB)
     QList<SucursalMock2> listaSucursales = {
         {"101", "Central"}, {"102", "Norte"}, {"103", "Sur"}, {"104", "Este"}
     };

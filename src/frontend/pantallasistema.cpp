@@ -120,10 +120,15 @@ void PantallaSistema::mostrarAgregarSucursal(){
         connect(this->controladorGeneral, &ControladorNegocio::tiempoProcesoInsercionGrafo, this->pantallaAgregadoSucursal, &PantallaAgregarSucursal::mostrarTiempo);
 
         connect(this->pantallaAgregadoSucursal, &PantallaAgregarSucursal::verSucursales, this, &PantallaSistema::mostrarVistaSucursales);
-    }
 
+        connect(this->pantallaAgregadoSucursal, &PantallaAgregarSucursal::asociarConexion, this->controladorGeneral, &ControladorNegocio::conexionSucursal);
+
+        connect(this->controladorGeneral, &ControladorNegocio::mensajeConfirmacionConexion, this->pantallaAgregadoSucursal, &PantallaAgregarSucursal::confirmarAsociacion);
+
+    }
     this->pantallaAgregadoSucursal->limpiarPantalla();
     this->ui->stackedWidget->setCurrentWidget(this->pantallaAgregadoSucursal);
+    this->pantallaAgregadoSucursal->inicializarCombos();
     this->ui->labelTasks->setText("Agregar Sucursal");
 }
 

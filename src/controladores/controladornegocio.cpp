@@ -65,6 +65,11 @@ void ControladorNegocio::insercionSucursal(const std::string &_id,const std::str
 
 }
 
+/*Metodo que permite conectar una sucursal con otra*/
+void conexionSucursal(const std::string &_Origen, const std::string &_Destino,double _tiempo,double _costo){
+
+}
+
 /*Metodo que permite eliminar una sucursal*/
 void ControladorNegocio::eliminacionSucursal(const std::string &_id){
 
