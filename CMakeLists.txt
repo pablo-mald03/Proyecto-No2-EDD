@@ -144,6 +144,9 @@ set(BACKEND_SOURCES
     src/backend/arbolb.cpp
     src/backend/arbolbmas.cpp
     src/backend/nodobmas.cpp
+    src/backend/conexion.cpp
+    src/backend/sucursal.cpp
+    src/backend/grafo.cpp
 )
 
 
@@ -160,6 +163,9 @@ set(BACKEND_HEADERS
     include/backend/arbolb.h
     include/backend/nodobmas.h
     include/backend/arbolbmas.h
+    include/backend/conexion.h
+    include/backend/sucursal.h
+    include/backend/grafo.h
 )
 
 set(EXCEPTIONS_SOURCES
@@ -167,6 +173,7 @@ set(EXCEPTIONS_SOURCES
     src/exceptions/readercsvexception.cpp
     src/exceptions/insertexception.cpp
     src/exceptions/deleteexception.cpp
+    src/exceptions/notfoundexception.cpp
 )
 
 set(EXCEPTIONS_HEADERS
@@ -174,6 +181,7 @@ set(EXCEPTIONS_HEADERS
     include/exceptions/readercsvexception.h
     include/exceptions/insertexception.h
     include/exceptions/deleteexception.h
+    include/exceptions/notfoundexception.h
 )
 
 
