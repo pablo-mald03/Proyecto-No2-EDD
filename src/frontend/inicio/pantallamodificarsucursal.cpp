@@ -112,37 +112,45 @@ void PantallaModificarSucursal::on_btnModificar_clicked()
     emit modificarSucursal(id,nombre,ubicacion,ingreso,despacho,preparacion);
 }
 
-void PantallaModificarSucursal::inicializarCombo() {
+void PantallaModificarSucursal::inicializarCombo(const std::vector<Sucursal*>& sucursales) {
 
     ui->comboBox->blockSignals(true);
     ui->comboBox->clear();
 
-    ui->comboBox->addItem("Sucursal Central - Ciudad", "ID_001");
-    ui->comboBox->addItem("Sucursal Norte - Petén", "ID_002");
-    ui->comboBox->addItem("Sucursal Occidente - Xela", "ID_003");
+    for (Sucursal* suc : sucursales) {
+        QString nombreVisible = QString::fromStdString(suc->getNombre());
+        QString idOculto = QString::fromStdString(suc->getId());
+
+        ui->comboBox->addItem(nombreVisible, idOculto);
+    }
 
     ui->comboBox->setCurrentIndex(-1);
 
     ui->comboBox->blockSignals(false);
 }
 
-/*METODO PROVISIONAL*/
-Sucursal1 PantallaModificarSucursal::buscarEnHashHardcoded(QString id) {
-    Sucursal1 s;
-    if (id == "ID_001") {
-        s = {"ID_001", "Sucursal Central", "Ciudad de Guatemala"};
-    } else if (id == "ID_002") {
-        s = {"ID_002", "Sucursal Norte", "Flores, Petén"};
-    } else {
-        s = {"ID_003", "Sucursal Occidente", "Quetzaltenango"};
-    }
-    return s;
+/*Metodo que permite setear todos los valores encontrados de la sucursal*/
+void PantallaModificarSucursal::recibirSucursal(Sucursal* sucursal){
+
+    this->ui->textID->setText(QString::fromStdString(sucursal->getId()));
+    this->ui->textNombre->setText(QString::fromStdString(sucursal->getNombre()));
+    this->ui->textUbicacion->setText(QString::fromStdString(sucursal->getUbicacion()));
+    this->ui->textITiempoIngreso->setText(QString::number(sucursal->getTiempoIngreso()));
+    this->ui->textTiempoDesapacho->setText(QString::number(sucursal->getTiempoDespacho()));
+    this->ui->textITiempoPreparacion->setText(QString::number(sucursal->getTiempoPreparacion()));
+
+    ui->textID->setReadOnly(true);
+}
+
+/*Metodo que permite mostrar un mensaje de error en caso de no encontrar nada*/
+void PantallaModificarSucursal::recibirMensajeError(QString mensaje){
+    QMessageBox::warning(this, "Datos no encontrados", mensaje);
 }
 
 /*Metodo que permite quitar la seleccion de la sucursal*/
 void PantallaModificarSucursal::on_btnQuitar_clicked()
 {
-     this->limpiarDatos();
+    this->limpiarDatos();
 }
 
 /*Evento que permite detectar que opcion de clickeo*/
@@ -155,13 +163,7 @@ void PantallaModificarSucursal::on_comboBox_currentIndexChanged(int index)
 
     if (idSeleccionado.isEmpty()) return;
 
-    Sucursal1 datos = buscarEnHashHardcoded(idSeleccionado);
-
-    ui->textID->setText(datos.id);
-    ui->textNombre->setText(datos.nombre);
-    ui->textUbicacion->setText(datos.ubicacion);
-
-    ui->textID->setReadOnly(true);
+    emit solicitarSucursal(idSeleccionado.toStdString());
 
 }
 

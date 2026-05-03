@@ -1,14 +1,9 @@
 #ifndef PANTALLAMODIFICARSUCURSAL_H
 #define PANTALLAMODIFICARSUCURSAL_H
 
+#include "sucursal.h"
 #include <QWidget>
 
-/*STRUCT TEMPORAL PENDIENTE REMOVER*/
-struct Sucursal1 {
-    QString id;
-    QString nombre;
-    QString ubicacion;
-};
 
 namespace Ui {
 class PantallaModificarSucursal;
@@ -24,7 +19,7 @@ public:
 
     void limpiarPantalla();
 
-    void inicializarCombo();
+    void inicializarCombo(const std::vector<Sucursal*>& sucursales);
 
 private:
     Ui::PantallaModificarSucursal *ui;
@@ -34,18 +29,24 @@ private:
     void limpiarDatos();
     void limpiarLogs();
 
-    Sucursal1 buscarEnHashHardcoded(QString id);
-
 public slots:
     void appendGrafoLog(QString mensaje, QString color);
 
     void mostrarTiempo(double milisegundos);
+
+    void recibirSucursal(Sucursal* sucursal);
+
+    void recibirMensajeError(QString mensaje);
 
 signals:
     /*Metodo que permite insertar sucursal*/
     void modificarSucursal(const std::string &_id,const std::string &_nombre, const std::string &_ubicacion, double _ingreso, double _despacho, double _preparacion);
     /*Metodo que permite viajar a mostrar los arboles*/
     void verSucursales();
+
+    /*Metodo que permite encontrar el valor de la sucursal*/
+    void solicitarSucursal(const std::string &_id);
+
 private slots:
     void on_btnModificar_clicked();
     void on_btnQuitar_clicked();

@@ -245,6 +245,36 @@ void ControladorNegocio::eliminacionSucursal(const std::string &_id){
 /*Metodo que permite modificar una sucursal*/
 void ControladorNegocio::modificacionSucursal(const std::string &_id,const std::string &_nombre, const std::string &_ubicacion, double _ingreso, double _despacho, double _preparacion){
 
+    QElapsedTimer timer;
+    timer.start();
+
+    try {
+        this->gestorMapeo->editarSucursal(_id, _nombre, _ubicacion,
+                                            _ingreso, _preparacion, _despacho);
+
+        emit logModificacionGrafo(
+            QString::fromStdString("Sucursal [ " + _nombre + " ] con ID: {"+_id+"} modificada correctamente."), "green");
+
+    } catch (const std::exception &e) {
+        emit logModificacionGrafo("Error al modificar: " +
+                                QString::fromStdString(e.what()),
+                            "red");
+    }
+
+    double tiempoTotalMs = timer.elapsed();
+
+    emit tiempoProcesoModificacionGrafo(tiempoTotalMs);
+}
+
+/*Metodo que permite buscar la informacion de la sucursal en bas al id*/
+void ControladorNegocio::buscarSucursal(const std::string &_id){
+
+    try {
+        Sucursal * sucursalEncontrada = this->gestorMapeo->buscarSucursal(_id);
+        emit enviarInformacion(sucursalEncontrada);
+    } catch (const std::exception& e) {
+        emit mensajeErrorModificar(QString::fromStdString(e.what()));
+    }
 }
 
 /*Metodo que permite buscar en el grafo las sucursales registradas*/

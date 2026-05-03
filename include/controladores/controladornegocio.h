@@ -52,6 +52,8 @@ public slots:
     /*Metodo que permite modificar una sucursal*/
     void modificacionSucursal(const std::string &_id,const std::string &_nombre, const std::string &_ubicacion, double _ingreso, double _despacho, double _preparacion);
 
+    /*Metodo que permite buscar la informacion de la sucursal en bas al id*/
+    void buscarSucursal(const std::string &_id);
 
     /*Metodo que permite generar el viaje hacia la sucursal*/
     void cargarSucursal(const std::string &id);
@@ -114,6 +116,10 @@ signals:
     /*Signals que permiten ir comunicandose con la UI para poder realizar las operaciones de modificacion*/
     void logModificacionGrafo(QString mensaje, QString color);
     void tiempoProcesoModificacionGrafo(double milisegundos);
+    /*Metotodo que permite enviar la informacion de la sucursal encontrada*/
+    void enviarInformacion(Sucursal* sucursal);
+    /*Metotodo que permite enviar un mensaje de error*/
+    void mensajeErrorModificar(QString mensaje);
 
     /*Metodo que permite viajar hacia otra sucursal*/
     void abrirSucursal(Sucursal * _sucursal, Grafo * redGrafo);

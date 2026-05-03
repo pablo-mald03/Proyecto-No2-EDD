@@ -166,12 +166,19 @@ void PantallaSistema::mostrarModificarSucursal(){
         connect(this->controladorGeneral, &ControladorNegocio::tiempoProcesoModificacionGrafo, this->pantallaModificadoSucursal, &PantallaModificarSucursal::mostrarTiempo);
 
         connect(this->pantallaModificadoSucursal, &PantallaModificarSucursal::verSucursales, this, &PantallaSistema::mostrarVistaSucursales);
+
+        connect(this->controladorGeneral, &ControladorNegocio::enviarInformacion, this->pantallaModificadoSucursal, &PantallaModificarSucursal::recibirSucursal);
+
+        connect(this->pantallaModificadoSucursal, &PantallaModificarSucursal::solicitarSucursal, this->controladorGeneral, &ControladorNegocio::buscarSucursal);
+
+        connect(this->controladorGeneral, &ControladorNegocio::mensajeErrorModificar, this->pantallaModificadoSucursal, &PantallaModificarSucursal::recibirMensajeError);
+
     }
 
     this->pantallaModificadoSucursal->limpiarPantalla();
     this->ui->stackedWidget->setCurrentWidget(this->pantallaModificadoSucursal);
 
-    this->pantallaModificadoSucursal->inicializarCombo();
+    this->pantallaModificadoSucursal->inicializarCombo(this->controladorGeneral->obtenerGrafo()->getNodos());
     this->ui->labelTasks->setText("Modificar Sucursal");
 }
 
