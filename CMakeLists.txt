@@ -161,6 +161,10 @@ set(BACKEND_SOURCES
     src/backend/grafo.cpp
     src/backend/gestormapa.cpp
     src/backend/tablahash.cpp
+    src/backend/gestorenvios.cpp
+    src/backend/historialenvio.cpp
+    src/backend/nodocola.cpp
+    src/backend/cola.cpp
 )
 
 
@@ -182,6 +186,10 @@ set(BACKEND_HEADERS
     include/backend/grafo.h
     include/backend/gestormapa.h
     include/backend/tablahash.h
+    include/backend/historialenvio.h
+    include/backend/gestorenvios.h
+    include/backend/nodocola.h
+    include/backend/cola.h
 )
 
 set(EXCEPTIONS_SOURCES
@@ -226,7 +234,6 @@ qt_add_executable(ProyectoNo2-EDD
     ${MODULES_HEADERS}
     ${UI_FILES}
     recursos.qrc
-
 )
 
 target_include_directories(ProyectoNo2-EDD PRIVATE
