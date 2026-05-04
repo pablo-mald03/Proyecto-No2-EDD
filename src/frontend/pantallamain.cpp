@@ -410,6 +410,41 @@ void PantallaMain::mostrarVerArboles(){
 
 }
 
+/*Metodo utilizado para poder navegar a la ventana de buscar por nombre*/
+void PantallaMain::mostrarCompararBusqueda(){
+
+    if (!this->pantallaComparar) {
+
+        this->pantallaComparar = new PantallaCompararBusquedas(this);
+
+        ui->stackedWidget->addWidget(this->pantallaComparar);
+
+        //Se conectan las signlas para poder interactuar con las pantallas
+        connect(this->controladorCrud, &Controlador::logComparacionTablaHash,this->pantallaComparar, &PantallaCompararBusquedas::appendHashLog);
+
+        connect(this->controladorCrud, &Controlador::logComparacionAvl,this->pantallaComparar, &PantallaCompararBusquedas::appendAvlLog);
+
+        connect(this->controladorCrud, &Controlador::logComparacionListaOrdenada,this->pantallaComparar, &PantallaCompararBusquedas::appendListOrdenadaLog);
+
+        connect(this->controladorCrud, &Controlador::logComparacionListaNoOrdenada,this->pantallaComparar, &PantallaCompararBusquedas::appendListNoOrdenadaLog);
+
+        connect(this->controladorCrud, &Controlador::tiempoProcesoComparacion, this->pantallaComparar, &PantallaCompararBusquedas::mostrarTiempo);
+
+        connect(this->pantallaComparar, &PantallaCompararBusquedas::verArboles, this, &PantallaMain::mostrarVerArboles);
+
+        connect(this, &PantallaMain::limpiarCompararBusquedas, this->pantallaComparar, &PantallaCompararBusquedas::limpiarPantalla);
+
+        /*Pruebas*/
+        connect(this->pantallaComparar, &PantallaCompararBusquedas::pruebaAleatoria, this->controladorCrud, &Controlador::pruebaAleatoriaComparacion);
+    }
+
+    emit this->limpiarCompararBusquedas();
+    this->controladorCrud->ordenarListado(1);
+    this->solicitarTitulo("Comparar Busquedas");
+    this->ui->stackedWidget->setCurrentWidget(this->pantallaComparar);
+
+}
+
 /*Destructor*/
 PantallaMain::~PantallaMain()
 {
@@ -473,6 +508,6 @@ void PantallaMain::on_btnEstructuras_clicked()
 /*Metodo que permite navegar a la pantalla de mostrar el estado de los arboles*/
 void PantallaMain::on_btnCompararBusqueda_clicked()
 {
-
+    this->mostrarCompararBusqueda();
 }
 

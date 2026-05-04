@@ -5,6 +5,7 @@
 
 /*Region de importacion de la UI*/
 #include "pantallabuscarcodigo.h"
+#include "pantallacompararbusquedas.h"
 #include"pantallaprincipal.h"
 #include"controlador.h"
 #include"pantallaagregar.h"
@@ -76,6 +77,8 @@ private:
 
     PantallaVerArboles * pantallaVerArboles = nullptr;
 
+    PantallaCompararBusquedas * pantallaComparar = nullptr;
+
     PantallaListarNombre * pantallaListarNombre = nullptr;
 
     /*Punteros de pantallas en la UI*/
@@ -103,6 +106,7 @@ signals:
     void limpiarBuscarCategoria();
     void limpiarBuscarRango();
     void limpiarEliminar();
+    void limpiarCompararBusquedas();
     void limpiarListar();
 
     /*Signal que permite ir cambiando el label de titulos*/

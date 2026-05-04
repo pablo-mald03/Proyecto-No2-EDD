@@ -162,6 +162,9 @@ public slots:
     /*Metodo que permite generar las consultas en extremos por categoria*/
     void pruebaExtremosCategoria(int consultas,int veces);
 
+    /*Metodo que permite generar las consultas aleatorias para comparar rendimiento*/
+    void pruebaAleatoriaComparacion(int consultas,int veces);
+
 signals:
 
     /*Metodos que permiten enviar la informacion para poder generar el graphviz los arboles*/
@@ -263,8 +266,6 @@ signals:
 
     /*Fin de las Signals que permiten comunicarse con la pantalla de buscar por nombre */
 
-
-
     /*Signals que permiten comunicarse con la pantalla de eliminar productos */
     void logEliminarArbolAvl(QString mensaje, QString color);
     void logEliminarArbolB(QString mensaje, QString color);
@@ -293,6 +294,15 @@ signals:
     void mostrarTiempoPruebasNombre(double milisegundos);
     void mostrarTiempoPruebasCategoria(double milisegundos);
     void mostrarTiempoPruebasFechas(double milisegundos);
+
+    /*Signals que permiten comunicarse con la pantalla de comparar busquedas */
+    void logComparacionTablaHash(QString mensaje, QString color);
+    void logComparacionAvl(QString mensaje, QString color);
+    void logComparacionListaOrdenada(QString mensaje, QString color);
+    void logComparacionListaNoOrdenada(QString mensaje, QString color);
+
+    /*Signal que permite setear el tiempo en el label*/
+    void tiempoProcesoComparacion (int estructura, double milisegundos);
 
 };
 

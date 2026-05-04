@@ -2894,3 +2894,220 @@ void Controlador::pruebaExtremosCodigo(int consultas,int veces){
         emit logBusquedaCodigoListaNoOrdenada("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
     }
 }
+
+
+/*Metodo que permite generar las consultas aleatorias para comparar busquedas*/
+void Controlador::pruebaAleatoriaComparacion(int consultas,int veces){
+
+    try{
+
+        ListaEnlazada<Producto> listaRangos = this->gestorBackend->getRangosAleatorios();
+
+        if(listaRangos.esVacia()){
+            emit logComparacionTablaHash("La Tabla Hash no cuenta con los suficientes datos para hacer pruebas aleatorias", "yellow");
+            emit logComparacionAvl("El arbol AVL no cuenta con los suficientes datos para hacer pruebas aleatorias", "yellow");
+            emit logComparacionListaOrdenada("La lista Ordenada esta vacia", "yellow");
+            emit logComparacionListaNoOrdenada("La lista No Ordenada esta vacia", "yellow");
+            return;
+        }
+
+        if(listaRangos.getLongitud() < 2){
+
+            emit logComparacionAvl("El arbol AVL no cuenta con los suficientes datos para hacer pruebas aleatorias", "yellow");
+            emit logComparacionTablaHash("La Tabla Hash no cuenta con los suficientes datos para hacer pruebas aleatorias", "yellow");
+            emit logComparacionListaOrdenada("La lista no cuenta con los suficientes datos para hacer pruebas aleatorias", "yellow");
+            emit logComparacionListaNoOrdenada("La lista no cuenta con los suficientes datos para hacer pruebas aleatorias", "yellow");
+            return;
+        }
+
+        int indiceUltimo = listaRangos.getLongitud() -1;
+
+        ListaEnlazada<Producto> lista = this->gestorBackend->getProductosIntervalo(listaRangos.getValor(0),listaRangos.getValor(indiceUltimo), 4);
+
+        int longitudLista = lista.getLongitud();
+        double tiempoTotal = 0.0;
+        int repeticiones = veces * consultas;
+
+        for (int i = 0; i < repeticiones; ++i) {
+
+            int indiceBase = rand() % (longitudLista - 1);
+
+            Producto producto1 = lista.getValor(indiceBase);
+
+            QElapsedTimer timer;
+            timer.start();
+
+            this->buscarHashCodigo(producto1.getCodigoBarra());
+
+            double tiempoPasado = timer.nsecsElapsed() / 1000000.0;
+
+            if (repeticiones <= 50) {
+
+                QString tiempoStr = QString::number(tiempoPasado, 'f', 4);
+
+                QString cantidad =
+                    "==========================================\n"
+                    "Tiempo transcurrido: " +
+                    tiempoStr + "\n" +
+                    "==========================================\n\n";
+
+                emit logComparacionTablaHash(cantidad.replace("\n", "<br>"),
+                                                "yellow");
+            }
+
+            tiempoTotal += tiempoPasado;
+        }
+
+        double tiempoPromedio = tiempoTotal / (veces * consultas);
+
+        QString tiempoStrTotalB = QString::number(tiempoTotal, 'f', 4);
+
+        QString cantidadFinalB =
+            "--------*****---------------*****---------\n"
+            "TIEMPO TOTAL TABLA HASH: " + tiempoStrTotalB + " ms\n" +
+            "PROMEDIO POR CONSULTA: " + QString::number(tiempoPromedio, 'f', 4) + " ms\n" +
+            "--------*****---------------*****---------\n\n";
+
+        emit logComparacionTablaHash(cantidadFinalB.replace("\n", "<br>"), "yellow");
+
+
+        double tiempoTotalOrdenado = 0.0;
+
+        for (int i = 0; i < repeticiones; ++i) {
+
+            int indiceBase = rand() % (longitudLista - 1);
+
+            Producto producto1 = lista.getValor(indiceBase);
+
+            QElapsedTimer timer;
+            timer.start();
+
+            this->buscarListasOrdenadaCodigo(producto1.getCodigoBarra());
+
+            double tiempoPasado = timer.nsecsElapsed() / 1000000.0;
+
+            if (repeticiones <= 50) {
+
+                QString tiempoStr = QString::number(tiempoPasado, 'f', 4);
+
+                QString cantidad =
+                    "==========================================\n"
+                    "Tiempo transcurrido: " +
+                    tiempoStr + "\n" +
+                    "==========================================\n\n";
+
+                emit logComparacionListaOrdenada(cantidad.replace("\n", "<br>"),
+                                                    "yellow");
+            }
+
+            tiempoTotalOrdenado += tiempoPasado;
+        }
+
+        double tiempoPromedioOrdenado = tiempoTotalOrdenado / repeticiones;
+
+        QString tiempoStrTotalOrdenado = QString::number(tiempoTotalOrdenado, 'f', 4);
+
+        QString cantidadFinal =
+            "--------*****---------------*****---------\n"
+            "TIEMPO TOTAL LISTA ORDENADA: " + tiempoStrTotalOrdenado + " ms\n" +
+            "PROMEDIO POR CONSULTA: " + QString::number(tiempoPromedioOrdenado, 'f', 4) + " ms\n" +
+            "--------*****---------------*****---------\n\n";
+
+        emit logComparacionListaOrdenada(cantidadFinal.replace("\n", "<br>"), "yellow");
+
+        double tiempoTotalNoOrdenado = 0.0;
+
+        for (int i = 0; i < repeticiones; ++i) {
+
+            int indiceBase = rand() % (longitudLista - 1);
+
+            Producto producto1 = lista.getValor(indiceBase);
+
+            QElapsedTimer timer;
+            timer.start();
+
+            this->buscarListasNoOrdenadaCodigo(producto1.getCodigoBarra());
+
+            double tiempoPasado = timer.nsecsElapsed() / 1000000.0;
+
+            if (repeticiones <= 50) {
+
+                QString tiempoStr = QString::number(tiempoPasado, 'f', 4);
+
+                QString cantidad =
+                    "==========================================\n"
+                    "Tiempo transcurrido: " +
+                    tiempoStr + "\n" +
+                    "==========================================\n\n";
+
+                emit logComparacionListaNoOrdenada(cantidad.replace("\n", "<br>"),
+                                                      "yellow");
+            }
+
+            tiempoTotalNoOrdenado += tiempoPasado;
+        }
+
+        double tiempoPromedioNoOrdenado = tiempoTotalNoOrdenado / repeticiones;
+
+        QString tiempoStrTotalNoOrdenado = QString::number(tiempoTotalNoOrdenado, 'f', 4);
+
+        QString cantidadNoOrdenadaFinal =
+            "--------*****---------------*****---------\n"
+            "TIEMPO TOTAL LISTA NO ORDENADA: " + tiempoStrTotalNoOrdenado + " ms\n" +
+            "PROMEDIO POR CONSULTA: " + QString::number(tiempoPromedioNoOrdenado, 'f', 4) + " ms\n" +
+            "--------*****---------------*****---------\n\n";
+
+        emit logComparacionListaNoOrdenada(cantidadNoOrdenadaFinal.replace("\n", "<br>"), "yellow");
+
+
+        double tiempoTotalAvl = 0.0;
+
+        for (int i = 0; i < repeticiones; ++i) {
+
+            int indiceBase = rand() % (longitudLista - 1);
+
+            Producto producto1 = lista.getValor(indiceBase);
+
+            QElapsedTimer timer;
+            timer.start();
+
+            this->buscarAvlNombre(producto1.getNombre());
+
+            double tiempoPasado = timer.nsecsElapsed() / 1000000.0;
+
+            if (repeticiones <= 50) {
+
+                QString tiempoStr = QString::number(tiempoPasado, 'f', 4);
+
+                QString cantidad =
+                    "==========================================\n"
+                    "Tiempo transcurrido: " +
+                    tiempoStr + "\n" +
+                    "==========================================\n\n";
+
+                emit logComparacionAvl(cantidad.replace("\n", "<br>"),
+                                                   "yellow");
+            }
+
+            tiempoTotalAvl+= tiempoPasado;
+        }
+
+        double tiempoPromedioAvl = tiempoTotalAvl / repeticiones;
+
+        QString tiempoStrTotalAvl = QString::number(tiempoTotalAvl, 'f', 4);
+
+        QString cantidadNoAvlFinal =
+            "--------*****---------------*****---------\n"
+            "TIEMPO TOTAL ARBOL AVL: " + tiempoStrTotalAvl + " ms\n" +
+            "PROMEDIO POR CONSULTA: " + QString::number(tiempoPromedioAvl, 'f', 4) + " ms\n" +
+            "--------*****---------------*****---------\n\n";
+
+        emit logComparacionAvl(cantidadNoAvlFinal.replace("\n", "<br>"), "yellow");
+
+    }catch (const std::exception& ex) {
+        emit logComparacionTablaHash("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
+        emit logComparacionAvl("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
+        emit logComparacionListaOrdenada("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
+        emit logComparacionListaNoOrdenada("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
+    }
+}
