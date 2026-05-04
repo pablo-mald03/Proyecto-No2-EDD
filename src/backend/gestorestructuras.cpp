@@ -18,7 +18,8 @@ GestorEstructuras::GestorEstructuras():
     arbolB(new ArbolB(5)),
     arbolBMas(new ArbolBMas(10)),
     tablaHash(new TablaHash(500)),
-    cargoArchivo(false)
+    cargoArchivo(false),
+    parametroOrden(1)
 {
     srand(time(NULL));
 }
@@ -145,6 +146,45 @@ std::string GestorEstructuras::obtenerGraphvizBMas(){
     return this->arbolBMas->generarDot();
 }
 
+
+/*Metodo que permite obtener el .dot de la lista enlazada*/
+std::string GestorEstructuras::obtenerGraphvizLista(){
+    std::stringstream dot;
+
+    dot << "digraph G {\n";
+    dot << "  rankdir=LR;\n";
+    dot << "  node [shape=record, color=\"#08333B\", fontcolor=\"black\", style=bold];\n";
+    dot << "  edge [color=\"#3A0A69\"];\n";
+
+    NodoLista<Producto>* actual = this->listaOrdenada->getCabeza();
+
+    if (actual == nullptr) {
+        dot << "  NodoVacio [label=\"Lista Vacia\", color=red];\n";
+    } else {
+        int contador = 0;
+        while (actual != nullptr) {
+            Producto p = actual->getDato();
+
+            dot << "  nodo" << contador << " [label=\""
+                << p.getNombre() << " | " << p.getCodigoBarra()
+                << "\"];\n";
+
+            if (actual->getSiguiente() != nullptr) {
+                dot << "  nodo" << contador << " -> nodo" << (contador + 1) << ";\n";
+            } else {
+                dot << "  null [label=\"NULL\", shape=none, fontcolor=red];\n";
+                dot << "  nodo" << contador << " -> null;\n";
+            }
+
+            actual = actual->getSiguiente();
+            contador++;
+        }
+    }
+
+    dot << "}\n";
+    return dot.str();
+}
+
 /*Metodo que permite obtener la raiz del arbol avl*/
 NodoAvl * GestorEstructuras::getRaizArbolAvl(){
     return this->arbolAvl->getRaiz();
@@ -174,6 +214,16 @@ ListaEnlazada<ErroresLectura>* GestorEstructuras::getListaErrores(){
 /*Getter de la lista no ordenada*/
 ListaEnlazada<Producto> * GestorEstructuras::getListaNoOrdenada(){
     return this->listaNoOrdenada;
+}
+
+/*Getter de la lista ordenada*/
+ListaEnlazada<Producto> * GestorEstructuras::getListaOrdenada(){
+    return this->listaOrdenada;
+}
+
+/*Getter del parametro de orden actual*/
+int GestorEstructuras::getParametroOrden(){
+    return this->parametroOrden;
 }
 
 /*Metodo para saber si tiene errores la lista*/
@@ -537,6 +587,8 @@ void GestorEstructuras::generarListaOrdenada(int criterio){
         this->listaOrdenada->insertarAtras(p);
     }
 
+    this->parametroOrden = criterio;
+
 }
 
 
@@ -602,6 +654,8 @@ void GestorEstructuras::ordenarLista(int criterio){
     for (int i = 0; i < n; i++) {
         this->listaOrdenada->insertarAtras(buffer[i]);
     }
+
+    this->parametroOrden = criterio;
 
     delete[] buffer;
 }
@@ -868,6 +922,7 @@ ListaEnlazada<Producto> GestorEstructuras::getProductosExtremos(){
 * 1 -> nombre
 * 2 -> categoria
 * 3 -> fecha
+* 4 -> codigo
 */
 ListaEnlazada<Producto> GestorEstructuras::getProductosIntervalo(const Producto &productoInferior,const Producto &productoSuperior, int orden){
 
@@ -879,7 +934,7 @@ ListaEnlazada<Producto> GestorEstructuras::getProductosIntervalo(const Producto 
 
     switch(orden){
 
-    case 1: { // Por Nombre
+    case 1: {
         std::string val1 = productoInferior.getNombre();
         std::string val2 = productoSuperior.getNombre();
         if (val1 <= val2) {
@@ -889,7 +944,7 @@ ListaEnlazada<Producto> GestorEstructuras::getProductosIntervalo(const Producto 
         }
         break;
     }
-    case 2: { // Por Categoria
+    case 2: {
         std::string val1 = productoInferior.getCategoria();
         std::string val2 = productoSuperior.getCategoria();
         if (val1 <= val2) {
@@ -899,7 +954,7 @@ ListaEnlazada<Producto> GestorEstructuras::getProductosIntervalo(const Producto 
         }
         break;
     }
-    case 3: { // Por Fecha
+    case 3: {
         std::string val1 = productoInferior.getFechaExpiracion();
         std::string val2 = productoSuperior.getFechaExpiracion();
         if (val1 <= val2) {
@@ -921,19 +976,19 @@ ListaEnlazada<Producto> GestorEstructuras::getProductosIntervalo(const Producto 
         bool dentroDelRango = false;
 
         switch(orden){
-        case 1: // Por Nombre
+        case 1:
             if (pActual.getNombre() >= limiteInf && pActual.getNombre() <= limiteSup) {
                 dentroDelRango = true;
             }
             break;
 
-        case 2: // Por Categoria
+        case 2:
             if (pActual.getCategoria() >= limiteInf && pActual.getCategoria() <= limiteSup) {
                 dentroDelRango = true;
             }
             break;
 
-        case 3: // Por Fecha
+        case 3:
             if (pActual.getFechaExpiracion() >= limiteInf && pActual.getFechaExpiracion() <= limiteSup) {
                 dentroDelRango = true;
             }

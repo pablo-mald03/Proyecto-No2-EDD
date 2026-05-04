@@ -8,6 +8,7 @@
 #include"pantallaarbolavl.h"
 #include"pantallaarbolb.h"
 #include"pantallaarbolbmas.h"
+#include "pantallalistaenlazada.h"
 #include "pantallatablahash.h"
 
 namespace Ui {
@@ -32,12 +33,14 @@ signals:
     void solicitarArbolB();
     void solicitarArbolBMas();
     void solicitarTablaHash();
+    void solicitarLista();
 
     /*Metodos que permiten solicitar el graphviz de los arboles*/
     void solicitarGraphArbolAvl();
     void solicitarGraphArbolB();
     void solicitarGraphArbolBMas();
     void solicitarGraphTablaHash();
+    void solicitarGraphLista();
 
 
 public slots:
@@ -46,12 +49,14 @@ public slots:
     void recibirArbolB(NodoB * arbol);
     void recibirArbolBMas(NodoBMas * arbol);
     void recibirTablaHash(ListaEnlazada<Producto>**  _tabla, int capacidad);
+    void recibirLista(NodoLista<Producto> * _cabeza, int parametro);
 
     /*Metodos que permiten generar el graphviz del estado actual de los arboles*/
     void recibirGrapvizAvl(std::string dot);
     void recibirGrapvizB(std::string dot);
     void recibirGrapvizBMas(std::string dot);
     void recibirGrapvizTablaHash(std::string dot);
+    void recibirGrapvizLista(std::string dot);
 
 private slots:
     void on_btnSiguiente_clicked();
@@ -64,12 +69,14 @@ private slots:
     void onSolicitarArbolB();
     void onSolicitarArbolBMas();
     void onSolicitarTablaHash();
+    void onSolicitarLista();
 
     /*Metodos para poder solicitar el graphviz de los arboles*/
     void onSolicitarGraphvizAvl();
     void onSolicitarGraphvizB();
     void onSolicitarGraphvizBMas();
     void onSolicitarGraphvizTablaHash();
+    void onSolicitarGraphvizLista();
 
 private:
     Ui::PantallaVerArboles *ui;
@@ -85,6 +92,8 @@ private:
 
     PantallaTablaHash * pantallaTablaHash = nullptr;
 
+    PantallaListaEnlazada * pantallaListaEnlazada = nullptr;
+
 
     /*Metodos de carga entre pantallas*/
     void mostrarVistaAvl();
@@ -92,6 +101,7 @@ private:
     void mostrarVistaBMas();
     void refrescarVista();
     void mostrarVistaTablaHash();
+    void mostrarVistaLista();
 
 };
 

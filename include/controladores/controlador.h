@@ -114,12 +114,14 @@ public slots:
     void obtenerArbolB();
     void obtenerArbolBMas();
     void obtenerTablaHash();
+    void obtenerLista();
 
     /*Metodos que permiten obtener el graphviz de las estructuras*/
     void generarGraphArbolAvl();
     void generarGraphArbolB();
     void generarGraphArbolBMas();
     void generarGraphTablaHash();
+    void generarGraphLista();
 
     /*Metodo que permite obtener los datos para poder descargar el Log de errores*/
     void prepararLogParaDescarga();
@@ -152,6 +154,7 @@ signals:
     void enviarGraphvizArbolB(std::string arbol);
     void enviarGraphvizArbolBMas(std::string arbol);
     void enviarGraphvizTablaHash(std::string tabla);
+    void enviarGraphvizLista(std::string lista);
 
     /*Metodo que permite enviar al front el contenido para poder ser guardado*/
     void contenidoCsvListo(QString archivo);
@@ -173,6 +176,7 @@ signals:
     void enviarArbolB(NodoB * arbol);
     void enviarArbolBMas(NodoBMas * arbol);
     void enviarTablaHash(ListaEnlazada<Producto>**  arbol, int capacidad);
+    void enviarLista(NodoLista<Producto> * _cabeza, int parametro);
 
 
     /*Signals que permiten comunicarse con la pantalla del csv */

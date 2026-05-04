@@ -88,6 +88,12 @@ public:
     /*Metodo que retorna a la lista No ordenada*/
     ListaEnlazada<Producto> * getListaNoOrdenada();
 
+    /*Metodo que retorna a la lista ordenada*/
+    ListaEnlazada<Producto> * getListaOrdenada();
+
+    /*Getter del parametro de orden actual*/
+    int getParametroOrden();
+
     /*Metodo que permite exportar la lista al csv*/
     std::string serializarListaCsv();
 
@@ -114,6 +120,9 @@ public:
 
     /*Metodo que permite obtener el graphviz del arbol B+*/
     std::string obtenerGraphvizBMas();
+
+    /*Metodo que permite obtener el .dot de la lista enlazada*/
+    std::string obtenerGraphvizLista();
 
     /*Metodo que permite obtener el graphviz de la tabla Hash*/
     std::string obtenerGraphvizTablaHash();
@@ -186,6 +195,9 @@ private:
 
     /*Atributo flag de carga de csv para saber si guardar o refrescar*/
     bool cargoArchivo;
+
+    /*Atributo que permite saber bajo que parametro de orden esta la lista*/
+    int parametroOrden;
 
     /*Metodo delegado para poder validar la fecha*/
     bool esFechaISO(const QString& fecha);

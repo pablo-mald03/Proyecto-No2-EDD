@@ -347,6 +347,19 @@ void PantallaMain::mostrarVerArboles(){
 
         connect(this->controladorCrud, &Controlador::enviarGraphvizTablaHash,
                 this->pantallaVerArboles, &PantallaVerArboles::recibirGrapvizTablaHash);
+
+        /*Signals de la Lista Ordenada*/
+        connect(this->pantallaVerArboles, &PantallaVerArboles::solicitarLista,
+                this->controladorCrud, &Controlador::obtenerLista);
+
+        connect(this->controladorCrud, &Controlador::enviarLista,
+                this->pantallaVerArboles, &PantallaVerArboles::recibirLista);
+
+        connect(this->pantallaVerArboles, &PantallaVerArboles::solicitarGraphLista,
+                this->controladorCrud, &Controlador::generarGraphLista);
+
+        connect(this->controladorCrud, &Controlador::enviarGraphvizLista,
+                this->pantallaVerArboles, &PantallaVerArboles::recibirGrapvizLista);
     }
 
     this->solicitarTitulo("Visualizar Arboles");

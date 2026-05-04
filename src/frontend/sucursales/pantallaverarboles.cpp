@@ -93,13 +93,30 @@ void PantallaVerArboles::mostrarVistaTablaHash(){
         ui->stackedWidget->addWidget(this->pantallaTablaHash);
 
         //Se conectan las signals para poder interactuar con la pantalla
-        connect(this->pantallaTablaHash, &PantallaTablaHash::solicitarTablaHash, this, &PantallaVerArboles::onSolicitarTablaHash);
         connect(this->pantallaTablaHash, &PantallaTablaHash::solicitarGraphvizHash, this, &PantallaVerArboles::onSolicitarGraphvizTablaHash);
     }
 
     this->ui->labelArboles->setText("Tabla Hash");
     this->ui->stackedWidget->setCurrentWidget(this->pantallaTablaHash);
     this->solicitarTablaHash();
+}
+
+/*Metodo que permite mostrar la lista*/
+void PantallaVerArboles::mostrarVistaLista(){
+
+    if (!this->pantallaListaEnlazada) {
+
+        this->pantallaListaEnlazada = new PantallaListaEnlazada(this);
+
+        ui->stackedWidget->addWidget(this->pantallaListaEnlazada);
+
+        //Se conectan las signals para poder interactuar con la pantalla
+        connect(this->pantallaListaEnlazada, &PantallaListaEnlazada::solicitarGraphvizListaOrdenada, this, &PantallaVerArboles::onSolicitarGraphvizLista);
+    }
+
+    this->ui->labelArboles->setText("Lista Ordenada");
+    this->ui->stackedWidget->setCurrentWidget(this->pantallaListaEnlazada);
+    this->solicitarLista();
 }
 
 
@@ -120,6 +137,9 @@ void PantallaVerArboles::refrescarVista(){
         case 4:
             this->mostrarVistaTablaHash();
             break;
+        case 5:
+            this->mostrarVistaLista();
+            break;
     }
 
 }
@@ -128,7 +148,7 @@ void PantallaVerArboles::refrescarVista(){
 /*Metodo que permite ir a la siguiente vista*/
 void PantallaVerArboles::on_btnSiguiente_clicked()
 {
-    if(this->contadorPantallas == 4){
+    if(this->contadorPantallas >= 5){
         return;
     }
 
@@ -193,6 +213,14 @@ void PantallaVerArboles::recibirGrapvizTablaHash(std::string dot){
     }
 }
 
+/*Metodo para recibir el graphviz de la lista enlazada ordenada*/
+void PantallaVerArboles::recibirGrapvizLista(std::string dot){
+
+    if(this->pantallaListaEnlazada){
+        this->pantallaListaEnlazada->generarGraphviz(dot);
+    }
+}
+
 
 /*Metodo para recibir el arbol B*/
 void PantallaVerArboles::recibirArbolB(NodoB * arbol){
@@ -219,6 +247,14 @@ void PantallaVerArboles::recibirTablaHash(ListaEnlazada<Producto>**  _tabla, int
     }
 }
 
+/*Metodo para recibir la lista ordenada */
+void PantallaVerArboles::recibirLista(NodoLista<Producto> * _cabeza, int parametro){
+
+    if(this->pantallaListaEnlazada){
+        this->pantallaListaEnlazada->setCabeza(_cabeza,parametro);
+    }
+}
+
 
 /*Metodos para poder solicitar el graphviz del arbol AVL*/
 void PantallaVerArboles::onSolicitarGraphvizAvl(){
@@ -238,6 +274,11 @@ void PantallaVerArboles::onSolicitarGraphvizBMas(){
 /*Metodos para poder solicitar el graphviz de la tabla hash*/
 void PantallaVerArboles::onSolicitarGraphvizTablaHash(){
     emit solicitarGraphTablaHash();
+}
+
+/*Metodos para poder solicitar el graphviz de la lista ordenada*/
+void PantallaVerArboles::onSolicitarGraphvizLista(){
+    emit solicitarGraphLista();
 }
 
 
@@ -265,4 +306,11 @@ void PantallaVerArboles::onSolicitarArbolBMas()
 void PantallaVerArboles::onSolicitarTablaHash()
 {
     emit solicitarTablaHash();
+}
+
+
+/*Metodo que permite solicitar la lista enlazada ordenada para poderla graficar*/
+void PantallaVerArboles::onSolicitarLista()
+{
+    emit solicitarLista();
 }

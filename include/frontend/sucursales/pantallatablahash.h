@@ -22,7 +22,7 @@ public:
     ~PantallaTablaHash();
     void setTabla(ListaEnlazada<Producto>**  _tabla, int capacidad);
 
-    /*Metodo que permite generar el graphviz del arbol B*/
+    /*Metodo que permite generar el graphviz de la tabla hash*/
     void generarGraphviz(std::string graph);
 
 private:
@@ -44,7 +44,6 @@ private:
     void actualizarVista();
 
 signals:
-    void solicitarTablaHash();
     void solicitarGraphvizHash();
 private slots:
     void on_btnExportar_clicked();

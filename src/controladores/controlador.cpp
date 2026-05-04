@@ -1267,6 +1267,10 @@ void Controlador::obtenerTablaHash(){
     emit enviarTablaHash(this->gestorBackend->getTablaHash(),this->gestorBackend->getCapacidadTabla());
 }
 
+void Controlador::obtenerLista(){
+    emit enviarLista(this->gestorBackend->getListaOrdenada()->getCabeza(),this->gestorBackend->getParametroOrden());
+}
+
 /*-----*---Fin del Apartado de metodos para poder generar las vistas de los arboles---*-----*/
 
 
@@ -1285,6 +1289,10 @@ void Controlador::generarGraphArbolBMas(){
 
 void Controlador::generarGraphTablaHash(){
     emit enviarGraphvizTablaHash(this->gestorBackend->obtenerGraphvizTablaHash());
+}
+
+void Controlador::generarGraphLista(){
+    emit enviarGraphvizLista(this->gestorBackend->obtenerGraphvizLista());
 }
 
 /*-----*---Fin del apartado de metodos para poder generar los graphviz de los arboles---*-----*/
