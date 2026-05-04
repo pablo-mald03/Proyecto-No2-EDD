@@ -58,6 +58,7 @@ private:
     void insertarEnArbolAvl(const std::string &_nombre,const std::string &_codigoBarra, const std::string &_categoria, const std::string &_fechaExpiracion, const std::string &_marca, double _precio, int _stock);
     void insertarEnArbolB(const std::string &_nombre,const std::string &_codigoBarra, const std::string &_categoria, const std::string &_fechaExpiracion, const std::string &_marca, double _precio, int _stock);
     void insertarEnArbolBMas(const std::string &_nombre,const std::string &_codigoBarra, const std::string &_categoria, const std::string &_fechaExpiracion, const std::string &_marca, double _precio, int _stock);
+    void insertarEnTablaHash(const std::string &_nombre,const std::string &_codigoBarra, const std::string &_categoria, const std::string &_fechaExpiracion, const std::string &_marca, double _precio, int _stock);
 
     /*Metodos que permiten buscar datos por nombre*/
     void buscarAvlNombre(const std::string &nombre);
@@ -200,6 +201,7 @@ signals:
     void logInsertArbolBMas(QString mensaje, QString color);
     void logInsertListaOrdenada(QString mensaje, QString color);
     void logInsertListaNoOrdenada(QString mensaje, QString color);
+    void logInsertTablaHash(QString mensaje, QString color);
 
     /*Signal que permite setear el tiempo en el label*/
     void tiempoProcesoInsert (int estructura, double milisegundos);

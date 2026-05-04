@@ -77,6 +77,8 @@ void PantallaMain::mostrarAgregar(){
 
         connect(this->controladorCrud, &Controlador::logInsertListaNoOrdenada,this->pantallaAgregar, &PantallaAgregar::appendListNoOrdenadaLog);
 
+        connect(this->controladorCrud, &Controlador::logInsertTablaHash,this->pantallaAgregar, &PantallaAgregar::appendTablaHash);
+
         connect(this->controladorCrud, &Controlador::tiempoProcesoInsert, this->pantallaAgregar, &PantallaAgregar::mostrarTiempo);
 
         connect(this->pantallaAgregar, &PantallaAgregar::insertarProducto, this->controladorCrud, &Controlador::insercionProducto);

@@ -24,6 +24,7 @@ PantallaAgregar::PantallaAgregar(QWidget *parent)
     this->ui->textArbolBMas->setReadOnly(true);
     this->ui->textEditListNoOrdenada->setReadOnly(true);
     this->ui->textEditListOrdenada->setReadOnly(true);
+    this->ui->textTablaHash->setReadOnly(true);
 }
 
 /*Destructor*/
@@ -70,6 +71,12 @@ void PantallaAgregar::appendListNoOrdenadaLog(QString mensaje, QString color){
         );
 }
 
+void PantallaAgregar::appendTablaHash(QString mensaje, QString color){
+
+    this->ui->textTablaHash->append(
+        "<span style='color:" + color + ";'>" + mensaje + "</span>"
+        );
+}
 
 /*---***--- Fin del Apartado de metodos que permiten comunicar a la UI los logs que se van a mostrar----***--*/
 
@@ -81,6 +88,7 @@ void PantallaAgregar::appendListNoOrdenadaLog(QString mensaje, QString color){
 * 3 -> B+
 * 4 -> LISTA ORDENADA
 * 5 -> LISTA NO ORDENADA
+* 6 -> TABLA HASH
 *
 */
 void PantallaAgregar::mostrarTiempo(int estructura, double milisegundos){
@@ -106,6 +114,9 @@ void PantallaAgregar::mostrarTiempo(int estructura, double milisegundos){
         break;
     case 5:
         this->ui->labelTiempoListNoOrdenada->setText(tiempoTexto );
+        break;
+    case 6:
+        this->ui->labelTiempoHash->setText(tiempoTexto );
         break;
     }
 
@@ -193,12 +204,14 @@ void PantallaAgregar::limpiarLogs(){
     this->ui->textArbolBMas->clear();
     this->ui->textEditListNoOrdenada->clear();
     this->ui->textEditListOrdenada->clear();
+    this->ui->textTablaHash->clear();
 
     this->ui->labelTiempoListNoOrdenada->setText("Tiempo de insercion: 0 ms");
     this->ui->labelTiempoListOrdenada->setText("Tiempo de insercion: 0 ms");
     this->ui->labelTiempoAvl->setText("Tiempo de insercion: 0 ms");
     this->ui->labelTiempoB->setText("Tiempo de insercion: 0 ms");
     this->ui->labelTiempoBMas->setText("Tiempo de insercion: 0 ms");
+    this->ui->labelTablaHash->setText("Tiempo de insercion: 0 ms");
 }
 
 /*Metodo del boton para limpiar*/
