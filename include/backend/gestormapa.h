@@ -41,6 +41,9 @@ public:
     /*Metodo que permite validar las filas del csv de conexiones de las sucursales*/
     bool validarFilaCsvConexion(const std::vector<QString>& fila, double& tiempo, double& costo, QString& error);
 
+    /*Metodo que permite validar las filas del csv de productos*/
+    bool validarFilaCsvProducto(const std::vector<QString>& fila, double& precio, int& stock, QString& error);
+
     /*Metodo que permite obtener el log de errores*/
     void agregarError(std::string error, int fila, int caso);
 

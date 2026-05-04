@@ -33,6 +33,10 @@ private:
 
     ControladorSucursal * controladorGestion = nullptr;
 
+    /*Atrbutos seteables que permiten tener el control total sobre los punteros que vienen del grafo y sucursales*/
+    Sucursal * sucursal = nullptr;
+    Grafo * redGrafo = nullptr;
+
 
     /*Metodos de control de ventanas*/
     void mostrarSucursal();

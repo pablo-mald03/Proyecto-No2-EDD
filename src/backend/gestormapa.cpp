@@ -259,3 +259,39 @@ bool GestorMapa::tieneErrores(int parametro) const {
 
 }
 
+/*Metodo que permite validar las filas del csv de productos*/
+bool GestorMapa::validarFilaCsvProducto(const std::vector<QString>& fila, double& precio, int& stock, QString& error) {
+
+    if (fila.size() != 8) {
+        error = "Formato invalido: Se esperaban 8 columnas, se recibieron " + QString::number(fila.size());
+        return false;
+    }
+
+    if (fila[0].trimmed().isEmpty() || fila[1].trimmed().isEmpty() || fila[2].trimmed().isEmpty()) {
+        error = "El ID de Sucursal, Nombre y Codigo de Barra no pueden estar vacios.";
+        return false;
+    }
+
+    QDate fecha = QDate::fromString(fila[4].trimmed(), "yyyy-MM-dd");
+    if (!fecha.isValid()) {
+        error = "Formato de fecha invalido. Debe ser YYYY-MM-DD.";
+        return false;
+    }
+
+    bool okPrecio, okStock;
+    precio = fila[6].trimmed().toDouble(&okPrecio);
+    stock = fila[7].trimmed().toInt(&okStock);
+
+    if (!okPrecio || !okStock) {
+        error = "El precio y el stock deben ser valores numericos.";
+        return false;
+    }
+
+    if (precio < 0 || stock < 0) {
+        error = "El precio y el stock no pueden ser negativos.";
+        return false;
+    }
+
+    return true;
+}
+

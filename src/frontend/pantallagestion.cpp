@@ -24,9 +24,12 @@ PantallaGestion::PantallaGestion(QWidget *parent)
 /*Metodo que permite tomar la referencia que traen de la sucursal y setearla a los controladores*/
 void PantallaGestion::setSucursal(Sucursal * _sucursal, Grafo * _redGrafo){
 
+    this->sucursal = _sucursal;
+    this->redGrafo = _redGrafo;
+
     this->ui->labelAdmin->setText(QString::fromStdString(_sucursal->getNombre()));
-    this->pantallaMain->setGestorSucursal(_sucursal->getAlmacen());
-    this->pantallaSucursal->setRecursos(_sucursal,_redGrafo);
+    this->pantallaMain->setGestorSucursal(this->sucursal->getAlmacen());
+    this->pantallaSucursal->setRecursos(this->sucursal,this->redGrafo);
 }
 
 /*Metodo que permite mostar la primera pantalla de inicio*/

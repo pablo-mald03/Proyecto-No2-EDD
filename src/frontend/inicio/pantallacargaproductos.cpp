@@ -44,50 +44,6 @@ void PantallaCargaProductos::limpiarLogs(){
     this->ui->textEditBMas->clear();
 
 }
-/*
-/*Metodo que permite seleccionar el archivo csv
-void PantallaPrincipal::on_btnCargar_clicked()
-{
-    QString fileName = QFileDialog::getOpenFileName(
-        this,
-        "Seleccionar CSV",
-        "",
-        "CSV Files (*.csv);;All Files (*)"
-        );
-
-    if(fileName.isEmpty()){
-        return;
-    }
-
-    QFile file(fileName);
-
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        this->ui->textEditCsv->append("<span style='color:red;'>Error al abrir archivo</span>");
-        return;
-    }
-
-    QTextStream in(&file);
-
-    std::vector<QString> buffer;
-
-    this->ui->textEditCsv->clear();
-
-
-    while (!in.atEnd()) {
-        QString line = in.readLine();
-        line.remove('"');
-        line = line.trimmed();
-        buffer.push_back(line);
-    }
-
-    file.close();
-
-    this->limpiarLogs();
-
-    emit csvCargado(buffer);
-
-}
-*/
 /*----Apartado de metodos para verificar el log de errores-----*/
 
 
@@ -266,5 +222,29 @@ PantallaCargaProductos::~PantallaCargaProductos()
 void PantallaCargaProductos::on_btnErrores_clicked()
 {
     emit solicitarLogErrores();
+}
+
+/*Metodo que permite cargar los productos*/
+void PantallaCargaProductos::on_btnCargar_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, "Seleccionar CSV", "", "CSV Files (*.csv);;All Files (*)");
+
+    if (fileName.isEmpty()) return;
+
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        ui->textEditCsv->append("<span style='color:red;'>Error al abrir archivo</span>");
+        return;
+    }
+
+    QString contenido = QTextStream(&file).readAll();
+    file.close();
+
+    ui->textEditCsv->clear();
+    this->limpiarLogs();
+
+    std::vector<std::vector<QString>> datos = parsearCSV(contenido);
+
+    emit csvProductosCargado(datos);
 }
 

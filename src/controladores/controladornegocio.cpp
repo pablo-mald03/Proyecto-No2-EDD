@@ -178,11 +178,154 @@ void ControladorNegocio::procesarCsvEnvios(const std::vector<std::vector<QString
 /*Metodo que permite procesar csv*/
 void ControladorNegocio::procesarCsvProductos(const std::vector<std::vector<QString>> & data){
 
+    emit logCargaCsvProductos("--- INICIANDO CARGA DE PRODUCTOS ---", "orange");
+
+    int insertadas = 0;
+    int errores = 0;
+
+    for (size_t i = 0; i < data.size(); ++i) {
+        const auto& fila = data[i];
+
+        QStringList listaFila;
+        for(const QString& campo : fila) {
+            listaFila << campo.trimmed();
+        }
+        QString lineaPorComas = listaFila.join(", ");
+        emit logCargaCsvProductos(lineaPorComas, "white");
+
+        if (i == 0 && fila.size() > 0 && fila[0].trimmed().toUpper() == "SUCURSALID") {
+            continue;
+        }
+
+        double precio = 0.0;
+        int stock = 0;
+        QString msjError;
+
+        if (!this->gestorMapeo->validarFilaCsvProducto(fila, precio, stock, msjError)) {
+            emit logCargaCsvProductos("Fila " + QString::number(i + 1) + " rechazada: " + msjError, "red");
+            this->gestorMapeo->agregarError(msjError.toStdString(), (i + 1) , 3);
+            errores++;
+            continue;
+        }
+
+        std::string sucursalId = fila[0].trimmed().toStdString();
+        std::string nombre = fila[1].trimmed().toStdString();
+        std::string codigoBarra = fila[2].trimmed().toStdString();
+        std::string categoria = fila[3].trimmed().toStdString();
+        std::string fechaExpiracion = fila[4].trimmed().toStdString();
+        std::string marca = fila[5].trimmed().toStdString();
+
+        Producto nuevoProducto(nombre, codigoBarra, categoria, fechaExpiracion, marca, precio, stock);
+
+        try {
+
+            this->insertarProductoSucursal(sucursalId, nuevoProducto);
+
+            insertadas++;
+        } catch (const std::exception& e) {
+            emit logCargaCsvProductos("Error fila " + QString::number(i + 1) + ": " + QString::fromStdString(e.what()), "red");
+            this->gestorMapeo->agregarError(QString::fromStdString(e.what()).toStdString(), (i + 1) , 3);
+            errores++;
+        }
+    }
+
+    QString colorResumen = (errores == 0) ? "orange" : (insertadas == 0 ? "red" : "yellow");
+    emit logCargaCsvProductos("--- Lineas validas: " + QString::number(insertadas) + " | Lineas no validas: " + QString::number(errores) + " ---", colorResumen);
+
     this->verificarErroresSucursales(3);
 }
 
-/*--------Metodos que permiten dar informacion en los logs de la carga de csv de sucursales---------*/
+/*Metodo que permite insertar el producto en la sucursal requerida*/
 
+/*--------Metodos que permiten dar informacion en los logs de la carga de csv de sucursales---------*/
+void ControladorNegocio::insertarProductoSucursal(const std::string idSucursal, const Producto &producto){
+    try {
+
+        Sucursal * sucursalEncontrada = this->gestorMapeo->buscarSucursal(idSucursal);
+
+        GestorEstructuras * gestor = sucursalEncontrada->getAlmacen();
+
+        this->darMensajeProductos(QString::fromStdString("Insertando en sucursal [ "+sucursalEncontrada->getId()+" ]:\n" +sucursalEncontrada->getNombre()) ,"orange");
+
+        QElapsedTimer timerAvl;
+        timerAvl.start();
+
+        gestor->insertarArbolAvl(producto.getNombre(),producto.getCodigoBarra(),producto.getCategoria(),producto.getFechaExpiracion(),producto.getMarca(),producto.getPrecio(),producto.getStock());
+
+        double tiempoPasadoAvl = timerAvl.nsecsElapsed() / 1000000.0;
+
+        emit tiempoProcesoProductos(1,tiempoPasadoAvl);
+
+        emit logArbolAvl("Producto con ID: {"+ QString::fromStdString(producto.getCodigoBarra()) +"} insertado", "green");
+
+        QElapsedTimer timerB;
+        timerB.start();
+
+        gestor->insertarArbolB(producto.getNombre(),producto.getCodigoBarra(),producto.getCategoria(),producto.getFechaExpiracion(),producto.getMarca(),producto.getPrecio(),producto.getStock());
+
+        double tiempoPasadoB = timerB.nsecsElapsed() / 1000000.0;
+
+        emit tiempoProcesoProductos(2,tiempoPasadoB);
+
+        emit logArbolB("Producto con ID: {"+ QString::fromStdString(producto.getCodigoBarra()) +"} insertado", "green");
+
+
+        QElapsedTimer timerBMas;
+        timerBMas.start();
+
+        gestor->insertarArbolBMas(producto.getNombre(),producto.getCodigoBarra(),producto.getCategoria(),producto.getFechaExpiracion(),producto.getMarca(),producto.getPrecio(),producto.getStock());
+
+        double tiempoPasadoBMas = timerBMas.nsecsElapsed() / 1000000.0;
+
+        emit tiempoProcesoProductos(3,tiempoPasadoBMas);
+
+        emit logArbolBMas("Producto con ID: {"+ QString::fromStdString(producto.getCodigoBarra()) +"} insertado", "green");
+
+        QElapsedTimer timerLista;
+        timerLista.start();
+
+        gestor->insertarListaOrdenada(producto.getNombre(),producto.getCodigoBarra(),producto.getCategoria(),producto.getFechaExpiracion(),producto.getMarca(),producto.getPrecio(),producto.getStock());
+
+        gestor->insertarListaNoOrdenada(producto.getNombre(),producto.getCodigoBarra(),producto.getCategoria(),producto.getFechaExpiracion(),producto.getMarca(),producto.getPrecio(),producto.getStock());
+
+        double tiempoPasadoLista = timerLista.nsecsElapsed() / 1000000.0;
+
+        emit tiempoProcesoProductos(4,tiempoPasadoLista);
+
+        emit logLista("Producto con ID: {"+ QString::fromStdString(producto.getCodigoBarra()) +"} insertado", "green");
+
+        QElapsedTimer timerHash;
+        timerHash.start();
+
+        gestor->insertarTablaHash(producto.getNombre(),producto.getCodigoBarra(),producto.getCategoria(),producto.getFechaExpiracion(),producto.getMarca(),producto.getPrecio(),producto.getStock());
+
+        double tiempoPasadoHash = timerHash.nsecsElapsed() / 1000000.0;
+
+        emit tiempoProcesoProductos(5,tiempoPasadoHash);
+
+        emit logHash("Producto con ID: {"+ QString::fromStdString(producto.getCodigoBarra()) +"} insertado", "green");
+
+    } catch (const std::exception& e) {
+
+        this->darMensajeProductos(QString::fromStdString(e.what()) ,"red");
+    }
+
+}
+
+/*Metodo auxiliar para poder dar mensajes mientras se estra leyendo el csv de carga de productos*/
+void ControladorNegocio::darMensajeProductos(QString msj, QString color){
+
+    QString mensaje = "==========================================\n" +
+                      msj + "\n" +
+                      "==========================================\n\n";
+
+    emit logArbolAvl(mensaje.replace("\n", "<br>"), color);
+    emit logArbolB(mensaje.replace("\n", "<br>"), color);
+    emit logArbolBMas(mensaje.replace("\n", "<br>"), color);
+    emit logLista(mensaje.replace("\n", "<br>"), color);
+    emit logHash(mensaje.replace("\n", "<br>"), color);
+
+}
 
 /*Metodo que permite obtener los datos para poder descargar el Log de errores de sucursales*/
 void ControladorNegocio::prepararLogParaDescargaSucursales(){

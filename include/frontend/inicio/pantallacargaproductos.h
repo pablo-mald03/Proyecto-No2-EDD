@@ -18,6 +18,8 @@ public:
 private slots:
     void on_btnErrores_clicked();
 
+    void on_btnCargar_clicked();
+
 public slots:
 
     /*Metodos que permiten comunicar las lineas leidas por los arboles o lista enlazada*/

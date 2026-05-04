@@ -26,6 +26,12 @@ private:
     /*Metodo que permite vaciar las sucursales cada que se cargan nuevas*/
     void vaciarSucursales();
 
+    /*--------Metodos que permiten dar informacion en los logs de la carga de csv de sucursales---------*/
+    void insertarProductoSucursal(const std::string idSucursal, const Producto &producto);
+
+    /*Metodo auxiliar para poder dar mensajes mientras se estra leyendo el csv de carga de productos*/
+    void darMensajeProductos(QString msj, QString color);
+
 public slots:
     void procesarCsvSucursal(const std::vector<std::vector<QString>> & data);
     void procesarCsvConexion(const std::vector<std::vector<QString>> & data);

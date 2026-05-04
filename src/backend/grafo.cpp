@@ -90,7 +90,7 @@ Sucursal* Grafo::buscarSucursal(const std::string& id) const {
         return nodos[indice];
     }
 
-    throw NotFoundException("La sucursal no existe en la red.");
+    throw NotFoundException("La sucursal con ID { "+id+" } no existe en la red.");
 }
 
 /*Metodo que permite modificar una sucursal de la red del grafo*/
