@@ -310,6 +310,7 @@ void GestorEstructuras::eliminarArbolB(const std::string &key){
     }
 }
 
+
 /*---****-----Fin del Apartado de Metodos que permiten utilizar el arbol B-------****---*/
 
 
@@ -375,6 +376,18 @@ void GestorEstructuras::eliminarListaOrdenada(const std::string &key){
     }
 }
 
+/*Metodo que permite insertar datos en la tabla hash*/
+void GestorEstructuras::insertarTablaHash(const std::string &nombre,const std::string &key,const std::string &categoria, const std::string &fecha, const std::string &marca, double precio, int stock){
+
+    this->tablaHash->insertar(Producto(nombre,key,categoria,fecha,marca,precio,stock));
+}
+
+/*Metodo que permite eliminar datos en la tabla hash*/
+void GestorEstructuras::eliminarTablaHash(const std::string &key){
+
+    this->tablaHash->eliminar(key);
+}
+
 /*---****-----Fin del Apartado de Metodos que permiten utilizar el arbol B+-------****---*/
 
 
@@ -408,12 +421,6 @@ void GestorEstructuras::insertarListaOrdenada(const std::string &nombre,const st
     }
 
     this->listaOrdenada->insertarAtras(Producto(nombre,key,categoria,fecha,marca,precio,stock));
-}
-
-/*Metodo que permite insertar datos en la tabla hash*/
-void GestorEstructuras::insertarTablaHash(const std::string &nombre,const std::string &key,const std::string &categoria, const std::string &fecha, const std::string &marca, double precio, int stock){
-
-    this->tablaHash->insertar(Producto(nombre,key,categoria,fecha,marca,precio,stock));
 }
 
 

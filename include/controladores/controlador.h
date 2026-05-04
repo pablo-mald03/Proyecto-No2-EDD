@@ -83,6 +83,7 @@ private:
     void eliminarEnArbolAvl(const std::string &_codigoBarra);
     void eliminarEnArbolB(const std::string &_codigoBarra);
     void eliminarEnArbolBMas(const std::string &_codigoBarra);
+    void eliminarEnTablaHash(const std::string &_codigoBarra);
 
 
     /*Metodos que permiten listar los productos en orden alfabetico*/
@@ -248,6 +249,7 @@ signals:
     void logEliminarArbolBMas(QString mensaje, QString color);
     void logEliminarListaOrdenada(QString mensaje, QString color);
     void logEliminarListaNoOrdenada(QString mensaje, QString color);
+    void logEliminarTablaHash(QString mensaje, QString color);
 
     /*Signal que permite setear el tiempo en el label*/
     void tiempoEliminarProceso(int estructura, double milisegundos);

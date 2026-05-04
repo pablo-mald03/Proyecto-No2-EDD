@@ -983,6 +983,7 @@ void Controlador::eliminarProducto(const std::string &codigo){
         this->eliminarEnArbolAvl(codigo);
         this->eliminarEnArbolB(codigo);
         this->eliminarEnArbolBMas(codigo);
+        this->eliminarEnTablaHash(codigo);
 
         /*Ordenar lista despues de medir tiempos*/
         this->gestorBackend->ordenarLista(1);
@@ -993,6 +994,7 @@ void Controlador::eliminarProducto(const std::string &codigo){
         emit logEliminarArbolAvl( QString::fromStdString(e.what()), "red");
         emit logEliminarArbolB( QString::fromStdString(e.what()), "red");
         emit logEliminarArbolBMas( QString::fromStdString(e.what()), "red");
+        emit logEliminarTablaHash( QString::fromStdString(e.what()), "red");
     }
     catch (const DeleteException& ex) {
         emit logEliminarListaOrdenada( QString::fromStdString(ex.what()), "red");
@@ -1000,6 +1002,7 @@ void Controlador::eliminarProducto(const std::string &codigo){
         emit logEliminarArbolAvl( QString::fromStdString(ex.what()), "red");
         emit logEliminarArbolB( QString::fromStdString(ex.what()), "red");
         emit logEliminarArbolBMas( QString::fromStdString(ex.what()), "red");
+        emit logEliminarTablaHash( QString::fromStdString(ex.what()), "red");
     }
     catch (const std::exception& ex) {
         emit logEliminarListaNoOrdenada("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
@@ -1007,6 +1010,7 @@ void Controlador::eliminarProducto(const std::string &codigo){
         emit logEliminarArbolAvl("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
         emit logEliminarArbolB("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
         emit logEliminarArbolBMas("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
+        emit logEliminarTablaHash("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
     }
 }
 
@@ -1106,6 +1110,30 @@ void Controlador::eliminarEnArbolBMas(const std::string &_codigoBarra){
         double tiempo = timer.nsecsElapsed() / 1000000.0;
 
         emit tiempoEliminarProceso(3, tiempo);
+
+    }catch (const DeleteException& e) {
+        throw;
+    }
+    catch (const std::exception& ex) {
+        throw DeleteException("Error inesperado en el arbol B+: " + std::string(ex.what()));
+    }
+}
+
+/*Metodo que permite eliminar en la tabla Hash*/
+void Controlador::eliminarEnTablaHash(const std::string &_codigoBarra){
+
+    try{
+
+        QElapsedTimer timer;
+        timer.start();
+
+        this->gestorBackend->eliminarTablaHash(_codigoBarra);
+
+        emit logEliminarTablaHash("Producto eliminado correctamente con el codigo: {" + QString::fromStdString(_codigoBarra)+ "}" , "green");
+
+        double tiempo = timer.nsecsElapsed() / 1000000.0;
+
+        emit tiempoEliminarProceso(6, tiempo);
 
     }catch (const DeleteException& e) {
         throw;

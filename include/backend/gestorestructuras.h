@@ -50,6 +50,9 @@ public:
     /*Metodo que permite eliminar los datos en la lista no ordenada*/
     void eliminarListaNoOrdenada(const std::string &key);
 
+    /*Metodo que permite eliminar datos en la tabla hash*/
+    void eliminarTablaHash(const std::string &key);
+
     /*Metodo para insertar en lista no ordenada*/
     void insertarListaNoOrdenada(const std::string &nombre,const std::string &key,const std::string &categoria, const std::string &fecha, const std::string &marca, double precio, int stock);
 

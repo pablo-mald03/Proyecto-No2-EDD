@@ -21,6 +21,7 @@ PantallaEliminarProducto::PantallaEliminarProducto(QWidget *parent)
     this->ui->textArbolBMas->setReadOnly(true);
     this->ui->textEditListNoOrdenada->setReadOnly(true);
     this->ui->textEditListOrdenada->setReadOnly(true);
+    this->ui->textHash->setReadOnly(true);
 }
 
 
@@ -68,6 +69,13 @@ void PantallaEliminarProducto::appendListNoOrdenadaLog(QString mensaje, QString 
         );
 }
 
+void PantallaEliminarProducto::appendTablaHashLog(QString mensaje, QString color){
+
+    this->ui->textHash->append(
+        "<span style='color:" + color + ";'>" + mensaje + "</span>"
+        );
+}
+
 /*---***--- Fin del Apartado de metodos que permiten comunicar a la UI los logs que se van a mostrar----***--*/
 
 
@@ -78,6 +86,7 @@ void PantallaEliminarProducto::appendListNoOrdenadaLog(QString mensaje, QString 
 * 3 -> B+
 * 4 -> LISTA ORDENADA
 * 5 -> LISTA NO ORDENADA
+* 6 -> TABLA HASH
 *
 */
 void PantallaEliminarProducto::mostrarTiempo(int estructura, double milisegundos){
@@ -103,6 +112,9 @@ void PantallaEliminarProducto::mostrarTiempo(int estructura, double milisegundos
         break;
     case 5:
         this->ui->labelTiempoListNoOrdenada->setText(tiempoTexto);
+        break;
+    case 6:
+        this->ui->labelTiempoHash->setText(tiempoTexto);
         break;
     }
 
@@ -130,12 +142,14 @@ void PantallaEliminarProducto::limpiarLogs(){
     this->ui->textArbolBMas->clear();
     this->ui->textEditListNoOrdenada->clear();
     this->ui->textEditListOrdenada->clear();
+    this->ui->textHash->clear();
 
     this->ui->labelTiempoListNoOrdenada->setText("Tiempo de eliminacion: 0 ms");
     this->ui->labelTiempoListOrdenada->setText("Tiempo de eliminacion: 0 ms");
     this->ui->labelTiempoAvl->setText("Tiempo de eliminacion: 0 ms");
     this->ui->labelTiempoB->setText("Tiempo de eliminacion: 0 ms");
     this->ui->labelTiempoBMas->setText("Tiempo de eliminacion: 0 ms");
+    this->ui->labelTiempoHash->setText("Tiempo de eliminacion: 0 ms");
 }
 
 

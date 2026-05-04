@@ -235,10 +235,9 @@ void PantallaMain::mostrarEliminar(){
         connect(this->controladorCrud, &Controlador::logEliminarArbolBMas,this->pantallaEliminar, &PantallaEliminarProducto::appendBMasLog);
         connect(this->controladorCrud, &Controlador::logEliminarListaOrdenada,this->pantallaEliminar, &PantallaEliminarProducto::appendListOrdenadaLog);
         connect(this->controladorCrud, &Controlador::logEliminarListaNoOrdenada,this->pantallaEliminar, &PantallaEliminarProducto::appendListNoOrdenadaLog);
-
+        connect(this->controladorCrud, &Controlador::logEliminarTablaHash,this->pantallaEliminar, &PantallaEliminarProducto::appendTablaHashLog);
 
         connect(this->controladorCrud, &Controlador::tiempoEliminarProceso, this->pantallaEliminar, &PantallaEliminarProducto::mostrarTiempo);
-
 
         connect(this->pantallaEliminar, &PantallaEliminarProducto::eliminarProducto, this->controladorCrud, &Controlador::eliminarProducto);
 

@@ -768,18 +768,6 @@ QPushButton#btnLimpiar:pressed {
          </item>
          <item>
           <widget class="QWidget" name="widget_9" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>200</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>250</height>
-            </size>
-           </property>
            <layout class="QVBoxLayout" name="verticalLayout_13">
             <item>
              <widget class="QTextEdit" name="textArbolAvl">
@@ -820,7 +808,7 @@ QPushButton#btnLimpiar:pressed {
 </string>
               </property>
               <property name="text">
-               <string>Tiempo de eliminacion: 0 ms</string>
+               <string>Tiempo eliminacion: 0 ms</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -872,12 +860,6 @@ QPushButton#btnLimpiar:pressed {
              <height>200</height>
             </size>
            </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>250</height>
-            </size>
-           </property>
            <layout class="QVBoxLayout" name="verticalLayout_14">
             <item>
              <widget class="QTextEdit" name="textArbolB">
@@ -918,7 +900,7 @@ QPushButton#btnLimpiar:pressed {
 </string>
               </property>
               <property name="text">
-               <string>Tiempo de eliminacion: 0 ms</string>
+               <string>Tiempo eliminacion: 0 ms</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -964,18 +946,6 @@ QPushButton#btnLimpiar:pressed {
          </item>
          <item>
           <widget class="QWidget" name="widget_11" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>200</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>250</height>
-            </size>
-           </property>
            <layout class="QVBoxLayout" name="verticalLayout_15">
             <item>
              <widget class="QTextEdit" name="textArbolBMas">
@@ -1016,7 +986,7 @@ QPushButton#btnLimpiar:pressed {
 </string>
               </property>
               <property name="text">
-               <string>Tiempo de eliminacion: 0 ms</string>
+               <string>Tiempo eliminacion: 0 ms</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -1053,7 +1023,7 @@ QPushButton#btnLimpiar:pressed {
 </string>
            </property>
            <property name="text">
-            <string>Arbol AVL</string>
+            <string>Tabla Hash</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -1062,18 +1032,6 @@ QPushButton#btnLimpiar:pressed {
          </item>
          <item>
           <widget class="QWidget" name="widget_15" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>200</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>250</height>
-            </size>
-           </property>
            <layout class="QVBoxLayout" name="verticalLayout_19">
             <item>
              <widget class="QTextEdit" name="textHash">
@@ -1115,7 +1073,7 @@ QPushButton#btnLimpiar:pressed {
 </string>
               </property>
               <property name="text">
-               <string>Tiempo de eliminacion: 0 ms</string>
+               <string>Tiempo eliminacion: 0 ms</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignmentFlag::AlignCenter</set>

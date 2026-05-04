@@ -22,6 +22,7 @@ public slots:
     void appendBMasLog(QString mensaje, QString color);
     void appendListOrdenadaLog(QString mensaje, QString color);
     void appendListNoOrdenadaLog(QString mensaje, QString color);
+    void appendTablaHashLog(QString mensaje, QString color);
 
     void mostrarTiempo(int estructura, double milisegundos);
 
