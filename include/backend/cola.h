@@ -1,7 +1,6 @@
 #ifndef COLA_H
 #define COLA_H
 
-#include <string>
 #include <vector>
 #include <mutex>
 #include "nodocola.h"

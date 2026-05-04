@@ -1,0 +1,24 @@
+digraph G {
+  rankdir=LR;
+  node [shape=record, color="#08333B", fontcolor="black", style=bold];
+  edge [color="#3A0A69"];
+  nodo0 [label="Manzana | 110"];
+  nodo0 -> nodo1;
+  nodo1 [label="Naranja | 111"];
+  nodo1 -> nodo2;
+  nodo2 [label="Papel Higienico | 123"];
+  nodo2 -> nodo3;
+  nodo3 [label="Sabana | 118"];
+  nodo3 -> nodo4;
+  nodo4 [label="Sabritas | 114"];
+  nodo4 -> nodo5;
+  nodo5 [label="Servilleta | 120"];
+  nodo5 -> nodo6;
+  nodo6 [label="Servilleta | 122"];
+  nodo6 -> nodo7;
+  nodo7 [label="Shampoo | 119"];
+  nodo7 -> nodo8;
+  nodo8 [label="Uva | 125"];
+  null [label="NULL", shape=none, fontcolor=red];
+  nodo8 -> null;
+}

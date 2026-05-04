@@ -10,23 +10,52 @@
 #include <cstdlib>
 #include <ctime>
 
-GestorEstructuras::GestorEstructuras():
-    listaNoOrdenada(new ListaEnlazada<Producto>()),
+GestorEstructuras::GestorEstructuras()
+    : listaNoOrdenada(new ListaEnlazada<Producto>()),
     listaOrdenada(new ListaEnlazada<Producto>()),
     listaErrores(new ListaEnlazada<ErroresLectura>()),
     arbolAvl(new ArbolAvl()),
     arbolB(new ArbolB(5)),
     arbolBMas(new ArbolBMas(10)),
     tablaHash(new TablaHash(500)),
+    colaIngreso(new Cola()),
+    colaSalida(new Cola()),
+    colaTraspaso(new Cola()),
     cargoArchivo(false),
-    parametroOrden(1)
-{
+    parametroOrden(1) {
     srand(time(NULL));
 }
 
 /*Destructor*/
 GestorEstructuras::~GestorEstructuras() {
     this->limpiarEstrucuturas();
+
+    if(this->colaIngreso != nullptr){
+        delete this->colaIngreso;
+        this->colaIngreso = nullptr;
+    }
+
+    if(this->colaTraspaso != nullptr){
+        delete this->colaTraspaso;
+        this->colaTraspaso = nullptr;
+    }
+
+    if(this->colaSalida != nullptr){
+        delete this->colaSalida;
+        this->colaSalida = nullptr;
+    }
+
+}
+
+/*Metodos getters de las colas*/
+Cola* GestorEstructuras::getColaIngreso() {
+    return colaIngreso;
+}
+Cola* GestorEstructuras::getColaTraspaso() {
+    return colaTraspaso;
+}
+Cola* GestorEstructuras::getColaSalida() {
+    return colaSalida;
 }
 
 /*Metodo que permite limpiar por completo todas las estrucutras y liberar memoria*/

@@ -19,6 +19,8 @@ public:
     Grafo();
     ~Grafo();
 
+    double obtenerTiempoArista(const std::string& idOrigen, const std::string& idDestino, bool porTiempo) const;
+
     // Metodos principales para poder gestionar el crud en el Grafo
     void insertarSucursal(Sucursal *nueva);
     void modificarSucursal(const std::string &_id,const std::string &_nombre, const std::string &_ubicacion, double _ingreso, double _despacho, double _preparacion);

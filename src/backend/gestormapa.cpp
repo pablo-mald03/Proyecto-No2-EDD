@@ -6,7 +6,9 @@ GestorMapa::GestorMapa()
     listaErroresEnvios(new ListaEnlazada<ErroresLectura>()),
     listaErroresProductos(new ListaEnlazada<ErroresLectura>())
 
-{}
+{
+    gestorEnvios = new GestorEnvios(this->grafoSucursales);
+}
 
 /*Destructor*/
 GestorMapa::~GestorMapa(){
@@ -46,6 +48,11 @@ void GestorMapa::limpiarRegistros(){
     this->listaErroresSucursales= new ListaEnlazada<ErroresLectura>();
     this->listaErroresEnvios=new ListaEnlazada<ErroresLectura>();
     this->listaErroresProductos= new ListaEnlazada<ErroresLectura>();
+}
+
+/*Metodo que permite obtener la referencia del gestor de envios*/
+GestorEnvios * GestorMapa::getGestorEnvios() const{
+    return this->gestorEnvios;
 }
 
 /*Metodo que permite obtener la referencia del grafo*/

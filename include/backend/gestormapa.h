@@ -1,6 +1,7 @@
 #ifndef GESTORMAPA_H
 #define GESTORMAPA_H
 
+#include "gestorenvios.h"
 #include "grafo.h"
 class GestorMapa
 {
@@ -55,8 +56,12 @@ public:
 
     Grafo * getGrafo() const;
 
+    GestorEnvios * getGestorEnvios() const;
+
 private:
     Grafo * grafoSucursales = nullptr;
+    /*Atributo para gestionar los envios*/
+    GestorEnvios * gestorEnvios = nullptr;
 
     /*Lista de logs de errores*/
     ListaEnlazada<ErroresLectura> * listaErroresSucursales = nullptr;

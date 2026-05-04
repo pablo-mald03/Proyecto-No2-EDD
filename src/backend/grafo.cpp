@@ -166,6 +166,18 @@ std::string Grafo::generarGraphviz() const {
     return oss.str();
 }
 
+/*Implementacion que permite obtener el peso de la arista en base a lo definido por el usuario*/
+double Grafo::obtenerTiempoArista(const std::string& idOrigen, const std::string& idDestino, bool porTiempo) const {
+    int i = obtenerIndice(idOrigen);
+    int j = obtenerIndice(idDestino);
+
+    if (i != -1 && j != -1 && matriz[i][j]->getExiste()) {
+
+        return (porTiempo)?  matriz[i][j]->getTiempo():  matriz[i][j]->getCosto();
+    }
+    return 0.0;
+}
+
 /*Implementacion del algoritmo dijkstra*/
 std::vector<Sucursal*> Grafo::obtenerRutaOptima(const std::string& origen, const std::string& destino, bool porTiempo) const {
 

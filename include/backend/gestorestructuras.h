@@ -5,6 +5,7 @@
 #include "arbolavl.h"
 #include "arbolb.h"
 #include "arbolbmas.h"
+#include "cola.h"
 #include "erroreslectura.h"
 #include"listaenlazada.h"
 #include"producto.h"
@@ -180,7 +181,17 @@ public:
     /*Metodo que permite validar las filas del csv cargado*/
     bool validarFilaCsvProducto(const std::vector<QString>& fila, double& precio, int& stock, QString& error) ;
 
+    /*Metodos getters para las colas*/
+    Cola* getColaIngreso();
+    Cola* getColaTraspaso();
+    Cola* getColaSalida();
+
 private:
+
+    /*Atributos de las colas que tiene la sucursal*/
+    Cola* colaIngreso;
+    Cola* colaTraspaso;
+    Cola* colaSalida;
 
     /*Arbol AVL*/
     ArbolAvl * arbolAvl = nullptr;
