@@ -27,7 +27,7 @@ private:
     void vaciarSucursales();
 
     /*--------Metodos que permiten dar informacion en los logs de la carga de csv de sucursales---------*/
-    void insertarProductoSucursal(const std::string idSucursal, const Producto &producto);
+    void insertarProductoSucursal(const std::string idSucursal, const Producto &producto, int &contadorAprobadas, int posicion);
 
     /*Metodo auxiliar para poder dar mensajes mientras se estra leyendo el csv de carga de productos*/
     void darMensajeProductos(QString msj, QString color);
