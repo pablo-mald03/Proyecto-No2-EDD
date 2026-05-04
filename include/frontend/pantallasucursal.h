@@ -20,7 +20,7 @@ public:
     ControladorSucursal * controlador = nullptr;
 
     /*Metodo que permite agregar los recursos que se utilizaran en el backend*/
-    void setRecursos(Sucursal * _sucursal, Grafo * _redGrafo);
+    void setRecursos(Sucursal* _sucursal, Grafo* _redGrafo, GestorEnvios* _gestor);
 
 
 private:

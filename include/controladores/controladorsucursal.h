@@ -1,6 +1,7 @@
 #ifndef CONTROLADORSUCURSAL_H
 #define CONTROLADORSUCURSAL_H
 
+#include "gestorenvios.h"
 #include "grafo.h"
 #include <QObject>
 
@@ -12,11 +13,17 @@ public:
     explicit ControladorSucursal(QObject *parent = nullptr);
     ~ControladorSucursal();
 
-    void setRecursosActuales(Sucursal * _sucursal, Grafo * _redGrafo);
+    void setRecursosActuales(Sucursal* _sucursal, Grafo* _redGrafo, GestorEnvios* _gestor);
+
+
 
 private:
-    Sucursal * sucursalAcutal = nullptr;
-    Grafo * redGrafo = nullptr;
+    Sucursal* sucursalActual = nullptr;
+    Grafo* redGrafo = nullptr;
+    GestorEnvios* gestorEnvios = nullptr;
+
+    /*Metodo que permite realizar un envio desde una sucursal*/
+    void enviarProducto(std::string idDestino, Producto* p,bool porTiempo);
 };
 
 #endif // CONTROLADORSUCURSAL_H

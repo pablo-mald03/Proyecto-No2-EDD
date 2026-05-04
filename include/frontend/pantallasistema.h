@@ -31,7 +31,7 @@ public:
 public slots:
     void mostrarVistaSucursales();
 
-    void cargarSucursal(Sucursal * _sucursal, Grafo * redGrafo);
+    void cargarSucursal(Sucursal* _sucursal, Grafo* _redGrafo, GestorEnvios* _gestor);
 
 private slots:
     void on_btnCargaSucursales_clicked();
@@ -82,7 +82,7 @@ private:
 signals:
 
     /*Metodo que permite solicitar la apertura al padre*/
-    void solicitarApertura(Sucursal * _sucursal, Grafo * );
+    void solicitarApertura(Sucursal* _sucursal, Grafo* _redGrafo, GestorEnvios* _gestor);
 
 };
 

@@ -472,7 +472,7 @@ void ControladorNegocio::buscarSucursal(const std::string &_id){
 void ControladorNegocio::cargarSucursal(const std::string &id){
 
     Sucursal * sucursalEncontrada = this->gestorMapeo->buscarSucursal(id);
-    emit abrirSucursal(sucursalEncontrada, this->obtenerGrafo());
+    emit abrirSucursal(sucursalEncontrada, this->obtenerGrafo(),this->gestorMapeo->getGestorEnvios());
 }
 
 

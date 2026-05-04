@@ -34,9 +34,9 @@ PantallaSistema::PantallaSistema(QWidget *parent)
 
 
 /*Metodo que permite comunicarle al padre que abra otra ventana con la sucursal seleccionada*/
-void PantallaSistema::cargarSucursal(Sucursal * _sucursal, Grafo * redGrafo){
+void PantallaSistema::cargarSucursal(Sucursal* _sucursal, Grafo* _redGrafo, GestorEnvios* _gestor){
 
-    emit solicitarApertura(_sucursal,redGrafo);
+    emit solicitarApertura(_sucursal,_redGrafo,_gestor);
 }
 
 /*------- Apartado de slots que sirven para poder enviar datos al controlador de la pantalla de carga de sucursales----------*/

@@ -12,8 +12,8 @@ PantallaSucursal::PantallaSucursal(QWidget *parent)
 }
 
 /*Metodo que permite agregar los recursos que se utilizaran en el backend*/
-void PantallaSucursal::setRecursos(Sucursal * _sucursal, Grafo * _redGrafo){
-    this->controlador->setRecursosActuales(_sucursal,_redGrafo);
+void PantallaSucursal::setRecursos(Sucursal* _sucursal, Grafo* _redGrafo, GestorEnvios* _gestor){
+    this->controlador->setRecursosActuales(_sucursal,_redGrafo,_gestor);
 }
 
 /*Destructor*/

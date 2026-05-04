@@ -20,7 +20,7 @@ public:
     ~PantallaGestion();
 
     /*Metodo que permite setear la sucursal que se va a mostrar*/
-    void setSucursal(Sucursal * _sucursal, Grafo * _redGrafo);
+    void setSucursal(Sucursal* _sucursal, Grafo* _redGrafo, GestorEnvios* _gestor) ;
 
     void setPantallaInicio();
 
@@ -36,7 +36,7 @@ private:
     /*Atrbutos seteables que permiten tener el control total sobre los punteros que vienen del grafo y sucursales*/
     Sucursal * sucursal = nullptr;
     Grafo * redGrafo = nullptr;
-
+    GestorEnvios* gestorEnvios = nullptr;
 
     /*Metodos de control de ventanas*/
     void mostrarSucursal();

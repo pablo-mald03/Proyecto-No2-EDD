@@ -133,7 +133,7 @@ signals:
     void mensajeErrorModificar(QString mensaje);
 
     /*Metodo que permite viajar hacia otra sucursal*/
-    void abrirSucursal(Sucursal * _sucursal, Grafo * redGrafo);
+    void abrirSucursal(Sucursal* _sucursal, Grafo* _redGrafo, GestorEnvios* _gestor);
 
     /*Metodo que permite ir refrescando los datos de una sucursal*/
     void actualizarEnvio(QString idEnvio, QStringList idsPasados, QString idSiguiente);

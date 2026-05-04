@@ -9,6 +9,8 @@ PantallaGestion::PantallaGestion(QWidget *parent)
 
     this->setStyleSheet("PantallaGestion { background-color: #1a1a1a; } ");
 
+    this->controladorGestion = new ControladorSucursal();
+
     this->pantallaSucursal = new PantallaSucursal(this);
 
     this->ui->stackedWidget->addWidget(this->pantallaSucursal);
@@ -22,14 +24,17 @@ PantallaGestion::PantallaGestion(QWidget *parent)
 }
 
 /*Metodo que permite tomar la referencia que traen de la sucursal y setearla a los controladores*/
-void PantallaGestion::setSucursal(Sucursal * _sucursal, Grafo * _redGrafo){
+void PantallaGestion::setSucursal(Sucursal* _sucursal, Grafo* _redGrafo, GestorEnvios* _gestor) {
 
     this->sucursal = _sucursal;
     this->redGrafo = _redGrafo;
+    this->gestorEnvios = _gestor;
+
+    this->controladorGestion->setRecursosActuales(_sucursal,_redGrafo,_gestor);
 
     this->ui->labelAdmin->setText(QString::fromStdString(_sucursal->getNombre()));
     this->pantallaMain->setGestorSucursal(this->sucursal->getAlmacen());
-    this->pantallaSucursal->setRecursos(this->sucursal,this->redGrafo);
+    this->pantallaSucursal->setRecursos(this->sucursal,this->redGrafo,this->gestorEnvios);
 }
 
 /*Metodo que permite mostar la primera pantalla de inicio*/
