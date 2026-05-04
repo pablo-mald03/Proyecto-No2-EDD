@@ -1009,6 +1009,13 @@ ListaEnlazada<Producto> GestorEstructuras::getProductosIntervalo(const Producto 
         }
         break;
     }
+    case 4: {
+        std::string val1 = productoInferior.getCodigoBarra();
+        std::string val2 = productoSuperior.getCodigoBarra();
+        limiteInf = (val1 <= val2) ? val1 : val2;
+        limiteSup = (val1 <= val2) ? val2 : val1;
+        break;
+    }
     default:
         break;
     }
@@ -1038,8 +1045,10 @@ ListaEnlazada<Producto> GestorEstructuras::getProductosIntervalo(const Producto 
                 dentroDelRango = true;
             }
             break;
-
-        default:
+        case 4:
+            if (pActual.getCodigoBarra() >= limiteInf && pActual.getCodigoBarra() <= limiteSup){
+                dentroDelRango = true;
+            }
             break;
         }
 

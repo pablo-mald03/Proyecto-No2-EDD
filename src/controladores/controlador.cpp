@@ -2561,30 +2561,30 @@ void Controlador::pruebaExtremosCategoria(int consultas,int veces){
 }
 
 
-/*Metodo que permite generar las consultas aleatorias por nombre*/
+/*Metodo que permite generar las consultas aleatorias por codigo de barras*/
 void Controlador::pruebaAleatoriaCodigo(int consultas,int veces){
-/*
+
     try{
 
         ListaEnlazada<Producto> listaRangos = this->gestorBackend->getRangosAleatorios();
 
         if(listaRangos.esVacia()){
-            emit logBusquedaNombreArbolAvl("El arbol AVL no cuenta con los suficientes datos para hacer pruebas de extremos", "yellow");
-            emit logBusquedaNombreListaOrdenada("La lista Ordenada esta vacia", "yellow");
-            emit logBusquedaNombreListaNoOrdenada("La lista No Ordenada esta vacia", "yellow");
+            emit logBusquedaCodigoTablaHash("La Tabla Hash no cuenta con los suficientes datos para hacer pruebas de extremos", "yellow");
+            emit logBusquedaCodigoListaOrdenada("La lista Ordenada esta vacia", "yellow");
+            emit logBusquedaCodigoListaNoOrdenada("La lista No Ordenada esta vacia", "yellow");
             return;
         }
 
         if(listaRangos.getLongitud() < 2){
-            emit logBusquedaNombreArbolAvl("El arbol AVL no cuenta con los suficientes datos para hacer pruebas de extremos", "yellow");
-            emit logBusquedaNombreListaOrdenada("La lista no cuenta con los suficientes datos para hacer pruebas de extremos", "yellow");
-            emit logBusquedaNombreListaNoOrdenada("La lista no cuenta con los suficientes datos para hacer pruebas de extremos", "yellow");
+            emit logBusquedaCodigoTablaHash("La Tabla Hash no cuenta con los suficientes datos para hacer pruebas de extremos", "yellow");
+            emit logBusquedaCodigoListaOrdenada("La lista no cuenta con los suficientes datos para hacer pruebas de extremos", "yellow");
+            emit logBusquedaCodigoListaNoOrdenada("La lista no cuenta con los suficientes datos para hacer pruebas de extremos", "yellow");
             return;
         }
 
         int indiceUltimo = listaRangos.getLongitud() -1;
 
-        ListaEnlazada<Producto> lista = this->gestorBackend->getProductosIntervalo(listaRangos.getValor(0),listaRangos.getValor(indiceUltimo), 1);
+        ListaEnlazada<Producto> lista = this->gestorBackend->getProductosIntervalo(listaRangos.getValor(0),listaRangos.getValor(indiceUltimo), 4);
 
         int longitudLista = lista.getLongitud();
         double tiempoTotal = 0.0;
@@ -2599,7 +2599,7 @@ void Controlador::pruebaAleatoriaCodigo(int consultas,int veces){
             QElapsedTimer timer;
             timer.start();
 
-            this->buscarAvlNombre(producto1.getNombre());
+            this->buscarHashCodigo(producto1.getCodigoBarra());
 
             double tiempoPasado = timer.nsecsElapsed() / 1000000.0;
 
@@ -2613,7 +2613,7 @@ void Controlador::pruebaAleatoriaCodigo(int consultas,int veces){
                     tiempoStr + "\n" +
                     "==========================================\n\n";
 
-                emit logBusquedaNombreArbolAvl(cantidad.replace("\n", "<br>"),
+                emit logBusquedaCodigoTablaHash(cantidad.replace("\n", "<br>"),
                                                "yellow");
             }
 
@@ -2624,15 +2624,15 @@ void Controlador::pruebaAleatoriaCodigo(int consultas,int veces){
 
         QString tiempoStrTotalB = QString::number(tiempoTotal, 'f', 4);
 
-        emit mostrarTiempoPruebasNombre(tiempoPromedio);
+        emit mostrarTiempoPruebasCodigo(tiempoPromedio);
 
         QString cantidadFinalB =
             "--------*****---------------*****---------\n"
-            "TIEMPO TOTAL ARBOL AVL: " + tiempoStrTotalB + " ms\n" +
+            "TIEMPO TOTAL TABLA HASH: " + tiempoStrTotalB + " ms\n" +
             "PROMEDIO POR CONSULTA: " + QString::number(tiempoPromedio, 'f', 4) + " ms\n" +
             "--------*****---------------*****---------\n\n";
 
-        emit logBusquedaNombreArbolAvl(cantidadFinalB.replace("\n", "<br>"), "yellow");
+        emit logBusquedaCodigoTablaHash(cantidadFinalB.replace("\n", "<br>"), "yellow");
 
 
         double tiempoTotalOrdenado = 0.0;
@@ -2646,7 +2646,7 @@ void Controlador::pruebaAleatoriaCodigo(int consultas,int veces){
             QElapsedTimer timer;
             timer.start();
 
-            this->buscarListasOrdenadaNombre(producto1.getNombre());
+            this->buscarListasOrdenadaCodigo(producto1.getCodigoBarra());
 
             double tiempoPasado = timer.nsecsElapsed() / 1000000.0;
 
@@ -2660,7 +2660,7 @@ void Controlador::pruebaAleatoriaCodigo(int consultas,int veces){
                     tiempoStr + "\n" +
                     "==========================================\n\n";
 
-                emit logBusquedaNombreListaOrdenada(cantidad.replace("\n", "<br>"),
+                emit logBusquedaCodigoListaOrdenada(cantidad.replace("\n", "<br>"),
                                                     "yellow");
             }
 
@@ -2677,7 +2677,7 @@ void Controlador::pruebaAleatoriaCodigo(int consultas,int veces){
             "PROMEDIO POR CONSULTA: " + QString::number(tiempoPromedioOrdenado, 'f', 4) + " ms\n" +
             "--------*****---------------*****---------\n\n";
 
-        emit logBusquedaNombreListaOrdenada(cantidadFinal.replace("\n", "<br>"), "yellow");
+        emit logBusquedaCodigoListaOrdenada(cantidadFinal.replace("\n", "<br>"), "yellow");
 
 
         double tiempoTotalNoOrdenado = 0.0;
@@ -2691,7 +2691,7 @@ void Controlador::pruebaAleatoriaCodigo(int consultas,int veces){
             QElapsedTimer timer;
             timer.start();
 
-            this->buscarListasNoOrdenadaNombre(producto1.getNombre());
+            this->buscarListasNoOrdenadaCodigo(producto1.getCodigoBarra());
 
             double tiempoPasado = timer.nsecsElapsed() / 1000000.0;
 
@@ -2705,7 +2705,7 @@ void Controlador::pruebaAleatoriaCodigo(int consultas,int veces){
                     tiempoStr + "\n" +
                     "==========================================\n\n";
 
-                emit logBusquedaNombreListaNoOrdenada(cantidad.replace("\n", "<br>"),
+                emit logBusquedaCodigoListaNoOrdenada(cantidad.replace("\n", "<br>"),
                                                       "yellow");
             }
 
@@ -2722,32 +2722,32 @@ void Controlador::pruebaAleatoriaCodigo(int consultas,int veces){
             "PROMEDIO POR CONSULTA: " + QString::number(tiempoPromedioNoOrdenado, 'f', 4) + " ms\n" +
             "--------*****---------------*****---------\n\n";
 
-        emit logBusquedaNombreListaNoOrdenada(cantidadNoOrdenadaFinal.replace("\n", "<br>"), "yellow");
+        emit logBusquedaCodigoListaNoOrdenada(cantidadNoOrdenadaFinal.replace("\n", "<br>"), "yellow");
 
     }catch (const std::exception& ex) {
-        emit logBusquedaNombreArbolAvl("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
-        emit logBusquedaNombreListaOrdenada("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
-        emit logBusquedaNombreListaNoOrdenada("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
-    }*/
+        emit logBusquedaCodigoTablaHash("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
+        emit logBusquedaCodigoListaOrdenada("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
+        emit logBusquedaCodigoListaNoOrdenada("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
+    }
 }
 
-/*Metodo que permite generar las consultas en extremos por nombre*/
+/*Metodo que permite generar las consultas en extremos por codigo de barras*/
 void Controlador::pruebaExtremosCodigo(int consultas,int veces){
-    /*try{
+    try{
 
         ListaEnlazada<Producto> lista = this->gestorBackend->getProductosExtremos();
 
         if(lista.esVacia()){
-            emit logBusquedaNombreArbolAvl("El arbol AVL no cuenta con los suficientes datos para hacer pruebas de extremos", "yellow");
-            emit logBusquedaNombreListaOrdenada("La lista Ordenada esta vacia", "yellow");
-            emit logBusquedaNombreListaNoOrdenada("La lista No Ordenada esta vacia", "yellow");
+            emit logBusquedaCodigoTablaHash("La Tabla Hash no cuenta con los suficientes datos para hacer pruebas de extremos", "yellow");
+            emit logBusquedaCodigoListaOrdenada("La lista Ordenada esta vacia", "yellow");
+            emit logBusquedaCodigoListaNoOrdenada("La lista No Ordenada esta vacia", "yellow");
             return;
         }
 
         if(lista.getLongitud() < 2){
-            emit logBusquedaNombreArbolAvl("El arbol AVL no cuenta con los suficientes datos para hacer pruebas de extremos", "yellow");
-            emit logBusquedaNombreListaOrdenada("La lista no cuenta con los suficientes datos para hacer pruebas de extremos", "yellow");
-            emit logBusquedaNombreListaNoOrdenada("La lista no cuenta con los suficientes datos para hacer pruebas de extremos", "yellow");
+            emit logBusquedaCodigoTablaHash("El arbol AVL no cuenta con los suficientes datos para hacer pruebas de extremos", "yellow");
+            emit logBusquedaCodigoListaOrdenada("La lista no cuenta con los suficientes datos para hacer pruebas de extremos", "yellow");
+            emit logBusquedaCodigoListaNoOrdenada("La lista no cuenta con los suficientes datos para hacer pruebas de extremos", "yellow");
             return;
         }
 
@@ -2763,7 +2763,7 @@ void Controlador::pruebaExtremosCodigo(int consultas,int veces){
             QElapsedTimer timer;
             timer.start();
 
-            this->buscarAvlNombre(producto1.getNombre());
+            this->buscarHashCodigo(producto1.getCodigoBarra());
 
             double tiempoPasado = timer.nsecsElapsed() / 1000000.0;
 
@@ -2777,7 +2777,7 @@ void Controlador::pruebaExtremosCodigo(int consultas,int veces){
                     tiempoStr + "\n" +
                     "==========================================\n\n";
 
-                emit logBusquedaNombreArbolAvl(cantidad.replace("\n", "<br>"),
+                emit logBusquedaCodigoTablaHash(cantidad.replace("\n", "<br>"),
                                                "yellow");
             }
 
@@ -2788,15 +2788,15 @@ void Controlador::pruebaExtremosCodigo(int consultas,int veces){
 
         QString tiempoStrTotalB = QString::number(tiempoTotal, 'f', 4);
 
-        emit mostrarTiempoPruebasNombre(tiempoPromedio);
+        emit mostrarTiempoPruebasCodigo(tiempoPromedio);
 
         QString cantidadFinalB =
             "--------*****---------------*****---------\n"
-            "TIEMPO TOTAL ARBOL AVL: " + tiempoStrTotalB + " ms\n" +
+            "TIEMPO TOTAL TABLA HASH: " + tiempoStrTotalB + " ms\n" +
             "PROMEDIO POR CONSULTA: " + QString::number(tiempoPromedio, 'f', 4) + " ms\n" +
             "--------*****---------------*****---------\n\n";
 
-        emit logBusquedaNombreArbolAvl(cantidadFinalB.replace("\n", "<br>"), "yellow");
+        emit logBusquedaCodigoTablaHash(cantidadFinalB.replace("\n", "<br>"), "yellow");
 
 
         double tiempoTotalOrdenado = 0.0;
@@ -2810,7 +2810,7 @@ void Controlador::pruebaExtremosCodigo(int consultas,int veces){
             QElapsedTimer timer;
             timer.start();
 
-            this->buscarListasOrdenadaNombre(producto1.getNombre());
+            this->buscarListasOrdenadaCodigo(producto1.getCodigoBarra());
 
             double tiempoPasado = timer.nsecsElapsed() / 1000000.0;
 
@@ -2824,7 +2824,7 @@ void Controlador::pruebaExtremosCodigo(int consultas,int veces){
                     tiempoStr + "\n" +
                     "==========================================\n\n";
 
-                emit logBusquedaNombreListaOrdenada(cantidad.replace("\n", "<br>"),
+                emit logBusquedaCodigoListaOrdenada(cantidad.replace("\n", "<br>"),
                                                     "yellow");
             }
 
@@ -2841,7 +2841,7 @@ void Controlador::pruebaExtremosCodigo(int consultas,int veces){
             "PROMEDIO POR CONSULTA: " + QString::number(tiempoPromedioOrdenado, 'f', 4) + " ms\n" +
             "--------*****---------------*****---------\n\n";
 
-        emit logBusquedaNombreListaOrdenada(cantidadFinal.replace("\n", "<br>"), "yellow");
+        emit logBusquedaCodigoListaOrdenada(cantidadFinal.replace("\n", "<br>"), "yellow");
 
 
         double tiempoTotalNoOrdenado = 0.0;
@@ -2855,7 +2855,7 @@ void Controlador::pruebaExtremosCodigo(int consultas,int veces){
             QElapsedTimer timer;
             timer.start();
 
-            this->buscarListasNoOrdenadaNombre(producto1.getNombre());
+            this->buscarListasNoOrdenadaCodigo(producto1.getCodigoBarra());
 
             double tiempoPasado = timer.nsecsElapsed() / 1000000.0;
 
@@ -2869,7 +2869,7 @@ void Controlador::pruebaExtremosCodigo(int consultas,int veces){
                     tiempoStr + "\n" +
                     "==========================================\n\n";
 
-                emit logBusquedaNombreListaNoOrdenada(cantidad.replace("\n", "<br>"),
+                emit logBusquedaCodigoListaNoOrdenada(cantidad.replace("\n", "<br>"),
                                                       "yellow");
             }
 
@@ -2886,11 +2886,11 @@ void Controlador::pruebaExtremosCodigo(int consultas,int veces){
             "PROMEDIO POR CONSULTA: " + QString::number(tiempoPromedioNoOrdenado, 'f', 4) + " ms\n" +
             "--------*****---------------*****---------\n\n";
 
-        emit logBusquedaNombreListaNoOrdenada(cantidadNoOrdenadaFinal.replace("\n", "<br>"), "yellow");
+        emit logBusquedaCodigoListaNoOrdenada(cantidadNoOrdenadaFinal.replace("\n", "<br>"), "yellow");
 
     }catch (const std::exception& ex) {
-        emit logBusquedaNombreArbolAvl("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
-        emit logBusquedaNombreListaOrdenada("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
-        emit logBusquedaNombreListaNoOrdenada("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
-    }*/
+        emit logBusquedaCodigoTablaHash("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
+        emit logBusquedaCodigoListaOrdenada("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
+        emit logBusquedaCodigoListaNoOrdenada("Error inesperado: " + QString::fromStdString(ex.what()) , "red");
+    }
 }
