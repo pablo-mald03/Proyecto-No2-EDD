@@ -83,12 +83,14 @@ void PantallaPrincipal::limpiarLogs(){
     this->ui->labelTiempoB->setText("Tiempo total: 0 ms");
     this->ui->labelTiempoBMas->setText("Tiempo total: 0 ms");
     this->ui->labelTiempoLista->setText("Tiempo total: 0 ms");
+    this->ui->labelTiempoHash->setText("Tiempo total: 0 ms");
 
     this->ui->textEditCsv->clear();
     this->ui->textEditLista->clear();
     this->ui->textEditAvl->clear();
     this->ui->textEditB->clear();
     this->ui->textEditBMas->clear();
+    this->ui->textTablaHash->clear();
 
 }
 

@@ -604,7 +604,7 @@ void GestorEstructuras::generarListaOrdenada(int criterio){
 * 1 -> nombre
 * 2 -> categoria
 * 3 -> fecha
-* 4 -> codigo de barra (Especial para la eliminacion)
+* 4 -> codigo de barra
 */
 void GestorEstructuras::ordenarLista(int criterio){
 
@@ -670,6 +670,44 @@ void GestorEstructuras::ordenarLista(int criterio){
 
 
 /*-*----Metodos de busqueda por nombre----*--*/
+
+/*Busqueda en la tabla Hash*/
+Producto* GestorEstructuras::buscarProductoTablaHash(const std::string& codigo){
+    return this->tablaHash->buscar(codigo);
+}
+
+/*Busqueda de codigo en lista ordenada*/
+Producto * GestorEstructuras::buscarProductoCodigoListaOrdenada(const std::string& codigo){
+
+    int longitud = this->listaOrdenada->getLongitud();
+
+    for (int i = 0; i < longitud; i++) {
+        Producto& product = this->listaOrdenada->getValor(i);
+
+        if (product.getCodigoBarra() == codigo) {
+            return &product;
+        }
+    }
+
+    return nullptr;
+}
+
+/*Busqueda de codigo en lista no ordenada*/
+Producto * GestorEstructuras::buscarProductoCodigoListaNoOrdenada(const std::string& codigo){
+
+    int longitud = this->listaNoOrdenada->getLongitud();
+
+    for (int i = 0; i < longitud; i++) {
+        Producto& product = this->listaNoOrdenada->getValor(i);
+
+        if (product.getCodigoBarra() == codigo) {
+            return &product;
+        }
+    }
+
+    return nullptr;
+}
+
 
 /*Busqueda en arbol AVL*/
 ListaEnlazada<Producto> GestorEstructuras::buscarProductoAvl(const std::string& nombre){

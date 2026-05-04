@@ -60,6 +60,12 @@ private:
     void insertarEnArbolBMas(const std::string &_nombre,const std::string &_codigoBarra, const std::string &_categoria, const std::string &_fechaExpiracion, const std::string &_marca, double _precio, int _stock);
     void insertarEnTablaHash(const std::string &_nombre,const std::string &_codigoBarra, const std::string &_categoria, const std::string &_fechaExpiracion, const std::string &_marca, double _precio, int _stock);
 
+    /*Metodos que permiten buscar datos por codigo*/
+    void buscarHashCodigo(const std::string &codigo);
+    void buscarListasCodigo(const std::string &codigo);
+    void buscarListasOrdenadaCodigo(const std::string &codigo);
+    void buscarListasNoOrdenadaCodigo(const std::string &codigo);
+
     /*Metodos que permiten buscar datos por nombre*/
     void buscarAvlNombre(const std::string &nombre);
     void buscarListasNombre(const std::string &nombre);
@@ -105,6 +111,7 @@ public slots:
     /*Metodos que permiten realizar el CRUD de la aplicacion*/
     void insercionProducto(const std::string &_nombre,const std::string &_codigoBarra, const std::string &_categoria, const std::string &_fechaExpiracion, const std::string &_marca, const std::string &_precio, const std::string &_stock);
     void buscarPorNombre(const std::string &nombre);
+    void buscarPorCodigo(const std::string &codigo);
     void buscarPorCategoria(std::string categoria);
     void buscarPorFecha(const std::string &limiteInferior, const std::string &limiteSuperior);
     void eliminarProducto(const std::string &codigo);
@@ -136,6 +143,12 @@ public slots:
 
     /*Metodo que permite generar las consultas en extremos por rango de fechas*/
     void pruebaExtremosFechas(int consultas,int veces);
+
+    /*Metodo que permite generar las consultas aleatorias por codigo*/
+    void pruebaAleatoriaCodigo(int consultas,int veces);
+
+    /*Metodo que permite generar las consultas en extremos por codigo*/
+    void pruebaExtremosCodigo(int consultas,int veces);
 
     /*Metodo que permite generar las consultas aleatorias por nombre*/
     void pruebaAleatoriaNombre(int consultas,int veces);
@@ -210,6 +223,15 @@ signals:
     /*Fin de las Signals que permiten comunicarse con la pantalla de agregar */
 
 
+    /*Signals que permiten comunicarse con la pantalla de buscar por codigo */
+    void logBusquedaCodigoTablaHash(QString mensaje, QString color);
+    void logBusquedaCodigoListaOrdenada(QString mensaje, QString color);
+    void logBusquedaCodigoListaNoOrdenada(QString mensaje, QString color);
+
+    /*Signal que permite setear el tiempo en el label*/
+    void tiempoProcesoBusquedaCodigo (int estructura, double milisegundos);
+
+
     /*Signals que permiten comunicarse con la pantalla de buscar por nombre */
     void logBusquedaNombreArbolAvl(QString mensaje, QString color);
     void logBusquedaNombreListaOrdenada(QString mensaje, QString color);
@@ -267,6 +289,7 @@ signals:
     /*Fin de las Signals que permiten comunicarse con la pantalla de listai productos */
 
     /*Apartado de metodos que permiten generar las pruebas con las busquedas de arboles*/
+    void mostrarTiempoPruebasCodigo(double milisegundos);
     void mostrarTiempoPruebasNombre(double milisegundos);
     void mostrarTiempoPruebasCategoria(double milisegundos);
     void mostrarTiempoPruebasFechas(double milisegundos);

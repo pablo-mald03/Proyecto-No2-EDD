@@ -96,6 +96,47 @@ void PantallaMain::mostrarAgregar(){
 }
 
 /*Metodo utilizado para poder navegar a la ventana de buscar por nombre*/
+void PantallaMain::mostrarBuscarCodigo(){
+
+    if (!this->pantallaBusquedaCodigo) {
+
+        this->pantallaBusquedaCodigo = new PantallaBuscarCodigo(this);
+
+        ui->stackedWidget->addWidget(this->pantallaBusquedaCodigo);
+
+        //Se conectan las signlas para poder interactuar con las pantallas
+        connect(this->controladorCrud, &Controlador::logBusquedaCodigoTablaHash,this->pantallaBusquedaCodigo, &PantallaBuscarCodigo::appendHashLog);
+
+        connect(this->controladorCrud, &Controlador::logBusquedaCodigoListaOrdenada,this->pantallaBusquedaCodigo, &PantallaBuscarCodigo::appendListOrdenadaLog);
+
+        connect(this->controladorCrud, &Controlador::logBusquedaCodigoListaNoOrdenada,this->pantallaBusquedaCodigo, &PantallaBuscarCodigo::appendListNoOrdenadaLog);
+
+        connect(this->controladorCrud, &Controlador::tiempoProcesoBusquedaCodigo, this->pantallaBusquedaCodigo, &PantallaBuscarCodigo::mostrarTiempo);
+
+        connect(this->pantallaBusquedaCodigo, &PantallaBuscarCodigo::buscarPorCodigo, this->controladorCrud, &Controlador::buscarPorCodigo);
+
+        connect(this->pantallaBusquedaCodigo, &PantallaBuscarCodigo::verArboles, this, &PantallaMain::mostrarVerArboles);
+
+        connect(this->controladorCrud, &Controlador::tiempoProcesoBusquedaCodigo, this->pantallaBusquedaCodigo, &PantallaBuscarCodigo::mostrarTiempo);
+
+        connect(this, &PantallaMain::limpiarBuscarCodigo, this->pantallaBusquedaCodigo, &PantallaBuscarCodigo::limpiarPantalla);
+
+        /*Pruebas*/
+        connect(this->controladorCrud, &Controlador::mostrarTiempoPruebasCodigo, this->pantallaBusquedaCodigo, &PantallaBuscarCodigo::mostrarTiempoPruebas);
+
+        connect(this->pantallaBusquedaCodigo, &PantallaBuscarCodigo::pruebaAleatoria, this->controladorCrud, &Controlador::pruebaAleatoriaCodigo);
+
+        connect(this->pantallaBusquedaCodigo, &PantallaBuscarCodigo::pruebaExtremos, this->controladorCrud, &Controlador::pruebaExtremosCodigo);
+    }
+
+    emit this->limpiarBuscarCodigo();
+    this->controladorCrud->ordenarListado(4);
+    this->solicitarTitulo("Busqueda por codigo");
+    this->ui->stackedWidget->setCurrentWidget(this->pantallaBusquedaCodigo);
+
+}
+
+/*Metodo utilizado para poder navegar a la ventana de buscar por nombre*/
 void PantallaMain::mostrarBuscarNombre(){
 
     if (!this->pantallaBusquedaNombre) {
@@ -396,7 +437,7 @@ void PantallaMain::on_btnBuscarNombre_clicked()
 
 void PantallaMain::on_btnBuscarBarra_clicked()
 {
-
+    this->mostrarBuscarCodigo();
 }
 
 /*Metodo que permite navegar a la pantalla de buscar por categoria*/

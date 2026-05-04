@@ -139,6 +139,11 @@ public:
                           const std::string &_stock);
 
 
+    /*Busqueda de datos por codigo*/
+    Producto*  buscarProductoTablaHash(const std::string& codigo);
+    Producto * buscarProductoCodigoListaOrdenada(const std::string& codigo);
+    Producto * buscarProductoCodigoListaNoOrdenada(const std::string& codigo);
+
     /*Metodos de busqueda de datos por nombre*/
     ListaEnlazada<Producto> buscarProductoAvl(const std::string& nombre);
     ListaEnlazada<Producto> buscarProductoListaOrdenada(const std::string& nombre);

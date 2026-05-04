@@ -4,6 +4,7 @@
 #include <QWidget>
 
 /*Region de importacion de la UI*/
+#include "pantallabuscarcodigo.h"
 #include"pantallaprincipal.h"
 #include"controlador.h"
 #include"pantallaagregar.h"
@@ -63,6 +64,8 @@ private:
 
     PantallaAgregar * pantallaAgregar = nullptr;
 
+    PantallaBuscarCodigo * pantallaBusquedaCodigo = nullptr;
+
     PantallaBuscarPorNombre * pantallaBusquedaNombre = nullptr;
 
     PantallaBuscarPorCategoria * pantallaBusquedaCategoria = nullptr;
@@ -83,6 +86,7 @@ private:
     /*Metodos para navegar por la UI*/
     void mostrarAgregar();
     void mostrarBuscarNombre();
+    void mostrarBuscarCodigo();
     void mostrarBuscarCategoria();
     void mostrarBuscarRango();
     void mostrarEliminar();
@@ -95,6 +99,7 @@ private:
 signals:
     void limpiarAgregar();
     void limpiarBuscarNombre();
+    void limpiarBuscarCodigo();
     void limpiarBuscarCategoria();
     void limpiarBuscarRango();
     void limpiarEliminar();
