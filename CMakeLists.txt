@@ -8,6 +8,7 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS
     ${CMAKE_CURRENT_SOURCE_DIR}/ui
     ${CMAKE_CURRENT_SOURCE_DIR}/ui/sucursales
     ${CMAKE_CURRENT_SOURCE_DIR}/ui/inicio
+    ${CMAKE_CURRENT_SOURCE_DIR}/ui/manejo
 )
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -51,6 +52,13 @@ set(FRONTEND_SOURCES
     src/frontend/inicio/pantallaversucursales.cpp
     src/frontend/inicio/pantallaverenvios.cpp
 
+    src/frontend/manejo/pantallaverestadoenvios.cpp
+    src/frontend/manejo/pantallacolaingreso.cpp
+    src/frontend/manejo/pantallacolapreparacion.cpp
+    src/frontend/manejo/pantallacolasalida.cpp
+    src/frontend/manejo/pantalladetallessucursal.cpp
+    src/frontend/manejo/pantallaenviarproductos.cpp
+    src/frontend/manejo/pantallahistorialenvios.cpp
 
 )
 
@@ -89,6 +97,14 @@ set(FRONTEND_HEADERS
     include/frontend/inicio/pantallaeliminarsucursal.h
     include/frontend/inicio/pantallaversucursales.h
     include/frontend/inicio/pantallaverenvios.h
+
+    include/frontend/manejo/pantallaverestadoenvios.h
+    include/frontend/manejo/pantallacolaingreso.h
+    include/frontend/manejo/pantallacolapreparacion.h
+    include/frontend/manejo/pantallacolasalida.h
+    include/frontend/manejo/pantalladetallessucursal.h
+    include/frontend/manejo/pantallaenviarproductos.h
+    include/frontend/manejo/pantallahistorialenvios.h
 )
 
 set(CONTROLADORES_SOURCES
@@ -140,6 +156,15 @@ set(UI_FILES
     ui/inicio/pantallaeliminarsucursal.ui
     ui/inicio/pantallaversucursales.ui
     ui/inicio/pantallaverenvios.ui
+
+
+    ui/manejo/pantallaverestadoenvios.ui
+    ui/manejo/pantallacolaingreso.ui
+    ui/manejo/pantallacolapreparacion.ui
+    ui/manejo/pantallacolasalida.ui
+    ui/manejo/pantalladetallessucursal.ui
+    ui/manejo/pantallaenviarproductos.ui
+    ui/manejo/pantallahistorialenvios.ui
 
 )
 
@@ -241,6 +266,7 @@ target_include_directories(ProyectoNo2-EDD PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include/backend
     ${CMAKE_CURRENT_SOURCE_DIR}/include/frontend/sucursales
     ${CMAKE_CURRENT_SOURCE_DIR}/include/frontend/inicio
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/frontend/manejo
     ${CMAKE_CURRENT_SOURCE_DIR}/include/exceptions
     ${CMAKE_CURRENT_SOURCE_DIR}/include/controladores
     ${CMAKE_CURRENT_SOURCE_DIR}/include/modules
