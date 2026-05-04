@@ -24,6 +24,10 @@ set(FRONTEND_SOURCES
     src/frontend/sucursales/pantallabuscarrango.cpp
     src/frontend/sucursales/pantallalistarnombre.cpp
     src/frontend/sucursales/pantallaeliminarproducto.cpp
+    src/frontend/sucursales/pantallatablahash.cpp
+    src/frontend/sucursales/pantallabuscarcodigo.cpp
+    src/frontend/sucursales/pantallacompararbusquedas.cpp
+    src/frontend/sucursales/pantallalistaenlazada.cpp
 
     src/frontend/sucursales/pantallaverarboles.cpp
 
@@ -60,6 +64,10 @@ set(FRONTEND_HEADERS
     include/frontend/sucursales/pantallabuscarrango.h
     include/frontend/sucursales/pantallalistarnombre.h
     include/frontend/sucursales/pantallaeliminarproducto.h
+    include/frontend//sucursales/pantallatablahash.h
+    include/frontend//sucursales/pantallabuscarcodigo.h
+    include/frontend//sucursales/pantallacompararbusquedas.h
+    include/frontend//sucursales/pantallalistaenlazada.h
 
     include/frontend/sucursales/pantallaverarboles.h
     include/frontend/sucursales/graphicsviewzoom.h
@@ -108,6 +116,10 @@ set(UI_FILES
     ui/sucursales/pantallabuscarrango.ui
     ui/sucursales/pantallalistarnombre.ui
     ui/sucursales/pantallaeliminarproducto.ui
+    ui/sucursales/pantallatablahash.ui
+    ui/sucursales/pantallabuscarcodigo.ui
+    ui/sucursales/pantallacompararbusquedas.ui
+    ui/sucursales/pantallalistaenlazada.ui
 
     ui/sucursales/pantallaverarboles.ui
 

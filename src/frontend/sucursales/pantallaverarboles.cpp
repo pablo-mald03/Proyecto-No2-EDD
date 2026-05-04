@@ -83,6 +83,25 @@ void PantallaVerArboles::mostrarVistaBMas(){
     this->solicitarArbolBMas();
 }
 
+/*Metodo que permite mostrar la tabla hash*/
+void PantallaVerArboles::mostrarVistaTablaHash(){
+
+    if (!this->pantallaTablaHash) {
+
+        this->pantallaTablaHash = new PantallaTablaHash(this);
+
+        ui->stackedWidget->addWidget(this->pantallaTablaHash);
+
+        //Se conectan las signals para poder interactuar con la pantalla
+        connect(this->pantallaTablaHash, &PantallaTablaHash::solicitarTablaHash, this, &PantallaVerArboles::onSolicitarTablaHash);
+        connect(this->pantallaTablaHash, &PantallaTablaHash::solicitarGraphvizHash, this, &PantallaVerArboles::onSolicitarGraphvizTablaHash);
+    }
+
+    this->ui->labelArboles->setText("Tabla Hash");
+    this->ui->stackedWidget->setCurrentWidget(this->pantallaTablaHash);
+    this->solicitarTablaHash();
+}
+
 
 /*Metodo que permite ir moviendose entre vistas*/
 void PantallaVerArboles::refrescarVista(){
@@ -98,6 +117,9 @@ void PantallaVerArboles::refrescarVista(){
         case 3:
             this->mostrarVistaBMas();
             break;
+        case 4:
+            this->mostrarVistaTablaHash();
+            break;
     }
 
 }
@@ -106,7 +128,7 @@ void PantallaVerArboles::refrescarVista(){
 /*Metodo que permite ir a la siguiente vista*/
 void PantallaVerArboles::on_btnSiguiente_clicked()
 {
-    if(this->contadorPantallas == 3){
+    if(this->contadorPantallas == 4){
         return;
     }
 
@@ -147,15 +169,6 @@ void PantallaVerArboles::recibirGrapvizAvl(std::string dot){
 }
 
 
-/*Metodo para recibir el arbol B*/
-void PantallaVerArboles::recibirArbolB(NodoB * arbol){
-
-    if(this->pantallaB){
-        this->pantallaB->setArbol(arbol);
-    }
-
-}
-
 /*Metodo para recibir el graphviz del arbol B*/
 void PantallaVerArboles::recibirGrapvizB(std::string dot){
 
@@ -172,12 +185,37 @@ void PantallaVerArboles::recibirGrapvizBMas(std::string dot){
     }
 }
 
+/*Metodo para recibir el graphviz de la tabla Hash*/
+void PantallaVerArboles::recibirGrapvizTablaHash(std::string dot){
+
+    if(this->pantallaTablaHash){
+        this->pantallaTablaHash->generarGraphviz(dot);
+    }
+}
+
+
+/*Metodo para recibir el arbol B*/
+void PantallaVerArboles::recibirArbolB(NodoB * arbol){
+
+    if(this->pantallaB){
+        this->pantallaB->setArbol(arbol);
+    }
+
+}
 
 /*Metodo para recibir el arbol B+ */
 void PantallaVerArboles::recibirArbolBMas(NodoBMas * arbol){
 
     if(this->pantallaBMas){
         this->pantallaBMas->setArbol(arbol);
+    }
+}
+
+/*Metodo para recibir la tabla Hash */
+void PantallaVerArboles::recibirTablaHash(ListaEnlazada<Producto>**  _tabla, int capacidad){
+
+    if(this->pantallaTablaHash){
+        this->pantallaTablaHash->setTabla(_tabla,capacidad);
     }
 }
 
@@ -195,6 +233,11 @@ void PantallaVerArboles::onSolicitarGraphvizB(){
 /*Metodos para poder solicitar el graphviz del arbol B+*/
 void PantallaVerArboles::onSolicitarGraphvizBMas(){
     emit solicitarGraphArbolBMas();
+}
+
+/*Metodos para poder solicitar el graphviz de la tabla hash*/
+void PantallaVerArboles::onSolicitarGraphvizTablaHash(){
+    emit solicitarGraphTablaHash();
 }
 
 
@@ -217,3 +260,9 @@ void PantallaVerArboles::onSolicitarArbolBMas()
     emit solicitarArbolBMas();
 }
 
+
+/*Metodo que permite solicitar la tabla hash para poderla graficar*/
+void PantallaVerArboles::onSolicitarTablaHash()
+{
+    emit solicitarTablaHash();
+}

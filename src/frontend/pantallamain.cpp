@@ -322,6 +322,7 @@ void PantallaMain::mostrarVerArboles(){
         connect(this->controladorCrud, &Controlador::enviarGraphvizArbolB,
                 this->pantallaVerArboles, &PantallaVerArboles::recibirGrapvizB);
 
+        /*Signals del arbol B+*/
         connect(this->pantallaVerArboles, &PantallaVerArboles::solicitarArbolBMas,
                 this->controladorCrud, &Controlador::obtenerArbolBMas);
 
@@ -333,6 +334,19 @@ void PantallaMain::mostrarVerArboles(){
 
         connect(this->controladorCrud, &Controlador::enviarGraphvizArbolBMas,
                 this->pantallaVerArboles, &PantallaVerArboles::recibirGrapvizBMas);
+
+        /*Signals de la Tabla Hash*/
+        connect(this->pantallaVerArboles, &PantallaVerArboles::solicitarTablaHash,
+                this->controladorCrud, &Controlador::obtenerTablaHash);
+
+        connect(this->controladorCrud, &Controlador::enviarTablaHash,
+                this->pantallaVerArboles, &PantallaVerArboles::recibirTablaHash);
+
+        connect(this->pantallaVerArboles, &PantallaVerArboles::solicitarGraphTablaHash,
+                this->controladorCrud, &Controlador::generarGraphTablaHash);
+
+        connect(this->controladorCrud, &Controlador::enviarGraphvizTablaHash,
+                this->pantallaVerArboles, &PantallaVerArboles::recibirGrapvizTablaHash);
     }
 
     this->solicitarTitulo("Visualizar Arboles");

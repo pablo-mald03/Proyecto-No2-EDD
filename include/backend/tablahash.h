@@ -38,7 +38,10 @@ public:
     bool eliminar(const std::string& codigoBarra);
 
     /*Metodo que permite generar el graphviz de la tabla hash*/
-    std::string generarGraphviz();
+    std::string generarDot();
+
+    /*Metodo que permite obtener la referencia hacia la capacidad de la tabla hash para poderla agraficar*/
+    int getCapacidad();
 
     /*Metodo que permite obtener la referencia hacia el arreglo de la tabla hash para poderl agraficar*/
     ListaEnlazada<Producto>** getTabla();

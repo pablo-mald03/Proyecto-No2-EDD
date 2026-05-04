@@ -100,6 +100,12 @@ public:
     /*Metodo que permite obtener la raiz del arbol B+*/
     NodoBMas * getRaizArbolBMas();
 
+    /*Metodo que permite obtener la tabla hash*/
+    ListaEnlazada<Producto>**  getTablaHash();
+
+    /*Metodo que permite obtener la capacidad de la tabla hash+*/
+    int  getCapacidadTabla();
+
     /*Metodo que permite obtener el graphviz del arbol AVL*/
     std::string obtenerGraphvizAvl();
 
@@ -108,6 +114,9 @@ public:
 
     /*Metodo que permite obtener el graphviz del arbol B+*/
     std::string obtenerGraphvizBMas();
+
+    /*Metodo que permite obtener el graphviz de la tabla Hash*/
+    std::string obtenerGraphvizTablaHash();
 
     /*Metodo que permite validar la insercion*/
     void validarInsercion(const std::string &_nombre,

@@ -8,6 +8,7 @@
 #include"pantallaarbolavl.h"
 #include"pantallaarbolb.h"
 #include"pantallaarbolbmas.h"
+#include "pantallatablahash.h"
 
 namespace Ui {
 class PantallaVerArboles;
@@ -30,11 +31,13 @@ signals:
     void solicitarArbolAvl();
     void solicitarArbolB();
     void solicitarArbolBMas();
+    void solicitarTablaHash();
 
     /*Metodos que permiten solicitar el graphviz de los arboles*/
     void solicitarGraphArbolAvl();
     void solicitarGraphArbolB();
     void solicitarGraphArbolBMas();
+    void solicitarGraphTablaHash();
 
 
 public slots:
@@ -42,11 +45,13 @@ public slots:
     void recibirArbolAvl(NodoAvl * arbol);
     void recibirArbolB(NodoB * arbol);
     void recibirArbolBMas(NodoBMas * arbol);
+    void recibirTablaHash(ListaEnlazada<Producto>**  _tabla, int capacidad);
 
     /*Metodos que permiten generar el graphviz del estado actual de los arboles*/
     void recibirGrapvizAvl(std::string dot);
     void recibirGrapvizB(std::string dot);
     void recibirGrapvizBMas(std::string dot);
+    void recibirGrapvizTablaHash(std::string dot);
 
 private slots:
     void on_btnSiguiente_clicked();
@@ -58,11 +63,13 @@ private slots:
     void onSolicitarArbolAvl();
     void onSolicitarArbolB();
     void onSolicitarArbolBMas();
+    void onSolicitarTablaHash();
 
     /*Metodos para poder solicitar el graphviz de los arboles*/
     void onSolicitarGraphvizAvl();
     void onSolicitarGraphvizB();
     void onSolicitarGraphvizBMas();
+    void onSolicitarGraphvizTablaHash();
 
 private:
     Ui::PantallaVerArboles *ui;
@@ -76,12 +83,15 @@ private:
 
     PantallaArbolBMas * pantallaBMas = nullptr;
 
+    PantallaTablaHash * pantallaTablaHash = nullptr;
+
 
     /*Metodos de carga entre pantallas*/
     void mostrarVistaAvl();
     void mostrarVistaB();
     void mostrarVistaBMas();
     void refrescarVista();
+    void mostrarVistaTablaHash();
 
 };
 

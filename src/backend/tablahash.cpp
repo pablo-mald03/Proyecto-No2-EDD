@@ -63,9 +63,14 @@ unsigned int TablaHash::calcularIndice(const std::string& clave) {
     return hash % this->capacidad;
 }
 
-/*Metodo que permite obtener la referencia hacia el arreglo de la tabla hash para poderl agraficar*/
+/*Metodo que permite obtener la referencia hacia el arreglo de la tabla hash para poderla agraficar*/
 ListaEnlazada<Producto>** TablaHash::getTabla(){
     return this->tabla;
+}
+
+/*Metodo que permite obtener la referencia hacia la capacidad de la tabla hash para poderla agraficar*/
+int TablaHash::getCapacidad(){
+    return this->capacidad;
 }
 
 /*Metodo que permite insertar un producto en la tabla hash*/
@@ -174,7 +179,7 @@ void TablaHash::redimensionarHash() {
 }
 
 /*Metodo que permite generar el graphviz de la tabla hash incluyendo colisiones*/
-std::string TablaHash::generarGraphviz() {
+std::string TablaHash::generarDot() {
     std::stringstream dot;
 
     dot << "digraph G {\n";

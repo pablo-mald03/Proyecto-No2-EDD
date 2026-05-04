@@ -110,6 +110,16 @@ NodoBMas * GestorEstructuras::getRaizArbolBMas(){
     return this->arbolBMas->getRaiz();
 }
 
+/*Metodo que permite obtener la tabla hash+*/
+ListaEnlazada<Producto>**  GestorEstructuras::getTablaHash(){
+    return this->tablaHash->getTabla();
+}
+
+/*Metodo que permite obtener la capacidad de la tabla hash+*/
+int  GestorEstructuras::getCapacidadTabla(){
+    return this->tablaHash->getCapacidad();
+}
+
 /*Metodo que permite obtener la raiz del arbol B*/
 NodoB * GestorEstructuras::getRaizArbolB(){
     return this->arbolB->getRaiz();
@@ -123,6 +133,11 @@ std::string GestorEstructuras::obtenerGraphvizAvl(){
 /*Metodo que permite obtener el .dot del arbol B*/
 std::string GestorEstructuras::obtenerGraphvizB(){
     return this->arbolB->generarDot();
+}
+
+/*Metodo que permite obtener el .dot de la tabla hash*/
+std::string GestorEstructuras::obtenerGraphvizTablaHash(){
+    return this->tablaHash->generarDot();
 }
 
 /*Metodo que permite obtener el .dot del arbol B+*/
