@@ -26,6 +26,14 @@ void ControladorSucursal::enviarProducto(std::string idDestino, Producto* p,bool
         gestorEnvios->iniciarEnvio(p, ruta,porTiempo);
     }
 }
+/*Metodos getter de la clase*/
+Grafo * ControladorSucursal::obtenerGrafo(){
+    return this->redGrafo;
+}
+
+Sucursal * ControladorSucursal::obtenerSucursalActual(){
+    return this->sucursalActual;
+}
 
 
 

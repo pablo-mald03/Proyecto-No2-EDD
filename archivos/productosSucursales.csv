@@ -1,0 +1,90 @@
+"SucursalID", "Nombre", "CodigoBarra", "Categoria", "FechaCaducidad", "Marca", "Precio", "Stock"
+1, "Leche", "7501000012345", "Lacteos", "2025-03-15", "Lala", 25.50, 12
+1, "Pan", "7501000012346", "Panaderia", "2025-02-20", "Bimbo", 18.00, 8
+1, "Jabon", "7501000012348", "Limpieza", "2026-05-01", "Ariel", 15.60, 5
+1, "Cafe", "7501000012349", "Bebidas", "2025-07-30", "Nescafe", 45.00, 3
+2, "Arroz", "7501000012347", "Granos", "2026-01-10", "Mahatma", 22.30, 15
+2, "Azucar", "7501000012350", "Dulces", "2026-03-22", "Zulka", 19.80, 10
+2, "Aceite", "7501000012351", "Abarrotes", "2025-11-11", "Capullo", 32.40, 7
+2, "Galletas", "7501000012352", "Dulces", "2025-04-18", "Emperador", 12.50, 20
+3, "Yogurt", "7501000012353", "Lacteos", "2025-02-28", "Alpura", 14.20, 9
+3, "Refresco", "7501000012354", "Bebidas", "2025-08-14", "CocaCola", 21.00, 14
+3, "Frijoles", "7501000012355", "Granos", "2026-02-17", "La Sierra", 28.90, 6
+4, "Shampoo", "7501000012356", "Higiene", "2026-06-30", "Head&Shoulders", 62.50, 4
+4, "Papel", "7501000012357", "Limpieza", "2025-09-01", "Regio", 38.00, 11
+4, "Atun", "7501000012358", "Enlatados", "2025-10-20", "Tuny", 27.30, 18
+4, "Mayonesa", "7501000012359", "Abarrotes", "2025-12-05", "McCormick", 34.90, 5
+5, "Cereal", "7501000012360", "Desayuno", "2025-05-12", "Kellogg's", 49.50, 7
+5, "Pasta", "7501000012361", "Abarrotes", "2026-01-25", "Barilla", 16.40, 13
+5, "Detergente", "7501000012362", "Limpieza", "2026-04-14", "Foca", 42.00, 3
+5, "Queso", "7501000012363", "Lacteos", "2025-02-10", "Lala", 68.00, 2
+5, "Sopa", "7501000012364", "Instantaneos", "2025-09-22", "Maruchan", 13.80, 9
+6, "Chocolate", "7501000012365", "Dulces", "2025-06-18", "Hershey's", 23.00, 16
+6, "Cloro", "7501000012366", "Limpieza", "2026-05-19", "Cloralex", 19.50, 5
+6, "Mermelada", "7501000012367", "Dulces", "2025-10-10", "McCormick", 38.20, 4
+7, "Jugo", "7501000012368", "Bebidas", "2025-04-25", "Del Valle", 26.80, 11
+7, "Mantequilla", "7501000012369", "Lacteos", "2025-03-03", "Lala", 45.60, 6
+7, "Harina", "7501000012370", "Abarrotes", "2026-02-28", "Selecta", 21.40, 8
+7, "Cepillo", "7501000012371", "Higiene", "2026-07-01", "Oral-B", 35.00, 3
+8, "Pilas", "7501000012372", "Electronicos", "2025-12-31", "Energizer", 89.00, 12
+8, "Velas", "7501000012373", "Hogar", "2025-11-15", "Yaxa", 15.80, 7
+8, "Lentejas", "7501000012374", "Granos", "2026-03-12", "La Sierra", 29.50, 5
+8, "Gelatina", "7501000012375", "Postres", "2025-07-24", "Royal", 8.90, 19
+9, "Crema", "7501000012376", "Lacteos", "2025-02-21", "Lala", 31.70, 4
+9, "Pure", "7501000012377", "Enlatados", "2025-09-08", "Del Monte", 22.50, 9
+9, "Cacahuates", "7501000012378", "Botanas", "2025-05-19", "Mafer", 17.90, 14
+10, "Galletas", "7501000012379", "Dulces", "2025-04-11", "Marias", 11.20, 22
+10, "Te", "7501000012380", "Bebidas", "2026-01-04", "Lipton", 37.40, 3
+10, "Avena", "7501000012381", "Cereales", "2025-10-27", "Quaker", 41.50, 6
+10, "Sal", "7501000012382", "Abarrotes", "2026-05-22", "Salinera", 6.80, 17
+11, "Clips", "7501000012383", "Papeleria", "2025-06-09", "BIC", 23.00, 8
+11, "Lapices", "7501000012384", "Papeleria", "2025-08-16", "BIC", 32.50, 5
+11, "Cuaderno", "7501000012385", "Papeleria", "2025-07-05", "Scribe", 55.00, 4
+12, "Gomas", "7501000012386", "Papeleria", "2026-02-01", "Maped", 8.50, 15
+12, "Tijeras", "7501000012387", "Papeleria", "2026-04-27", "Pritt", 42.00, 3
+12, "Cinta", "7501000012388", "Papeleria", "2025-09-19", "3M", 28.90, 7
+12, "Plumones", "7501000012389", "Papeleria", "2025-11-30", "Crayola", 65.00, 2
+13, "Marcadores", "7501000012390", "Papeleria", "2026-01-12", "Sharpie", 94.00, 5
+13, "Borrador", "7501000012391", "Papeleria", "2025-12-14", "Faber", 12.50, 11
+13, "Regla", "7501000012392", "Papeleria", "2026-03-15", "Scribe", 16.00, 6
+14, "Sacapuntas", "7501000012393", "Papeleria", "2025-10-06", "Maped", 9.80, 9
+14, "Pegamento", "7501000012394", "Papeleria", "2026-06-11", "Resistol", 24.30, 4
+14, "Chicles", "7501000012395", "Dulces", "2025-09-15", "Trident", 8.50, 18
+14, "Agua", "7501000012396", "Bebidas", "2026-08-01", "Ciel", 12.00, 7
+15, "Servilletas", "7501000012397", "Limpieza", "2026-07-20", "Kleenex", 19.90, 5
+15, "Palomitas", "7501000012398", "Botanas", "2025-11-10", "Act II", 28.30, 12
+15, "Huevos", "7501000012399", "Lacteos", "2025-06-05", "San Juan", 45.00, 3
+16, "Leche", "7501000012400", "Lacteos", "2025-04-12", "Santa Clara", 26.00, 8
+16, "Pan", "7501000012401", "Panaderia", "2025-03-18", "Wonder", 17.50, 6
+16, "Jabon", "7501000012402", "Limpieza", "2026-06-01", "Roma", 14.80, 4
+17, "Arroz", "7501000012403", "Granos", "2026-02-14", "Morelos", 21.90, 11
+17, "Azucar", "7501000012404", "Dulces", "2026-04-20", "Champion", 18.50, 5
+17, "Aceite", "7501000012405", "Abarrotes", "2025-12-01", "Nutrioli", 33.20, 7
+17, "Cafe", "7501000012406", "Bebidas", "2025-08-10", "Buen Dia", 42.00, 3
+18, "Yogurt", "7501000012407", "Lacteos", "2025-03-22", "Danone", 15.80, 9
+18, "Refresco", "7501000012408", "Bebidas", "2025-09-05", "Pepsi", 20.50, 13
+18, "Frijoles", "7501000012409", "Granos", "2026-03-18", "Isadora", 27.40, 6
+19, "Shampoo", "7501000012410", "Higiene", "2026-07-15", "Pantene", 58.90, 4
+19, "Papel", "7501000012411", "Limpieza", "2025-10-11", "Escorial", 36.50, 10
+19, "Atun", "7501000012412", "Enlatados", "2025-11-22", "Dolores", 26.80, 16
+19, "Mayonesa", "7501000012413", "Abarrotes", "2026-01-08", "Heinz", 33.50, 5
+20, "Cereal", "7501000012414", "Desayuno", "2025-06-18", "Nestle", 47.00, 6
+20, "Pasta", "7501000012415", "Abarrotes", "2026-02-05", "De Cecco", 15.90, 12
+20, "Detergente", "7501000012416", "Limpieza", "2026-05-20", "Ace", 41.00, 3
+21, "Queso", "7501000012417", "Lacteos", "2025-03-15", "Philadelphia", 72.00, 2
+21, "Sopa", "7501000012418", "Instantaneos", "2025-10-02", "Nissin", 12.90, 8
+21, "Chocolate", "7501000012419", "Dulces", "2025-07-22", "Milka", 25.50, 14
+22, "Cloro", "7501000012420", "Limpieza", "2026-06-09", "Pinol", 18.90, 5
+22, "Mermelada", "7501000012421", "Dulces", "2025-11-14", "La Vieja Fabrica", 36.80, 4
+22, "Jugo", "7501000012422", "Bebidas", "2025-05-28", "Jumex", 25.50, 10
+22, "Mantequilla", "7501000012423", "Lacteos", "2025-04-06", "Alpura", 43.00, 3
+23, "Harina", "7501000012424", "Abarrotes", "2026-03-25", "Blanca Flor", 20.80, 7
+23, "Cepillo", "7501000012425", "Higiene", "2026-07-22", "Colgate", 33.50, 5
+23, "Pilas", "7501000012426", "Electronicos", "2026-01-30", "Duracell", 85.00, 11
+24, "Velas", "7501000012427", "Hogar", "2025-12-05", "Cirio", 14.50, 6
+24, "Lentejas", "7501000012428", "Granos", "2026-04-02", "Zacatecas", 28.00, 4
+24, "Gelatina", "7501000012429", "Postres", "2025-08-14", "D'Gari", 7.90, 18
+24, "Crema", "7501000012430", "Lacteos", "2025-03-11", "Nestle", 30.50, 3
+25, "Pure", "7501000012431", "Enlatados", "2025-10-18", "La Costena", 21.00, 9
+25, "Cacahuates", "7501000012432", "Botanas", "2025-06-09", "El Toro", 16.50, 13
+25, "Galletas", "7501000012433", "Dulces", "2025-05-01", "Gamesa", 10.90, 21

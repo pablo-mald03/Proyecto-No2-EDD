@@ -9,18 +9,13 @@ PantallaGestion::PantallaGestion(QWidget *parent)
 
     this->setStyleSheet("PantallaGestion { background-color: #1a1a1a; } ");
 
-    this->controladorGestion = new ControladorSucursal();
-
-    this->pantallaSucursal = new PantallaSucursal(this);
-
-    this->ui->stackedWidget->addWidget(this->pantallaSucursal);
 
     this->pantallaMain = new PantallaMain(this);
 
     this->ui->stackedWidget->addWidget(this->pantallaMain);
 
     connect(this->pantallaMain, &PantallaMain::cambiarTitulo, this, &PantallaGestion::cambiarLabel);
-    connect(this->pantallaSucursal, &PantallaSucursal::cambiarTitulo, this, &PantallaGestion::cambiarLabel);
+
 }
 
 /*Metodo que permite tomar la referencia que traen de la sucursal y setearla a los controladores*/
@@ -30,16 +25,12 @@ void PantallaGestion::setSucursal(Sucursal* _sucursal, Grafo* _redGrafo, GestorE
     this->redGrafo = _redGrafo;
     this->gestorEnvios = _gestor;
 
-    this->controladorGestion->setRecursosActuales(_sucursal,_redGrafo,_gestor);
-
     this->ui->labelAdmin->setText(QString::fromStdString(_sucursal->getNombre()));
     this->pantallaMain->setGestorSucursal(this->sucursal->getAlmacen());
-    this->pantallaSucursal->setRecursos(this->sucursal,this->redGrafo,this->gestorEnvios);
 }
 
 /*Metodo que permite mostar la primera pantalla de inicio*/
 void PantallaGestion::setPantallaInicio(){
-
     this->mostrarSucursal();
 }
 
@@ -50,7 +41,21 @@ void PantallaGestion::cambiarLabel(QString _titulo){
 /*Region de metodos para poder mostrar las diferentes vistas*/
 void PantallaGestion::mostrarSucursal(){
 
+    if (!this->pantallaSucursal) {
+
+        this->pantallaSucursal = new PantallaSucursal(this);
+        this->ui->stackedWidget->addWidget(this->pantallaSucursal);
+
+        this->pantallaSucursal->setRecursos(this->sucursal, this->redGrafo,
+                                            this->gestorEnvios);
+
+        connect(this->pantallaSucursal, &PantallaSucursal::cambiarTitulo, this, &PantallaGestion::cambiarLabel);
+    }
+
+
     this->ui->stackedWidget->setCurrentWidget(this->pantallaSucursal);
+    this->pantallaSucursal->setRecursos(this->sucursal,this->redGrafo,this->gestorEnvios);
+    this->pantallaSucursal->mostrarEstadoEnvios();
 
 }
 

@@ -15,6 +15,8 @@ public:
 
     void setRecursosActuales(Sucursal* _sucursal, Grafo* _redGrafo, GestorEnvios* _gestor);
 
+    Grafo * obtenerGrafo();
+    Sucursal * obtenerSucursalActual();
 
 
 private:

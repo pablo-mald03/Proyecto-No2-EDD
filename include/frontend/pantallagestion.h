@@ -31,8 +31,6 @@ private:
     PantallaSucursal * pantallaSucursal = nullptr;
     PantallaMain * pantallaMain = nullptr;
 
-    ControladorSucursal * controladorGestion = nullptr;
-
     /*Atrbutos seteables que permiten tener el control total sobre los punteros que vienen del grafo y sucursales*/
     Sucursal * sucursal = nullptr;
     Grafo * redGrafo = nullptr;
